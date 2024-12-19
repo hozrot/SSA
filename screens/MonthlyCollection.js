@@ -5,6 +5,10 @@ export default function MonthlyCollection() {
   return (
     <View>
       <Text>MonthlyCollection</Text>
+      <Text>  </Text>
+
+      <Text>MonthlyCollection</Text>
+
     </View>
   )
 }

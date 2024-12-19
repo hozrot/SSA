@@ -4,7 +4,7 @@ import React from 'react'
 export default function MemberEntry() {
   return (
     <View>
-      <Text>MemberEntry</Text>
+      <Text>Member Entry  Entry</Text>
     </View>
   )
 }

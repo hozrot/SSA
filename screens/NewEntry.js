@@ -10,9 +10,12 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function NewEntry() {
   return (
+
+    // <View>
+    //   <Text>LoanDetails</Text>
+    // </View>
+    
     <Tab.Navigator>
-     
-     
        <Tab.Screen
         name="MemberEntry"
         component={MemberEntry}
@@ -23,9 +26,6 @@ export default function NewEntry() {
        <Tab.Screen
         name="Employee"
         component={EmployeeEntry}
-        options={{
-          tabBarLabel: "Employee",
-        }}
       />
       <Tab.Screen
         name="New Loan"
@@ -36,6 +36,7 @@ export default function NewEntry() {
       />
      
     </Tab.Navigator>
+   
   );
 }
 

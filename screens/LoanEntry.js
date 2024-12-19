@@ -4,7 +4,7 @@ import React from 'react'
 export default function LoanEntry() {
   return (
     <View>
-      <Text>LoanEntry</Text>
+      <Text>Member  Entry</Text>
     </View>
   )
 }

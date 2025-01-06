@@ -3,9 +3,10 @@ import React from 'react'
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import MemberEntry from "./MemberEntry";
 import EmployeeEntry from "./EmployeeEntry";
-import DailyCollection from './DailyCollection';
+import DailyCollection from './SavingsCollection';
 import MonthlyCollection from './MonthlyCollection';
-import WeeklyCollection from './WeeklyCollection';
+import LoanCollection from './LoanCollection';
+import SavingsCollection from './SavingsCollection';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -15,26 +16,26 @@ export default function CollectMoney() {
      
      
        <Tab.Screen
-        name="Daily"
-        component={DailyCollection}
+        name="Savings"
+        component={SavingsCollection}
         options={{
-          tabBarLabel: "Daily",
+          tabBarLabel: "Savings Collection",
         }}
       />
        <Tab.Screen
-        name="Weekly"
-        component={WeeklyCollection}
+        name="Loan"
+        component={LoanCollection}
         options={{
-          tabBarLabel: "Weekly",
+          tabBarLabel: "Loan Collection",
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Monthly"
         component={MonthlyCollection}
         options={{
           tabBarLabel: "Monthly",
         }}
-      />
+      /> */}
     
     </Tab.Navigator>
   )

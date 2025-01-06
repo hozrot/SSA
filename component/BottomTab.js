@@ -78,7 +78,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#000000',
-        paddingBottom: 15,
+        paddingBottom: 20,
+        paddingTop:10,
+        borderRadius:50
     },
     tabbarItem: {
         flex: 1,

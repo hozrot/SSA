@@ -1,21 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import { TouchableOpacity, Text, StyleSheet, ImageBackground, View, Vibration } from "react-native";
-import { LinearGradient } from 'expo-linear-gradient';
-import { RNSVGSvgAndroid } from "react-native-svg";
 
-import {
-  useFonts, DMSans_400Regular,
-  DMSans_500Medium,
-  DMSans_700Bold,
-} from "@expo-google-fonts/dm-sans";
+
 export default function Button({ label, onPress, backgroundColor, disabled }) {
   const image = require("../assets/button.png");
-  useFonts({
-    DMSans_400Regular,
-    DMSans_500Medium,
-    DMSans_700Bold,
-  });
-
+ 
   const [isPressed, setIsPressed] = useState(false);
 
   const handlePressIn = () => {

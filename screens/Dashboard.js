@@ -7,10 +7,10 @@ import MenuCard from "../component/MenuCard";
 export default function Dashboard({navigation}) {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text> Total Collection : </Text>
-        <Text> Total Paid : </Text>
-        <Text> Total Pending : </Text>
-        <Text> Total Asset : </Text>
+        <Text> Total Collection : 1,50,000,000</Text>
+        <Text> Total Paid : 1,10,500 </Text>
+        <Text> Total Pending : 18,50,000 </Text>
+        <Text> Total Asset : 5,000,000,000</Text>
 
       <View style={{ flex: .30, justifyContent: "center", alignItems: "center",flexDirection:'row' }}>
         <MenuCard

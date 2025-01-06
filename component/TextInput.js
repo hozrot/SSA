@@ -24,7 +24,7 @@ export default function TextInput({ onPress, inputHieght, inputAlign, icon, line
                 <RNTextInput
                     underlineColorAndroid="transparent"
                     placeholderTextColor="gray"
-                    color='white'
+                    color='black'
                     height={45}
                     {...otherProps}
                 />

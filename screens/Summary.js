@@ -29,14 +29,14 @@ export default function Summary() {
       iconName={"cash"}
       iconSize={80}
       iconColor={"green"}
-      onPress={() => navigation.navigate("EmployeeDetails")}
+      //onPress={() => navigation.navigate("EmployeeDetails")}
     />
      <MenuCard
       menuTitle={"Total Savings "}
       iconName={"text-box-multiple"}
       iconSize={80}
       iconColor={"red"}
-      onPress={() => navigation.navigate("MemberList")}
+     // onPress={() => navigation.navigate("MemberList")}
     />
   </View>
   <View style={{ flex: .30, justifyContent: "center", alignItems: "center",flexDirection:'row' }}>
@@ -45,14 +45,14 @@ export default function Summary() {
       iconName={"account-cash"}
       iconSize={80}
       iconColor={"red"}
-      onPress={() => navigation.navigate("CollectionDetails")}
+     // onPress={() => navigation.navigate("CollectionDetails")}
     />
      <MenuCard
       menuTitle={"Total Employee"}
       iconName={"stack-exchange"}
       iconSize={80}
       iconColor={"green"}
-      onPress={() => navigation.navigate("Summary")}
+     // onPress={() => navigation.navigate("Summary")}
     />
   </View>
   

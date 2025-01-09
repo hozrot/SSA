@@ -11,7 +11,7 @@ export default function LoanDetails() {
       iconName={"history"}
       iconSize={80}
       iconColor={"green"}
-      onPress={() => navigation.navigate("TransactionHistory")}
+      //onPress={() => navigation.navigate("TransactionHistory")}
     />
     
   </View>
@@ -22,7 +22,7 @@ export default function LoanDetails() {
     iconName={"cash"}
     iconSize={80}
     iconColor={"green"}
-    onPress={() => navigation.navigate("LoanDetails")}
+   // onPress={() => navigation.navigate("LoanDetails")}
   />
 </View>
 </View>

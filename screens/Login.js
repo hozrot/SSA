@@ -13,6 +13,9 @@ export default function Login({navigation}) {
             style={{
               fontFamily: "DMSans_500Bold",
               fontSize: 18,
+              padding:20,
+              textAlign:'center'
+              
             }}
           >
             {"সুন্দরগঞ্জ দোকান মালিক ব্যাবসায় সমবায় সমিতি"}
@@ -103,6 +106,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent:'center',
     padding: 10,
+    
   },
   SubmitView: {
     alignContent: "center",

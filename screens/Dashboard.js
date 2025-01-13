@@ -3,15 +3,37 @@ import React from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 // need to import MenuCard Template like bellow
 import MenuCard from "../component/MenuCard";
+import BalanceCard from "../component/BalanceCard";
 
 export default function Dashboard({navigation}) {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text> Total Collection : 1,50,000,000</Text>
+        {/* <Text> Total Collection : 1,50,000,000</Text>
         <Text> Total Paid : 1,10,500 </Text>
         <Text> Total Pending : 18,50,000 </Text>
-        <Text> Total Asset : 5,000,000,000</Text>
-
+        <Text> Total Asset : 5,000,000,000</Text> */}
+        <View style={{ flex: .30, justifyContent: "center", alignItems: "center",flexDirection:'row' }}>  
+        <BalanceCard 
+          balanceTitle={"Loan"}
+          iconName={"briefcase-search-outline"}
+          
+          iconColor={"white"}
+          balance={25000}
+          />
+           <BalanceCard 
+          balanceTitle={"Savings "}
+          iconName={"briefcase-clock-outline"}
+          iconColor={"white"}
+          balance={25000}
+          />
+           <BalanceCard 
+          balanceTitle={"Due  "}
+          iconName={"briefcase-eye-outline"}
+          iconSize={60}
+          iconColor={"white"}
+          balance={25000}
+          />
+</View>
       <View style={{ flex: .30, justifyContent: "center", alignItems: "center",flexDirection:'row' }}>
         <MenuCard
           menuTitle={"Transaction Hostory "}
@@ -22,7 +44,7 @@ export default function Dashboard({navigation}) {
         />
          <MenuCard
           menuTitle={"Loan Details"}
-          iconName={"cash"}
+          iconName={"currency-try"}
           iconSize={80}
           iconColor={"green"}
           onPress={() => navigation.navigate("LoanDetails")}
@@ -46,11 +68,11 @@ export default function Dashboard({navigation}) {
       </View>
       <View style={{ flex: .30, justifyContent: "center", alignItems: "center",flexDirection:'row' }}>
         <MenuCard
-          menuTitle={"Collection Details"}
-          iconName={"account-cash"}
+          menuTitle={"Balancesheet"}
+          iconName={"note"}
           iconSize={80}
           iconColor={"green"}
-          onPress={() => navigation.navigate("CollectionDetails")}
+          onPress={() => navigation.navigate("CostDetails")}
         />
          <MenuCard
           menuTitle={"Summary"}

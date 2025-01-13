@@ -16,6 +16,8 @@ import EmployeeDetails from './screens/EmployeeDetails';
 import MemberList from './screens/MemberList';
 import CollectionDetails from './screens/CollectionDetails';
 import Summary from './screens/Summary';
+import CostDetails from './screens/CostDetails';
+import ExpenseEntry from './screens/ExpenseEntry';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -36,6 +38,9 @@ export default function App() {
        <Stack.Screen name="EmployeeDetails" component={EmployeeDetails} />
        <Stack.Screen name="MemberList" component={MemberList} />
        <Stack.Screen name="CollectionDetails" component={CollectionDetails} />
+       <Stack.Screen name="CostDetails" component={CostDetails} />
+       <Stack.Screen name="ExpenseEntry" component={ExpenseEntry} />
+
        <Stack.Screen name="Summary" component={Summary} />
     </Stack.Navigator>
   

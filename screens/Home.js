@@ -6,6 +6,7 @@ import Dashboard from './Dashboard';
 import NewEntry from './NewEntry';
 import CollectMoney from './CollectMoney';
 import AboutUs from './AboutUs';
+import ExpenseEntry from './ExpenseEntry';
 
 
 //npm install @react-navigation/bottom-tabs
@@ -24,7 +25,7 @@ export default function Home({navigation}) {
           <Tab.Screen name="CollectMoney" component={CollectMoney} options={{
             headerShown: false
           }} />
-          <Tab.Screen name="AboutUs" component={AboutUs} options={{
+          <Tab.Screen name="Expense" component={ExpenseEntry} options={{
             headerShown: false
           }} />
     

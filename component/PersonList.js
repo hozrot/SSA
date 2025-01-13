@@ -5,10 +5,16 @@ function PersonList({name, designation, image,office,onPress}) {
     return (
         <TouchableOpacity style={styles.List} onPress={onPress}>  
               {image &&  <Image  style={styles.imageBox} source={image}/>}
+                <View style={{ }} >
+                <Text>Name : {name}</Text>
+                <Text>Join Date {designation}</Text>
+                
+                
+                </View>
                 <View>
-                <Text>{name}</Text>
-                <Text>{designation}</Text>
-                <Text>{office}</Text>
+                
+                <Text> Collection</Text>
+                <Text> Amount</Text>
                 
                 </View>
         </TouchableOpacity>
@@ -18,7 +24,13 @@ function PersonList({name, designation, image,office,onPress}) {
 const styles = StyleSheet.create({
     List:{
         flexDirection:'row',
-        margin:15
+        margin:5,
+        justifyContent:'space-between',
+        padding:10,
+        backgroundColor:'#F79C61',
+        borderColor:'gray',
+        borderWidth:2,
+        borderRadius:15
     },
     imageBox:{
         height: 70,

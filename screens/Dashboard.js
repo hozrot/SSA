@@ -5,84 +5,84 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import MenuCard from "../component/MenuCard";
 import BalanceCard from "../component/BalanceCard";
 
-export default function Dashboard({navigation}) {
+export default function Dashboard({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        {/* <Text> Total Collection : 1,50,000,000</Text>
+      {/* <Text> Total Collection : 1,50,000,000</Text>
         <Text> Total Paid : 1,10,500 </Text>
         <Text> Total Pending : 18,50,000 </Text>
         <Text> Total Asset : 5,000,000,000</Text> */}
-        <View style={{ flex: .30, justifyContent: "center", alignItems: "center",flexDirection:'row' }}>  
-        <BalanceCard 
+      <View style={{ flex: .30, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
+        <BalanceCard
           balanceTitle={"Loan"}
           iconName={"briefcase-search-outline"}
-          
+
           iconColor={"white"}
           balance={25000}
-          />
-           <BalanceCard 
+        />
+        <BalanceCard
           balanceTitle={"Savings "}
           iconName={"briefcase-clock-outline"}
           iconColor={"white"}
           balance={25000}
-          />
-           <BalanceCard 
+        />
+        <BalanceCard
           balanceTitle={"Due  "}
           iconName={"briefcase-eye-outline"}
           iconSize={60}
           iconColor={"white"}
           balance={25000}
-          />
-</View>
-      <View style={{ flex: .30, justifyContent: "center", alignItems: "center",flexDirection:'row' }}>
+        />
+      </View>
+      <View style={{ flex: .30, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
         <MenuCard
           menuTitle={"Transaction Hostory "}
           iconName={"history"}
           iconSize={80}
-          iconColor={"green"}
+          iconColor={"#6656FE"}
           onPress={() => navigation.navigate("TransactionHistory")}
         />
-         <MenuCard
+        <MenuCard
           menuTitle={"Loan Details"}
           iconName={"currency-try"}
           iconSize={80}
-          iconColor={"green"}
+          iconColor={"#6656FE"}
           onPress={() => navigation.navigate("LoanDetails")}
         />
       </View>
-      <View style={{ flex: .30, justifyContent: "center", alignItems: "center",flexDirection:'row' }}>
+      <View style={{ flex: .30, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
         <MenuCard
           menuTitle={"Employee Details"}
           iconName={"human-queue"}
           iconSize={80}
-          iconColor={"green"}
+          iconColor={"#6656FE"}
           onPress={() => navigation.navigate("EmployeeDetails")}
         />
-         <MenuCard
+        <MenuCard
           menuTitle={"Member List"}
           iconName={"text-box-multiple"}
           iconSize={80}
-          iconColor={"green"}
+          iconColor={"#6656FE"}
           onPress={() => navigation.navigate("MemberList")}
         />
       </View>
-      <View style={{ flex: .30, justifyContent: "center", alignItems: "center",flexDirection:'row' }}>
+      <View style={{ flex: .30, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
         <MenuCard
           menuTitle={"Balancesheet"}
           iconName={"note"}
           iconSize={80}
-          iconColor={"green"}
+          iconColor={"#6656FE"}
           onPress={() => navigation.navigate("CostDetails")}
         />
-         <MenuCard
+        <MenuCard
           menuTitle={"Summary"}
           iconName={"stack-exchange"}
           iconSize={80}
-          iconColor={"green"}
+          iconColor={"#6656FE"}
           onPress={() => navigation.navigate("Summary")}
         />
       </View>
-      
+
     </View>
   );
 }

@@ -1,9 +1,7 @@
-
-
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import PersonList from "../component/PersonList";
-import BalanceCard from '../component/BalanceCard';
+import ListOne from '../component/ListOne';
 
 const data = [
   { id: 1, title: 'Name 1' ,Date: "12/12/2024" },
@@ -14,35 +12,19 @@ const data = [
   { id: 6, title: 'Name 6' },
   // ... more items
 ];
-
-export default function EmployeeDetails() {
+export default function SavingsList() {
   return (
     <View style={styles.container}>
-      <View style={{  justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
-              <BalanceCard
-                balanceTitle={"Total Employee"}
-                iconName={"briefcase-search-outline"}
-      
-                iconColor={"white"}
-                balance={112}
-              />
-              <BalanceCard
-                balanceTitle={"Vacancy"}
-                iconName={"briefcase-search-outline"}
-      
-                iconColor={"white"}
-                balance={15}
-              />
-              </View>
-
       <FlatList
         data={data}
         keyExtractor={(item) => item.id.toString()} 
         renderItem={({ item }) => (
-          <PersonList
+          <ListOne
           name={item.title}
           designation={item.Date}
           office={item.office}
+          iconName={'bottle-tonic'}
+          iconColor={'#0C0C0C'}
          />
           // <View style={styles.item}>
           //   <Text>{item.title}</Text>

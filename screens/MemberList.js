@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
+import BalanceCard from '../component/BalanceCard';
 
 const data = [
   { id: 1, title: 'Name 1' ,Amount: "25,000 Taka", saving: 850 },
@@ -16,6 +17,22 @@ const data = [
 export default function MemberList() {
    return (
        <View style={styles.container}>
+         <View style={{  justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
+                      <BalanceCard
+                        balanceTitle={"Total Member"}
+                        iconName={"briefcase-search-outline"}
+              
+                        iconColor={"white"}
+                        balance={1120}
+                      />
+                      <BalanceCard
+                        balanceTitle={"Take Loan"}
+                        iconName={"briefcase-search-outline"}
+              
+                        iconColor={"white"}
+                        balance={150}
+                      />
+                      </View>
          <FlatList
            data={data}
            keyExtractor={(item) => item.id.toString()} 

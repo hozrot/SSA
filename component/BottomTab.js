@@ -55,12 +55,12 @@ export default function BottomTab({ state, descriptors, navigation }) {
                     >
                         {
                             icon[route.name]({
-                                color: isFocused ? '#6656FE' : '#ffffff'
+                                color: isFocused ? '#000000' : '#ffffff'
                             })
                         }
                         {/* <MaterialCommunityIcons name="camera-outline" size={18} color={isFocused ? '#FF4A22' : '#ffffff'} /> */}
                         <Text style={{
-                            color: isFocused ? '#6656FE' : '#ffffff', fontSize: 12,
+                            color: isFocused ? '#000000' : '#ffffff', fontSize: 12,
                             fontFamily: 'DMSans_400Regular',
                         }}>
                             {label}
@@ -77,11 +77,13 @@ const styles = StyleSheet.create({
 
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#000000',
+        backgroundColor: 'green',
         paddingBottom: 20,
         paddingTop: 10,
-        borderRadius: 50,
-        margin: 10
+        borderTopWidth: 5,
+
+
+
     },
     tabbarItem: {
         flex: 1,

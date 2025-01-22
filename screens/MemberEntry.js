@@ -1,26 +1,32 @@
-import { StyleSheet, Text, View, ScrollView} from 'react-native'
+import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import React from 'react'
+import { useContext, useState } from "react";
 import Button from "../component/Button";
 import TextInput from "../component/TextInput";
+import { Picker } from '@react-native-picker/picker';
+// npm i @react-native-picker/picker
 
-export default function MemberEntry({navigation}) {
+
+
+export default function MemberEntry({ navigation }) {
+  const [selectedType, setSelectedType] = useState();
   return (
     <ScrollView style={styles.containerView}>
-   
-           <View style={styles.HeaderView}>
-             <Text
-               style={{
-                 fontFamily: "DMSans_500Bold",
-                 fontSize: 18,
-               }}
-             >
-               {"সুন্দরগঞ্জ দোকান মালিক ব্যাবসায় সমবায় সমিতি"}
-                {" "}
-             </Text>
-             <Text style={styles.AllText}> সুন্দরগঞ্জ , গাইবান্ধা ।   </Text>
-           </View>
-           <View style={styles.FormView}>
-             {/* <Text
+
+      <View style={styles.HeaderView}>
+        <Text
+          style={{
+            fontFamily: "DMSans_500Bold",
+            fontSize: 18,
+          }}
+        >
+          {"সুন্দরগঞ্জ দোকান মালিক ব্যাবসায় সমবায় সমিতি"}
+          {" "}
+        </Text>
+        <Text style={styles.AllText}> সুন্দরগঞ্জ , গাইবান্ধা ।   </Text>
+      </View>
+      <View style={styles.FormView}>
+        {/* <Text
                style={{
                  fontFamily: "DMSans_500Medium",
                  fontSize: 16,
@@ -44,166 +50,179 @@ export default function MemberEntry({navigation}) {
               
                style={{ fontSize: 14 }}
              /> */}
-             <Text
-               style={{
-                 fontFamily: "DMSans_500Medium",
-                 fontSize: 16,
-                 paddingBottom: 8,
-                 paddingTop: 15,
-                 
-               }}
-             >
-               {" "}
-              Member  Name{" "}
-             </Text>
-   
-             <TextInput
-               inputHieght={54}
-               inputAlign={"center"}
-               placeholder="Enter here...."
-               autoCapitalize="none"
-               keyboardType="email-address"
-               keyboardAppearance="dark"
-               returnKeyType="next"
-               returnKeyLabel="next"
-              
-               style={{ fontSize: 14 }}
-             />
+        <Text
+          style={{
+            fontFamily: "DMSans_500Medium",
+            fontSize: 16,
+            paddingBottom: 8,
+            paddingTop: 15,
 
-<Text
-               style={{
-                 fontFamily: "DMSans_500Medium",
-                 fontSize: 16,
-                 paddingBottom: 8,
-                 paddingTop: 15,
-                 
-               }}
-             >
-               {" "}
-               Mobile No{" "}
-             </Text>
-   
-             <TextInput
-               inputHieght={54}
-               inputAlign={"center"}
-               placeholder="Enter here...."
-               autoCapitalize="none"
-               keyboardType="email-address"
-               keyboardAppearance="dark"
-               returnKeyType="next"
-               returnKeyLabel="next"
-              
-               style={{ fontSize: 14 }}
-             />
-              <Text
-               style={{
-                 fontFamily: "DMSans_500Medium",
-                 fontSize: 16,
-                 paddingBottom: 8,
-                 paddingTop: 15,
-                 
-               }}
-             >
-               {" "}
-               Company Name{" "}
-             </Text>
-   
-             <TextInput
-               inputHieght={54}
-               inputAlign={"center"}
-               placeholder="Enter here...."
-               autoCapitalize="none"
-               keyboardType="email-address"
-               keyboardAppearance="dark"
-               returnKeyType="next"
-               returnKeyLabel="next"
-              
-               style={{ fontSize: 14 }}
-             />
-              <Text
-               style={{
-                 fontFamily: "DMSans_500Medium",
-                 fontSize: 16,
-                 paddingBottom: 8,
-                 paddingTop: 15,
-                 
-               }}
-             >
-               {" "}
-               Enrollment Type{" "}
-             </Text>
-   
-             <TextInput
-               inputHieght={54}
-               inputAlign={"center"}
-               placeholder="Enter here...."
-               autoCapitalize="none"
-               keyboardType="email-address"
-               keyboardAppearance="dark"
-               returnKeyType="next"
-               returnKeyLabel="next"
-              
-               style={{ fontSize: 14 }}
-             />
-              <Text
-               style={{
-                 fontFamily: "DMSans_500Medium",
-                 fontSize: 16,
-                 paddingBottom: 8,
-                 paddingTop: 15,
-                 
-               }}
-             >
-               {" "}
-               NID no {" "}
-             </Text>
-   
-             <TextInput
-               inputHieght={54}
-               inputAlign={"center"}
-               placeholder="Enter here...."
-               autoCapitalize="none"
-               keyboardType="email-address"
-               keyboardAppearance="dark"
-               returnKeyType="next"
-               returnKeyLabel="next"
-              
-               style={{ fontSize: 14 }}
-             />
-              <Text
-                            style={{
-                              fontFamily: "DMSans_500Medium",
-                              fontSize: 16,
-                              paddingBottom: 8,
-                              paddingTop: 15,
-                              
-                            }}
-                          >
-                            {" "}
-                            Category {" "}
-                          </Text>
-                
-                          <TextInput
-                            inputHieght={54}
-                            inputAlign={"center"}
-                            placeholder="Enter here...."
-                            autoCapitalize="none"
-                            keyboardType="email-address"
-                            keyboardAppearance="dark"
-                            returnKeyType="next"
-                            returnKeyLabel="next"
-                           
-                            style={{ fontSize: 14 }}
-                          />
-             
-           </View>
-         
-   
-       <View style={styles.SubmitView}>
-   
-      
-         <Button label="Submit Entry "  onPress={() => navigation.navigate("Dashboard")} />
-         </View>
+          }}
+        >
+          {" "}
+          Member  Name{" "}
+        </Text>
+
+        <TextInput
+          inputHieght={54}
+          inputAlign={"center"}
+          placeholder="Enter here...."
+          autoCapitalize="none"
+          keyboardType="email-address"
+          keyboardAppearance="dark"
+          returnKeyType="next"
+          returnKeyLabel="next"
+
+          style={{ fontSize: 14 }}
+        />
+
+        <Text
+          style={{
+            fontFamily: "DMSans_500Medium",
+            fontSize: 16,
+            paddingBottom: 8,
+            paddingTop: 15,
+
+          }}
+        >
+          {" "}
+          Mobile No{" "}
+        </Text>
+
+        <TextInput
+          inputHieght={54}
+          inputAlign={"center"}
+          placeholder="Enter here...."
+          autoCapitalize="none"
+          keyboardType="phone-pad"
+          keyboardAppearance="dark"
+          returnKeyType="next"
+          returnKeyLabel="next"
+
+          style={{ fontSize: 14 }}
+        />
+        <Text
+          style={{
+            fontFamily: "DMSans_500Medium",
+            fontSize: 16,
+            paddingBottom: 8,
+            paddingTop: 15,
+
+          }}
+        >
+          {" "}
+          Company Name{" "}
+        </Text>
+
+        <TextInput
+          inputHieght={54}
+          inputAlign={"center"}
+          placeholder="Enter here...."
+          autoCapitalize="none"
+          keyboardType="email-address"
+          keyboardAppearance="dark"
+          returnKeyType="next"
+          returnKeyLabel="next"
+
+          style={{ fontSize: 14 }}
+        />
+        <Text
+          style={{
+            fontFamily: "DMSans_500Medium",
+            fontSize: 16,
+            paddingBottom: 8,
+            paddingTop: 15,
+
+          }}
+        >
+          {" "}
+          Enrollment Type{" "}
+        </Text>
+        <Picker
+          selectedValue={selectedType}
+          onValueChange={(itemValue, itemIndex) =>
+            setSelectedType(itemValue)
+          }
+          placeholder={{ label: "Select an option...", value: null }}
+
+          style={{
+            backgroundColor: 'gray',
+          }}>
+          <Picker.Item label="Temporary" value="java" />
+          <Picker.Item label="Parmanent " value="js" />
+        </Picker>
+
+        {/* <TextInput
+          inputHieght={54}
+          inputAlign={"center"}
+          placeholder="Enter here...."
+          autoCapitalize="none"
+          keyboardType="email-address"
+          keyboardAppearance="dark"
+          returnKeyType="next"
+          returnKeyLabel="next"
+
+          style={{ fontSize: 14 }}
+        /> */}
+        <Text
+          style={{
+            fontFamily: "DMSans_500Medium",
+            fontSize: 16,
+            paddingBottom: 8,
+            paddingTop: 15,
+
+          }}
+        >
+          {" "}
+          NID no {" "}
+        </Text>
+
+        <TextInput
+          inputHieght={54}
+          inputAlign={"center"}
+          placeholder="Enter here...."
+          autoCapitalize="none"
+          keyboardType="number-pad"
+          keyboardAppearance="dark"
+          returnKeyType="next"
+          returnKeyLabel="next"
+
+          style={{ fontSize: 14 }}
+        />
+        <Text
+          style={{
+            fontFamily: "DMSans_500Medium",
+            fontSize: 16,
+            paddingBottom: 8,
+            paddingTop: 15,
+
+          }}
+        >
+          {" "}
+          Category {" "}
+        </Text>
+
+        <TextInput
+          inputHieght={54}
+          inputAlign={"center"}
+          placeholder="Enter here...."
+          autoCapitalize="none"
+          keyboardType="email-address"
+          keyboardAppearance="dark"
+          returnKeyType="next"
+          returnKeyLabel="next"
+
+          style={{ fontSize: 14 }}
+        />
+
+      </View>
+
+
+      <View style={styles.SubmitView}>
+
+
+        <Button label="Submit Entry " onPress={() => navigation.navigate("Dashboard")} />
+      </View>
     </ScrollView>
   )
 }
@@ -225,7 +244,7 @@ const styles = StyleSheet.create({
     flex: 0.4,
     width: "100%",
     justifyContent: "center",
-    alignContent:'center',
+    alignContent: 'center',
     padding: 10,
   },
   SubmitView: {
@@ -233,5 +252,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
   },
- 
+
 })

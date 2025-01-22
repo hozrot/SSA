@@ -7,7 +7,7 @@ import BalanceCard from "../component/BalanceCard";
 
 export default function Dashboard({ navigation }) {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'green' }}>
       {/* <Text> Total Collection : 1,50,000,000</Text>
         <Text> Total Paid : 1,10,500 </Text>
         <Text> Total Pending : 18,50,000 </Text>
@@ -16,7 +16,7 @@ export default function Dashboard({ navigation }) {
         <BalanceCard
           balanceTitle={"Loan"}
           iconName={"briefcase-search-outline"}
-
+          iconSize={60}
           iconColor={"white"}
           balance={25000}
         />
@@ -24,6 +24,7 @@ export default function Dashboard({ navigation }) {
           balanceTitle={"Savings "}
           iconName={"briefcase-clock-outline"}
           iconColor={"white"}
+          iconSize={60}
           balance={25000}
         />
         <BalanceCard
@@ -72,7 +73,7 @@ export default function Dashboard({ navigation }) {
           iconName={"note"}
           iconSize={80}
           iconColor={"#6656FE"}
-          onPress={() => navigation.navigate("CostDetails")}
+          onPress={() => navigation.navigate("BalanceSheet")}
         />
         <MenuCard
           menuTitle={"Summary"}

@@ -1,14 +1,16 @@
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function BalanceCard({ onPress, balanceTitle, iconName, iconSize, balance,
+export default function BalanceCard({ onPress, balanceTitle, iconName, iconSize = 40, balance,
   iconColor = '#6656FE' }) {
   return (
     <TouchableOpacity style={styles.Container}
       onPress={onPress}>
+
       <Text style={{ color: 'white' }} >  {balanceTitle}  </Text>
-      <MaterialCommunityIcons name={iconName} size={45} color={iconColor} />
+
+      <MaterialCommunityIcons name={iconName} size={iconSize} color={iconColor} />
       <Text style={{ color: 'white', fontWeight: 'bold' }}  >  {balance}  </Text>
 
     </TouchableOpacity>
@@ -24,10 +26,11 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     justifyContent: 'space-around',
     alignItems: 'center',
-    alignContent: 'center',
-    margin: 10,
-    padding: 10,
-    height: 120,
+
+    margin: 5,
+    padding: 5,
+    height: 125,
 
   },
+
 })

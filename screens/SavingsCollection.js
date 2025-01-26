@@ -1,9 +1,29 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import Button from "../component/Button";
 import TextInput from "../component/TextInput";
 
+import { db } from '../config';
+import {ref,set} from 'firebase/database';
+
 export default function SavingsCollection({ navigation }) {
+
+  const [memberno,setMemberno] = useState('');
+  const [amount,setAmount] = useState('');
+  const [type,setType] = useState('');
+
+  const addSavings = ()=>{
+    set(ref(db,'savings/'+ memberno),{
+      memberno: memberno,
+      savingsamount: amount,
+      typeofpayment: type,
+    });
+    setMemberno('')
+    setAmount('')
+    setType('')
+    navigation.navigate("Home");
+  }
+
   return (
 
     <ScrollView style={styles.containerView}>
@@ -42,7 +62,8 @@ export default function SavingsCollection({ navigation }) {
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
+          value={memberno}
+          onChangeText={(text)=> setMemberno(text)}
           style={{ fontSize: 14 }}
         />
         {/* <Text
@@ -82,7 +103,8 @@ export default function SavingsCollection({ navigation }) {
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
+          value={amount}
+          onChangeText={(text)=> setAmount(text)}
           style={{ fontSize: 14 }}
         />
         <Text
@@ -107,7 +129,8 @@ export default function SavingsCollection({ navigation }) {
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
+          value={type}
+          onChangeText={(text)=> setType(text)}
           style={{ fontSize: 14 }}
         />
 
@@ -117,7 +140,7 @@ export default function SavingsCollection({ navigation }) {
       <View style={styles.SubmitView}>
 
 
-        <Button label="Save  Entry " onPress={() => navigation.navigate("Dashboard")} />
+        <Button label="Save  Entry " onPress={addSavings} />
       </View>
     </ScrollView>
 

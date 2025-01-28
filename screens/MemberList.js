@@ -1,11 +1,14 @@
 
 
-import React, { useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { FlatList, StyleSheet, Text, View, ScrollView } from 'react-native';
 import BalanceCard from '../component/BalanceCard';
+import { db } from '../config';
+import { ref, onValue } from 'firebase/database';
+//import { ScrollView } from 'react-native-gesture-handler';
 
 const data = [
-  { id: 1, title: 'Name 1' ,Amount: "25,000 Taka", saving: 850 },
+  { id: 1, title: 'Name 1', Amount: "25,000 Taka", saving: 850 },
   { id: 2, title: 'Name 2' },
   { id: 3, title: 'Name 3' },
   { id: 4, title: 'Name 4' },
@@ -15,25 +18,56 @@ const data = [
 ];
 
 export default function MemberList() {
-   return (
-       <View style={styles.container}>
-         <View style={{  justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
-                      <BalanceCard
-                        balanceTitle={"Total Member"}
-                        iconName={"briefcase-search-outline"}
-              
-                        iconColor={"white"}
-                        balance={1120}
-                      />
-                      <BalanceCard
-                        balanceTitle={"Take Loan"}
-                        iconName={"briefcase-search-outline"}
-              
-                        iconColor={"white"}
-                        balance={150}
-                      />
-                      </View>
-         <FlatList
+  const [memberList, setMemberList] = useState([])
+  const [memberCount, setMemberCount] = useState([])
+
+  useEffect(() => {
+    const dataLink = ref(db, 'member/');
+    onValue(dataLink, (snapshot) => {
+      const data = snapshot.val();
+      const allmember = Object.keys(data).map(key => ({
+        id: key,
+        ...data[key]
+      }));
+      setMemberList(allmember);
+      setMemberCount(allmember.length);
+    });
+  }, [])
+  return (
+    <ScrollView style={styles.container}>
+      <View style={{ justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
+        <BalanceCard
+          balanceTitle={"Total Member"}
+          iconName={"briefcase-search-outline"}
+
+          iconColor={"white"}
+          balance={memberCount}
+        />
+        <BalanceCard
+          balanceTitle={"Take Loan"}
+          iconName={"briefcase-search-outline"}
+
+          iconColor={"white"}
+          balance={150 - memberCount}
+        />
+      </View>
+
+      {
+        memberList.map((item, index) => {
+          return (
+            <View style={styles.item} key={index}>
+              <Text>Name : {item.name}</Text>
+
+              <Text>Id : {item.memid}</Text>
+              <Text>Company :  {item.company}</Text>
+              <Text>Mobile :  {item.mobile}</Text>
+              <Text>Member from  :  {item.timestamp}</Text>
+            </View>
+
+          )
+        })
+      }
+      {/* <FlatList
            data={data}
            keyExtractor={(item) => item.id.toString()} 
            renderItem={({ item }) => (
@@ -43,19 +77,21 @@ export default function MemberList() {
                <Text>Savings  Amount:  {item.saving}</Text>
              </View>
            )}
-         />
-       </View>
-     );
-   };
-   
-   const styles = StyleSheet.create({
-     container: {
-       flex: 1,
-       padding: 20,
-     },
-     item: {
-       backgroundColor: 'pink',
-       padding: 10,
-       marginVertical: 8,
-     },
-   });
+         /> */}
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+
+  },
+  item: {
+    backgroundColor: 'pink',
+    padding: 10,
+    bottom: 8,
+    marginVertical: 8,
+  },
+});

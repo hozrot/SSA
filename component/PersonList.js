@@ -1,20 +1,20 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 
-function PersonList({ name, designation, image, office, onPress }) {
+function PersonList({ name, designation, image, mobile, joindate, onPress }) {
     return (
         <TouchableOpacity style={styles.List} onPress={onPress}>
             {image && <Image style={styles.imageBox} source={image} />}
             <View style={{}} >
-                <Text>Name : {name}</Text>
-                <Text>Join Date {designation}</Text>
-
-
+                <Text> {name}</Text>
+                <Text> {mobile}</Text>
             </View>
             <View>
 
-                <Text> Collection</Text>
-                <Text> Amount</Text>
+
+
+                <Text> {designation}</Text>
+                <Text> {joindate}</Text>
 
             </View>
         </TouchableOpacity>

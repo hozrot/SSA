@@ -7,51 +7,59 @@ import { Picker } from '@react-native-picker/picker';
 // npm i @react-native-picker/picker
 
 import { db } from '../config';
-import {ref,set} from 'firebase/database';
-
+import { ref, set } from 'firebase/database';
+import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-alert-notification';
 
 
 export default function MemberEntry({ navigation }) {
   const [enrollmentType, setEnrollmentType] = useState();
-    const [memberno,setMemberno] = useState('');
-    const [name,setName] = useState('');
-    const [mobile,setMobile] = useState('');
-    const [nid,setNid] = useState('');
-    const [company,setCompany] = useState('');
-    //const [category,setCategory] = useState('');
-  
-    const timestamp = Date.now(); // Get current timestamp in milliseconds
-  
+  const [memberno, setMemberno] = useState('');
+  const [name, setName] = useState('');
+  const [mobile, setMobile] = useState('');
+  const [nid, setNid] = useState('');
+  const [company, setCompany] = useState('');
+  //const [category,setCategory] = useState('');
+
+  const timestamp = Date.now(); // Get current timestamp in milliseconds
+
   // Create a Date object from the timestamp
   const date = new Date(timestamp);
-  
+
   // Format the date and time using toLocaleString()
-  const formattedDateTime = date.toLocaleString(); 
-    const uniqueId = Math.floor(Math.random()*10000);
-    //const uniqueId = 1*1000;
-    
-  
-    const addMember = ()=>{
-      set(ref(db,'member/'+ uniqueId),{
-        name: name,
-        mobile: mobile,
-        company: company,
-        memid: uniqueId,
-        enrollmentType: enrollmentType,
-        nid: nid,
-        timestamp: formattedDateTime,
-      });
-      setName('')
-      setMobile('')
-      setCompany('')
-      setEnrollmentType('')
-      setNid('')
-      
-      
-    }
-  
+  const formattedDateTime = date.toLocaleString();
+  const uniqueId = Math.floor(Math.random() * 10000);
+  //const uniqueId = 1*1000;
+
+
+  const addMember = () => {
+
+    set(ref(db, 'member/' + uniqueId), {
+      name: name,
+      mobile: mobile,
+      company: company,
+      memid: uniqueId,
+      enrollmentType: enrollmentType,
+      nid: nid,
+      timestamp: formattedDateTime,
+    });
+    setName('')
+    setMobile('')
+    setCompany('')
+    setEnrollmentType('')
+    setNid('')
+    Dialog.show({
+      type: ALERT_TYPE.SUCCESS,
+      title: 'Success',
+      textBody: 'New Member Added',
+      button: 'close',
+    })
+
+  }
+
   return (
     <ScrollView style={styles.containerView}>
+      <AlertNotificationRoot>
+      </AlertNotificationRoot>
 
       <View style={styles.HeaderView}>
         <Text
@@ -113,8 +121,9 @@ export default function MemberEntry({ navigation }) {
           returnKeyType="next"
           returnKeyLabel="next"
           value={name}
-          onChangeText={(text)=> setName(text)}
+          onChangeText={(text) => setName(text)}
           style={{ fontSize: 14 }}
+          required
         />
 
         <Text
@@ -140,7 +149,7 @@ export default function MemberEntry({ navigation }) {
           returnKeyType="next"
           returnKeyLabel="next"
           value={mobile}
-          onChangeText={(text)=> setMobile(text)}
+          onChangeText={(text) => setMobile(text)}
           style={{ fontSize: 14 }}
         />
         <Text
@@ -166,7 +175,7 @@ export default function MemberEntry({ navigation }) {
           returnKeyType="next"
           returnKeyLabel="next"
           value={company}
-          onChangeText={(text)=> setCompany(text)}
+          onChangeText={(text) => setCompany(text)}
           style={{ fontSize: 14 }}
         />
         <Text
@@ -186,13 +195,13 @@ export default function MemberEntry({ navigation }) {
           onValueChange={(itemValue, itemIndex) =>
             setEnrollmentType(itemValue)
           }
-          placeholder={{ label: "Select an option...", value: null }}
+
 
           style={{
             backgroundColor: 'gray',
           }}>
           <Picker.Item label="Temporary" value="Temporary" />
-          <Picker.Item label="Parmanent " value="Parmanent" />
+          <Picker.Item label="Parmanent" value="Parmanent" />
         </Picker>
 
         <Text
@@ -218,7 +227,7 @@ export default function MemberEntry({ navigation }) {
           returnKeyType="next"
           returnKeyLabel="next"
           value={nid}
-          onChangeText={(text)=> setNid(text)}
+          onChangeText={(text) => setNid(text)}
           style={{ fontSize: 14 }}
         />
         {/* <Text

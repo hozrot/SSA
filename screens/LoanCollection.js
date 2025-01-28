@@ -1,9 +1,40 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
-import React from 'react'
 import Button from "../component/Button";
 import TextInput from "../component/TextInput";
+import React, { useState } from 'react'
+import { db } from '../config';
+import {ref,set} from 'firebase/database';
+import { Picker } from '@react-native-picker/picker';
 
 export default function LoanCollection({ navigation }) {
+   const [memberno,setMemberno] = useState('');
+    const [amount,setAmount] = useState('');
+    const [type,setType] = useState('');
+    const timestamp = Date.now(); // Get current timestamp in milliseconds
+  
+  // Create a Date object from the timestamp
+  const date = new Date(timestamp);
+  
+  // Format the date and time using toLocaleString()
+  const formattedDateTime = date.toLocaleString(); 
+    const uniqueId = Math.floor(Math.random()*10000);
+    //const uniqueId = 1*1000;
+    
+  
+    const addloancollection = ()=>{
+      set(ref(db,'loanCollection/'+ uniqueId),{
+        memberno: memberno,
+        loanamount: amount,
+        typeofpayment: type,
+        scid: uniqueId, 
+        timestamp: formattedDateTime,
+      });
+      setMemberno('')
+      setAmount('')
+      setType('')
+      
+    }
+  
   return (
 
     <ScrollView style={styles.containerView}>
@@ -42,7 +73,8 @@ export default function LoanCollection({ navigation }) {
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
+          value={memberno}
+          onChangeText={(text)=> setMemberno(text)}
           style={{ fontSize: 14 }}
         />
         {/* <Text
@@ -95,6 +127,8 @@ export default function LoanCollection({ navigation }) {
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
+          value={amount}
+          onChangeText={(text)=> setAmount(text)}
           style={{ fontSize: 14 }}
         />
         <Text
@@ -110,18 +144,21 @@ export default function LoanCollection({ navigation }) {
           Type of Payment {" "}
         </Text>
 
-        <TextInput
-          inputHieght={54}
-          inputAlign={"center"}
-          placeholder="Enter here...."
-          autoCapitalize="none"
-          keyboardType="email-address"
-          keyboardAppearance="dark"
-          returnKeyType="next"
-          returnKeyLabel="next"
-
-          style={{ fontSize: 14 }}
-        />
+        <Picker
+                  selectedValue={type}
+                  onValueChange={(itemValue, itemIndex) =>
+                    setType(itemValue)
+                  }
+                  placeholder={{ label: "Select an option...", value: null }}
+        
+                  style={{
+                    backgroundColor: 'gray',
+                  }}>
+                  <Picker.Item label="Bkash" value="Bkash" />
+                  <Picker.Item label="Nagad " value="Nagad" />
+                  <Picker.Item label="Bank " value="Bank" />
+                  <Picker.Item label="Cash " value="Cash" />
+                </Picker>
 
       </View>
 
@@ -129,7 +166,7 @@ export default function LoanCollection({ navigation }) {
       <View style={styles.SubmitView}>
 
 
-        <Button label="Collect Loan Amount " onPress={() => navigation.navigate("Dashboard")} />
+        <Button label="Collect Loan Amount " onPress={addloancollection} />
       </View>
     </ScrollView>
 

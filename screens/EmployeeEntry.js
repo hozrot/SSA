@@ -1,9 +1,49 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import React from 'react'
+import { useContext, useState } from "react";
 import Button from "../component/Button";
 import TextInput from "../component/TextInput";
 
+import { Picker } from '@react-native-picker/picker';
+// npm i @react-native-picker/picker
+
+import { db } from '../config';
+import {ref,set} from 'firebase/database';
+
 export default function EmployeeEntry({ navigation }) {
+  
+      const [name,setName] = useState('');
+      const [mobile,setMobile] = useState('');
+      const [nid,setNid] = useState('');
+      const [designation,setDesignation] = useState('');
+      //const [category,setCategory] = useState('');
+      const timestamp = Date.now(); // Get current timestamp in milliseconds
+    
+    // Create a Date object from the timestamp
+    const date = new Date(timestamp);
+    
+    // Format the date and time using toLocaleString()
+    const formattedDateTime = date.toLocaleString(); 
+      const uniqueId = Math.floor(Math.random()*10000);
+      //const uniqueId = 1*1000;
+      
+    
+      const addEmployee = ()=>{
+        set(ref(db,'employee/'+ uniqueId),{
+          name: name,
+          mobile: mobile,
+          designation: designation,
+          memid: uniqueId,
+          timestamp: formattedDateTime,
+          nid: nid,
+        });
+        setName('')
+        setMobile('')
+        setDesignation('')
+        setNid('')
+        
+        
+      }
   return (
     <ScrollView style={styles.containerView}>
 
@@ -66,7 +106,8 @@ export default function EmployeeEntry({ navigation }) {
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
+          value={name}
+          onChangeText={(text)=> setName(text)}
           style={{ fontSize: 14 }}
         />
 
@@ -92,7 +133,8 @@ export default function EmployeeEntry({ navigation }) {
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
+          value={mobile}
+          onChangeText={(text)=> setMobile(text)}
           style={{ fontSize: 14 }}
         />
 
@@ -119,7 +161,8 @@ export default function EmployeeEntry({ navigation }) {
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
+          value={nid}
+          onChangeText={(text)=> setNid(text)}
           style={{ fontSize: 14 }}
         />
 
@@ -136,26 +179,27 @@ export default function EmployeeEntry({ navigation }) {
           Designation {" "}
         </Text>
 
-        <TextInput
-          inputHieght={54}
-          inputAlign={"center"}
-          placeholder="Enter here...."
-          autoCapitalize="none"
-          keyboardType="email-address"
-          keyboardAppearance="dark"
-          returnKeyType="next"
-          returnKeyLabel="next"
-
-          style={{ fontSize: 14 }}
-        />
-
+         <Picker
+                  selectedValue={designation}
+                  onValueChange={(itemValue, itemIndex) =>
+                    setDesignation(itemValue)
+                  }
+                  placeholder={{ label: "Select an option...", value: null }}
+        
+                  style={{
+                    backgroundColor: 'gray',
+                  }}>
+                  <Picker.Item label="Manager" value="Manager" />
+                  <Picker.Item label="Assistant " value="Assistant" />
+                  <Picker.Item label="Field Officer " value="Field Officer" />
+                </Picker>
       </View>
 
 
       <View style={styles.SubmitView}>
 
 
-        <Button label="Submit Entry " onPress={() => navigation.navigate("Dashboard")} />
+        <Button label="Submit Entry " onPress={addEmployee} />
       </View>
     </ScrollView>
   )

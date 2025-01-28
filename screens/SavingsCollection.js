@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+
 import Button from "../component/Button";
 import TextInput from "../component/TextInput";
+import { Picker } from '@react-native-picker/picker';
 
+import React, { useState } from 'react'
 import { db } from '../config';
 import {ref,set} from 'firebase/database';
 
@@ -11,17 +13,29 @@ export default function SavingsCollection({ navigation }) {
   const [memberno,setMemberno] = useState('');
   const [amount,setAmount] = useState('');
   const [type,setType] = useState('');
+  const timestamp = Date.now(); // Get current timestamp in milliseconds
+
+// Create a Date object from the timestamp
+const date = new Date(timestamp);
+
+// Format the date and time using toLocaleString()
+const formattedDateTime = date.toLocaleString(); 
+  const uniqueId = Math.floor(Math.random()*10000);
+  //const uniqueId = 1*1000;
+  
 
   const addSavings = ()=>{
-    set(ref(db,'savings/'+ memberno),{
+    set(ref(db,'savingsCollection/'+ uniqueId),{
       memberno: memberno,
       savingsamount: amount,
       typeofpayment: type,
+      scid: uniqueId, 
+      timestamp: formattedDateTime,
     });
     setMemberno('')
     setAmount('')
     setType('')
-    navigation.navigate("Home");
+    
   }
 
   return (
@@ -120,7 +134,23 @@ export default function SavingsCollection({ navigation }) {
           Type of Payment {" "}
         </Text>
 
-        <TextInput
+         <Picker
+                  selectedValue={type}
+                  onValueChange={(itemValue, itemIndex) =>
+                    setType(itemValue)
+                  }
+                  placeholder={{ label: "Select an option...", value: null }}
+        
+                  style={{
+                    backgroundColor: 'gray',
+                  }}>
+                  <Picker.Item label="Bkash" value="Bkash" />
+                  <Picker.Item label="Nagad " value="Nagad" />
+                  <Picker.Item label="Bank " value="Bank" />
+                  <Picker.Item label="Cash " value="Cash" />
+                </Picker>
+
+        {/* <TextInput
           inputHieght={54}
           inputAlign={"center"}
           placeholder="Enter here...."
@@ -132,7 +162,7 @@ export default function SavingsCollection({ navigation }) {
           value={type}
           onChangeText={(text)=> setType(text)}
           style={{ fontSize: 14 }}
-        />
+        /> */}
 
       </View>
 

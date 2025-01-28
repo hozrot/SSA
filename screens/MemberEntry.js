@@ -6,10 +6,50 @@ import TextInput from "../component/TextInput";
 import { Picker } from '@react-native-picker/picker';
 // npm i @react-native-picker/picker
 
+import { db } from '../config';
+import {ref,set} from 'firebase/database';
+
 
 
 export default function MemberEntry({ navigation }) {
-  const [selectedType, setSelectedType] = useState();
+  const [enrollmentType, setEnrollmentType] = useState();
+    const [memberno,setMemberno] = useState('');
+    const [name,setName] = useState('');
+    const [mobile,setMobile] = useState('');
+    const [nid,setNid] = useState('');
+    const [company,setCompany] = useState('');
+    //const [category,setCategory] = useState('');
+  
+    const timestamp = Date.now(); // Get current timestamp in milliseconds
+  
+  // Create a Date object from the timestamp
+  const date = new Date(timestamp);
+  
+  // Format the date and time using toLocaleString()
+  const formattedDateTime = date.toLocaleString(); 
+    const uniqueId = Math.floor(Math.random()*10000);
+    //const uniqueId = 1*1000;
+    
+  
+    const addMember = ()=>{
+      set(ref(db,'member/'+ uniqueId),{
+        name: name,
+        mobile: mobile,
+        company: company,
+        memid: uniqueId,
+        enrollmentType: enrollmentType,
+        nid: nid,
+        timestamp: formattedDateTime,
+      });
+      setName('')
+      setMobile('')
+      setCompany('')
+      setEnrollmentType('')
+      setNid('')
+      
+      
+    }
+  
   return (
     <ScrollView style={styles.containerView}>
 
@@ -72,7 +112,8 @@ export default function MemberEntry({ navigation }) {
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
+          value={name}
+          onChangeText={(text)=> setName(text)}
           style={{ fontSize: 14 }}
         />
 
@@ -98,7 +139,8 @@ export default function MemberEntry({ navigation }) {
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
+          value={mobile}
+          onChangeText={(text)=> setMobile(text)}
           style={{ fontSize: 14 }}
         />
         <Text
@@ -123,7 +165,8 @@ export default function MemberEntry({ navigation }) {
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
+          value={company}
+          onChangeText={(text)=> setCompany(text)}
           style={{ fontSize: 14 }}
         />
         <Text
@@ -139,31 +182,19 @@ export default function MemberEntry({ navigation }) {
           Enrollment Type{" "}
         </Text>
         <Picker
-          selectedValue={selectedType}
+          selectedValue={enrollmentType}
           onValueChange={(itemValue, itemIndex) =>
-            setSelectedType(itemValue)
+            setEnrollmentType(itemValue)
           }
           placeholder={{ label: "Select an option...", value: null }}
 
           style={{
             backgroundColor: 'gray',
           }}>
-          <Picker.Item label="Temporary" value="java" />
-          <Picker.Item label="Parmanent " value="js" />
+          <Picker.Item label="Temporary" value="Temporary" />
+          <Picker.Item label="Parmanent " value="Parmanent" />
         </Picker>
 
-        {/* <TextInput
-          inputHieght={54}
-          inputAlign={"center"}
-          placeholder="Enter here...."
-          autoCapitalize="none"
-          keyboardType="email-address"
-          keyboardAppearance="dark"
-          returnKeyType="next"
-          returnKeyLabel="next"
-
-          style={{ fontSize: 14 }}
-        /> */}
         <Text
           style={{
             fontFamily: "DMSans_500Medium",
@@ -186,10 +217,11 @@ export default function MemberEntry({ navigation }) {
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
+          value={nid}
+          onChangeText={(text)=> setNid(text)}
           style={{ fontSize: 14 }}
         />
-        <Text
+        {/* <Text
           style={{
             fontFamily: "DMSans_500Medium",
             fontSize: 16,
@@ -211,9 +243,10 @@ export default function MemberEntry({ navigation }) {
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
+          value={categoty}
+          onChangeText={(text)=> setCategory(text)}
           style={{ fontSize: 14 }}
-        />
+        /> */}
 
       </View>
 
@@ -221,7 +254,7 @@ export default function MemberEntry({ navigation }) {
       <View style={styles.SubmitView}>
 
 
-        <Button label="Submit Entry " onPress={() => navigation.navigate("Dashboard")} />
+        <Button label="Submit Entry " onPress={addMember} />
       </View>
     </ScrollView>
   )

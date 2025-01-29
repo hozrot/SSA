@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Button } from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BottomTab from '../component/BottomTab';
 import Dashboard from './Dashboard';
@@ -8,12 +8,15 @@ import CollectMoney from './CollectMoney';
 import AboutUs from './AboutUs';
 import ExpenseEntry from './ExpenseEntry';
 import LoanEntry from './LoanEntry';
+import { db } from '../config';
+import { ref, onValue } from 'firebase/database';
 
 
 //npm install @react-navigation/bottom-tabs
 const Tab = createBottomTabNavigator();
 
 export default function Home({ navigation }) {
+  
   return (
     <Tab.Navigator tabBar={props => <BottomTab {...props} />}>
 

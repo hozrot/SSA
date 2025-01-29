@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import Button from "../component/Button";
 import TextInput from "../component/TextInput";
 import { Picker } from '@react-native-picker/picker';
+import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-alert-notification';
 
 import React, { useState } from 'react'
 import { db } from '../config';
@@ -19,22 +20,39 @@ export default function SavingsCollection({ navigation }) {
 const date = new Date(timestamp);
 
 // Format the date and time using toLocaleString()
-const formattedDateTime = date.toLocaleString(); 
+//const formattedDateTime = date.toLocaleString(); 
+const formattedDate = date.toLocaleDateString(); 
+
   const uniqueId = Math.floor(Math.random()*10000);
   //const uniqueId = 1*1000;
   
 
   const addSavings = ()=>{
+     if (!amount || !memberno || !type) {
+          Dialog.show({
+            type: ALERT_TYPE.WARNING,
+            title: 'Error',
+            textBody: 'All fields are required.',
+            button: 'Close',
+          });
+          return; // Exit the function if any field is empty
+        }
     set(ref(db,'savingsCollection/'+ uniqueId),{
       memberno: memberno,
       savingsamount: amount,
       typeofpayment: type,
       scid: uniqueId, 
-      timestamp: formattedDateTime,
+      timestamp: formattedDate,
     });
     setMemberno('')
     setAmount('')
     setType('')
+     Dialog.show({
+          type: ALERT_TYPE.SUCCESS,
+          title: 'Success',
+          textBody: 'New Savings Added',
+          button: 'close',
+        })
     
   }
 
@@ -117,8 +135,13 @@ const formattedDateTime = date.toLocaleString();
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-          value={amount}
-          onChangeText={(text)=> setAmount(text)}
+          value={amount.toString()}
+          onChangeText={(text) => { 
+            const numericValue = parseFloat(text); 
+            if (!isNaN(numericValue)) { 
+              setAmount(numericValue); 
+            } 
+          }} 
           style={{ fontSize: 14 }}
         />
         <Text
@@ -143,6 +166,7 @@ const formattedDateTime = date.toLocaleString();
         
                   style={{
                     backgroundColor: 'gray',
+                    
                   }}>
                   <Picker.Item label="Bkash" value="Bkash" />
                   <Picker.Item label="Nagad " value="Nagad" />

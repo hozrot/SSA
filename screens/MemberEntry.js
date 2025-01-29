@@ -32,6 +32,15 @@ export default function MemberEntry({ navigation }) {
 
 
   const addMember = () => {
+    if (!name || !mobile || !company || !enrollmentType || !nid) {
+      Dialog.show({
+        type: ALERT_TYPE.WARNING,
+        title: 'Error',
+        textBody: 'All fields are required.',
+        button: 'Close',
+      });
+      return; // Exit the function if any field is empty
+    }
 
     set(ref(db, 'member/' + uniqueId), {
       name: name,
@@ -263,7 +272,7 @@ export default function MemberEntry({ navigation }) {
       <View style={styles.SubmitView}>
 
 
-        <Button label="Submit Entry " onPress={addMember} />
+        <Button label="Submit" onPress={addMember} />
       </View>
     </ScrollView>
   )

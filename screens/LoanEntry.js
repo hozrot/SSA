@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, ScrollView } from 'react-native'
 import Button from "../component/Button";
 import TextInput from "../component/TextInput";
 import { Picker } from '@react-native-picker/picker';
+import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-alert-notification';
 
 import React, { useState } from 'react'
 import { db } from '../config';
@@ -25,6 +26,15 @@ export default function LoanEntry({ navigation }) {
 
 
   const giveLoan = () => {
+    if (!amount || !type || !memberno) {
+      Dialog.show({
+        type: ALERT_TYPE.WARNING,
+        title: 'Error',
+        textBody: 'All fields are required.',
+        button: 'Close',
+      });
+      return; // Exit the function if any field is empty
+    }
     set(ref(db, 'loanGiven/' + uniqueId), {
       memberno: memberno,
       savingsamount: amount,
@@ -35,7 +45,12 @@ export default function LoanEntry({ navigation }) {
     setMemberno('')
     setAmount('')
     setType('')
-
+    Dialog.show({
+      type: ALERT_TYPE.SUCCESS,
+      title: 'Success',
+      textBody: 'New Loan Given',
+      button: 'close',
+    })
   }
 
   return (
@@ -117,8 +132,13 @@ export default function LoanEntry({ navigation }) {
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-          value={amount}
-          onChangeText={(text) => setAmount(text)}
+          value={amount.toString()}
+          onChangeText={(text) => { 
+            const numericValue = parseFloat(text); 
+            if (!isNaN(numericValue)) { 
+              setAmount(numericValue); 
+            } 
+          }} 
           style={{ fontSize: 14 }}
         />
         <Text

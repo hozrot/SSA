@@ -1,11 +1,61 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 // need to import MenuCard Template like bellow
 import MenuCard from "../component/MenuCard";
 import BalanceCard from "../component/BalanceCard";
+import { db } from '../config';
+import { ref, onValue } from 'firebase/database';
 
 export default function Dashboard({ navigation }) {
+
+  const [totalLoanAmount, setTotalLoanAmount] = useState([])
+  const [totalSaveAmount, setTotalSaveAmount] = useState([])
+  const [totalLoanGiven, setTotalLoanGiven] = useState([])
+
+  useEffect(() => {
+    const dataLink = ref(db, 'loanCollection/');
+    onValue(dataLink, (snapshot) => {
+      const data = snapshot.val();
+      if (data) { 
+        const totalLoanAmount = Object.values(data).reduce((total, loan) => {
+          return total + (loan.loanamount || 0); 
+        }, 0);
+        setTotalLoanAmount(totalLoanAmount); 
+      } else {
+        setTotalLoanAmount(0); 
+      }
+    });
+  }, []);
+  useEffect(() => {
+    const dataLink = ref(db, 'savingsCollection/');
+    onValue(dataLink, (snapshot) => {
+      const data = snapshot.val();
+      if (data) { 
+        const totalSaveAmount = Object.values(data).reduce((total, savings) => {
+          return total + (savings.savingsamount || 0); 
+        }, 0);
+        setTotalSaveAmount(totalSaveAmount); 
+      } else {
+        setTotalSaveAmount(0); 
+      }
+    });
+  }, []);
+  useEffect(() => {
+    const dataLink = ref(db, 'loanGiven/');
+    onValue(dataLink, (snapshot) => {
+      const data = snapshot.val();
+      if (data) { 
+        const totalLoanGiven = Object.values(data).reduce((total, loan) => {
+          return total + (loan.savingsamount || 0); 
+        }, 0);
+        setTotalLoanGiven(totalLoanGiven); 
+      } else {
+        setTotalLoanGiven(0); 
+      }
+    });
+  }, []);
+  
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'green' }}>
       {/* <Text> Total Collection : 1,50,000,000</Text>
@@ -14,25 +64,25 @@ export default function Dashboard({ navigation }) {
         <Text> Total Asset : 5,000,000,000</Text> */}
       <View style={{ flex: .30, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
         <BalanceCard
-          balanceTitle={"Loan"}
+          balanceTitle={"Collection"}
           iconName={"briefcase-search-outline"}
           iconSize={60}
           iconColor={"white"}
-          balance={25000}
+          balance={totalLoanAmount}
         />
         <BalanceCard
           balanceTitle={"Savings "}
           iconName={"briefcase-clock-outline"}
           iconColor={"white"}
           iconSize={60}
-          balance={25000}
+          balance={totalSaveAmount}
         />
         <BalanceCard
-          balanceTitle={"Due  "}
+          balanceTitle={"Loan Given "}
           iconName={"briefcase-eye-outline"}
           iconSize={60}
           iconColor={"white"}
-          balance={25000}
+          balance={totalLoanGiven}
         />
       </View>
       <View style={{ flex: .30, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>

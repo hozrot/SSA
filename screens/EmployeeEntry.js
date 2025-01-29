@@ -29,6 +29,15 @@ export default function EmployeeEntry({ navigation }) {
 
 
   const addEmployee = () => {
+    if (!name || !mobile || !designation || !nid) {
+      Dialog.show({
+        type: ALERT_TYPE.WARNING,
+        title: 'Error',
+        textBody: 'All fields are required.',
+        button: 'Close',
+      });
+      return; // Exit the function if any field is empty
+    }
     set(ref(db, 'employee/' + uniqueId), {
       name: name,
       mobile: mobile,

@@ -5,6 +5,8 @@ import React, { useState } from 'react'
 import { db } from '../config';
 import {ref,set} from 'firebase/database';
 import { Picker } from '@react-native-picker/picker';
+import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-alert-notification';
+
 
 export default function LoanCollection({ navigation }) {
    const [memberno,setMemberno] = useState('');
@@ -22,6 +24,15 @@ export default function LoanCollection({ navigation }) {
     
   
     const addloancollection = ()=>{
+      if (!amount || !memberno || !type) {
+        Dialog.show({
+          type: ALERT_TYPE.WARNING,
+          title: 'Error',
+          textBody: 'All fields are required.',
+          button: 'Close',
+        });
+        return; // Exit the function if any field is empty
+      }
       set(ref(db,'loanCollection/'+ uniqueId),{
         memberno: memberno,
         loanamount: amount,
@@ -32,7 +43,12 @@ export default function LoanCollection({ navigation }) {
       setMemberno('')
       setAmount('')
       setType('')
-      
+      Dialog.show({
+        type: ALERT_TYPE.SUCCESS,
+        title: 'Success',
+        textBody: 'New Loan Collection Added',
+        button: 'close',
+      })
     }
   
   return (
@@ -127,8 +143,13 @@ export default function LoanCollection({ navigation }) {
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-          value={amount}
-          onChangeText={(text)=> setAmount(text)}
+          value={amount.toString()}
+          onChangeText={(text) => { 
+            const numericValue = parseFloat(text); 
+            if (!isNaN(numericValue)) { 
+              setAmount(numericValue); 
+            } 
+          }} 
           style={{ fontSize: 14 }}
         />
         <Text

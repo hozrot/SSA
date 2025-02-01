@@ -24,7 +24,7 @@ export default function LoanCollection({ navigation }) {
     
   
     const addloancollection = ()=>{
-      if (!amount || !memberno || !type) {
+      if (!amount || !memberno || !enrollmentBy) {
         Dialog.show({
           type: ALERT_TYPE.WARNING,
           title: 'Error',
@@ -36,13 +36,14 @@ export default function LoanCollection({ navigation }) {
       set(ref(db,'loanCollection/'+ uniqueId),{
         memberno: memberno,
         loanamount: amount,
-        typeofpayment: type,
+        enrollmentBy: enrollmentBy,
         scid: uniqueId, 
         timestamp: formattedDateTime,
       });
       setMemberno('')
       setAmount('')
-      setType('')
+     
+      setEnrollmentBy('')
       Dialog.show({
         type: ALERT_TYPE.SUCCESS,
         title: 'Success',
@@ -175,9 +176,8 @@ export default function LoanCollection({ navigation }) {
                   style={{
                     backgroundColor: 'gray',
                   }}>
-                  <Picker.Item label="Employee1" value="Employee1" />
-                  <Picker.Item label="Employee2" value="Employee2" />
-                  <Picker.Item label="Employee3" value="Employee3" />
+                  <Picker.Item label="মো: জয়নাল আবেদীন" value="Employee1" />
+                                                    <Picker.Item label="মো: রাকিবুল ইসলাম" value="Employee2" />
                 </Picker>
         {/* <Text
           style={{

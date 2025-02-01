@@ -33,7 +33,7 @@ export default function MemberEntry({ navigation }) {
 
 
   const addMember = () => {
-    if (!name || !mobile || !company || !enrollmentType || !nid || !memid) {
+    if (!name || !company || !enrollmentType  || !memid) {
       Dialog.show({
         type: ALERT_TYPE.WARNING,
         title: 'Error',
@@ -50,14 +50,13 @@ export default function MemberEntry({ navigation }) {
       entryid: uniqueId,
       memid: memid,
       enrollmentType: enrollmentType,
-      nid: nid,
       timestamp: formattedDateTime,
     });
     setName('')
     setMobile('')
     setCompany('')
     setEnrollmentType('')
-    setNid('')
+   
     setmemid('')
     Dialog.show({
       type: ALERT_TYPE.SUCCESS,
@@ -192,7 +191,7 @@ export default function MemberEntry({ navigation }) {
         />
        
 
-        <Text
+        {/* <Text
           style={{
             fontFamily: "DMSans_500Medium",
             fontSize: 16,
@@ -217,7 +216,7 @@ export default function MemberEntry({ navigation }) {
           value={nid}
           onChangeText={(text) => setNid(text)}
           style={{ fontSize: 14 }}
-        />
+        /> */}
          <Text
           style={{
             fontFamily: "DMSans_500Medium",
@@ -267,9 +266,9 @@ export default function MemberEntry({ navigation }) {
           style={{
             backgroundColor: 'gray',
           }}>
-          <Picker.Item label="Employee1" value="Employee1" />
-          <Picker.Item label="Employee2" value="Employee2" />
-          <Picker.Item label="Employee3" value="Employee3" />
+          <Picker.Item label="মো: জয়নাল আবেদীন" value="Employee1" />
+          <Picker.Item label="মো: রাকিবুল ইসলাম" value="Employee2" />
+          
         </Picker>
         {/* <Text
           style={{

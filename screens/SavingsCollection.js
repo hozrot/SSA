@@ -28,7 +28,7 @@ const formattedDate = date.toLocaleDateString();
   
 
   const addSavings = ()=>{
-     if (!amount || !memberno || !type) {
+     if (!amount || !memberno || !enrollmentBy) {
           Dialog.show({
             type: ALERT_TYPE.WARNING,
             title: 'Error',
@@ -40,13 +40,13 @@ const formattedDate = date.toLocaleDateString();
     set(ref(db,'savingsCollection/'+ uniqueId),{
       memberno: memberno,
       savingsamount: amount,
-      typeofpayment: type,
+      enrollmentBy: enrollmentBy,
       scid: uniqueId, 
       timestamp: formattedDate,
     });
     setMemberno('')
     setAmount('')
-    setType('')
+    setEnrollmentBy('')
      Dialog.show({
           type: ALERT_TYPE.SUCCESS,
           title: 'Success',
@@ -169,9 +169,8 @@ const formattedDate = date.toLocaleDateString();
                   style={{
                     backgroundColor: 'gray',
                   }}>
-                  <Picker.Item label="Employee1" value="Employee1" />
-                  <Picker.Item label="Employee2" value="Employee2" />
-                  <Picker.Item label="Employee3" value="Employee3" />
+                  <Picker.Item label="মো: জয়নাল আবেদীন" value="Employee1" />
+                           <Picker.Item label="মো: রাকিবুল ইসলাম" value="Employee2" />
                 </Picker>
         {/* <Text
           style={{

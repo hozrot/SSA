@@ -26,7 +26,7 @@ export default function GiveLoan({ navigation }) {
 
 
   const giveLoan = () => {
-    if (!amount || !type || !memberno) {
+    if (!amount || !enrollmentBy || !memberno) {
       Dialog.show({
         type: ALERT_TYPE.WARNING,
         title: 'Error',
@@ -38,13 +38,13 @@ export default function GiveLoan({ navigation }) {
     set(ref(db, 'loanGiven/' + uniqueId), {
       memberno: memberno,
       savingsamount: amount,
-      typeofpayment: type,
+      enrollmentBy: enrollmentBy,
       scid: uniqueId,
       timestamp: formattedDateTime,
     });
     setMemberno('')
     setAmount('')
-    setType('')
+    setEnrollmentBy('')
     Dialog.show({
       type: ALERT_TYPE.SUCCESS,
       title: 'Success',
@@ -166,9 +166,8 @@ export default function GiveLoan({ navigation }) {
                           style={{
                             backgroundColor: 'gray',
                           }}>
-                          <Picker.Item label="Employee1" value="Employee1" />
-                          <Picker.Item label="Employee2" value="Employee2" />
-                          <Picker.Item label="Employee3" value="Employee3" />
+                          <Picker.Item label="মো: জয়নাল আবেদীন" value="Employee1" />
+                                   <Picker.Item label="মো: রাকিবুল ইসলাম" value="Employee2" />
                         </Picker>
         {/* <Text
           style={{

@@ -24,6 +24,7 @@ import ExpenseList from './screens/ExpenseList';
 import BalanceSheet from './screens/BalanceSheet';
 import GiveLoan from './screens/GiveLoan';
 import GiveSavings from './screens/GiveSavings';
+import MyTransaction from './screens/MyTransaction';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -52,6 +53,7 @@ export default function App() {
         <Stack.Screen name="BalanceSheet" component={BalanceSheet} />
         <Stack.Screen name="GiveLoan" component={GiveLoan} />
         <Stack.Screen name="GiveSavings" component={GiveSavings} />
+        <Stack.Screen name="MyTransaction" component={MyTransaction} />
         <Stack.Screen name="Summary" component={Summary} />
       </Stack.Navigator>
 

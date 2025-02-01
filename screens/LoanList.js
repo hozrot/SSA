@@ -5,6 +5,7 @@ import PersonList from "../component/PersonList";
 import ListOne from '../component/ListOne';
 import { db } from '../config';
 import { ref, onValue } from 'firebase/database';
+import BalanceCard from '../component/BalanceCard';
 
 const data = [
   { id: 1, title: 'Name 1', Date: "12/12/2024" },
@@ -33,6 +34,24 @@ export default function LoanList() {
   }, [])
   return (
     <ScrollView style={styles.container}>
+      
+
+        <View style={{ justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
+        <BalanceCard
+                balanceTitle={"Collected Loan"}
+                iconName={"briefcase-search-outline"}
+      
+                iconColor={"white"}
+                balance={45 }
+              />
+               <BalanceCard
+                balanceTitle={"Given Loan"}
+                iconName={"briefcase-search-outline"}
+                iconColor={"white"}
+                balance={45 }
+              />
+      </View>
+     
       {/* <FlatList
         data={data}
         keyExtractor={(item) => item.id.toString()}

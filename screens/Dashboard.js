@@ -94,11 +94,11 @@ export default function Dashboard({ navigation }) {
           onPress={() => navigation.navigate("TransactionHistory")}
         />
         <MenuCard
-          menuTitle={"Loan Details"}
+          menuTitle={"My Transactions"}
           iconName={"currency-try"}
           iconSize={80}
           iconColor={"#6656FE"}
-          onPress={() => navigation.navigate("LoanDetails")}
+          onPress={() => navigation.navigate("MyTransaction")}
         />
       </View>
       <View style={{ flex: .30, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>

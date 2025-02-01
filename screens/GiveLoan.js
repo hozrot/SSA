@@ -1,13 +1,12 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
-
 import Button from "../component/Button";
 import TextInput from "../component/TextInput";
 import { Picker } from '@react-native-picker/picker';
 import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-alert-notification';
-
 import React, { useState } from 'react'
 import { db } from '../config';
 import { ref, set } from 'firebase/database';
+
 
 export default function GiveLoan({ navigation }) {
 

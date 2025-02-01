@@ -302,6 +302,7 @@ const styles = StyleSheet.create({
   containerView: {
     flex: 1,
     backgroundColor: "acqua",
+    paddingTop: 20,
   },
   HeaderView: {
     flex: 0.2,

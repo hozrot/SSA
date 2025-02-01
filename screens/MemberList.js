@@ -1,7 +1,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { FlatList, StyleSheet, Text, View, ScrollView } from 'react-native';
+import { FlatList, StyleSheet, Text, View, ScrollView ,TouchableOpacity} from 'react-native';
 import BalanceCard from '../component/BalanceCard';
 import { db } from '../config';
 import { ref, onValue } from 'firebase/database';
@@ -17,7 +17,7 @@ const data = [
   // ... more items
 ];
 
-export default function MemberList() {
+export default function MemberList( {navigation} ) {
   const [memberList, setMemberList] = useState([])
   const [memberCount, setMemberCount] = useState([])
 
@@ -48,21 +48,21 @@ export default function MemberList() {
           iconName={"briefcase-search-outline"}
 
           iconColor={"white"}
-          balance={150 - memberCount}
+          balance={memberCount}
         />
       </View>
 
       {
         memberList.map((item, index) => {
           return (
-            <View style={styles.item} key={index}>
+            <TouchableOpacity style={styles.item} key={index} onPress={() => navigation.navigate("LoanList")}>
               <Text>Name : {item.name}</Text>
 
               <Text>Id : {item.memid}</Text>
               <Text>Company :  {item.company}</Text>
               <Text>Mobile :  {item.mobile}</Text>
               <Text>Member from  :  {item.timestamp}</Text>
-            </View>
+            </TouchableOpacity>
 
           )
         })

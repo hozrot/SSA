@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React, { useState, useEffect } from 'react';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 // need to import MenuCard Template like bellow
@@ -57,7 +57,7 @@ export default function Dashboard({ navigation }) {
   }, []);
   
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'green' }}>
+    <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'green',paddingTop:20 }}>
       {/* <Text> Total Collection : 1,50,000,000</Text>
         <Text> Total Paid : 1,10,500 </Text>
         <Text> Total Pending : 18,50,000 </Text>
@@ -134,7 +134,7 @@ export default function Dashboard({ navigation }) {
         />
       </View>
 
-    </View>
+    </SafeAreaView>
   );
 }
 

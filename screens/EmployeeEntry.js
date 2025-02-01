@@ -42,7 +42,7 @@ export default function EmployeeEntry({ navigation }) {
       name: name,
       mobile: mobile,
       designation: designation,
-      memid: uniqueId,
+      employeeId: uniqueId,
       timestamp: formattedDateTime,
       nid: nid,
     });

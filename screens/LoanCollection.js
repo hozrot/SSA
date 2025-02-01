@@ -11,7 +11,7 @@ import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-a
 export default function LoanCollection({ navigation }) {
    const [memberno,setMemberno] = useState('');
     const [amount,setAmount] = useState('');
-    const [type,setType] = useState('');
+    const [enrollmentBy,setEnrollmentBy] = useState('');
     const timestamp = Date.now(); // Get current timestamp in milliseconds
   
   // Create a Date object from the timestamp
@@ -152,7 +152,34 @@ export default function LoanCollection({ navigation }) {
           }} 
           style={{ fontSize: 14 }}
         />
+
         <Text
+                  style={{
+                    fontFamily: "DMSans_500Medium",
+                    fontSize: 16,
+                    paddingBottom: 8,
+                    paddingTop: 15,
+        
+                  }}
+                >
+                  {" "}
+                  Collected By{" "}
+                </Text>
+                <Picker
+                  selectedValue={enrollmentBy}
+                  onValueChange={(itemValue, itemIndex) =>
+                    setEnrollmentBy(itemValue)
+                  }
+        
+        
+                  style={{
+                    backgroundColor: 'gray',
+                  }}>
+                  <Picker.Item label="Employee1" value="Employee1" />
+                  <Picker.Item label="Employee2" value="Employee2" />
+                  <Picker.Item label="Employee3" value="Employee3" />
+                </Picker>
+        {/* <Text
           style={{
             fontFamily: "DMSans_500Medium",
             fontSize: 16,
@@ -179,7 +206,7 @@ export default function LoanCollection({ navigation }) {
                   <Picker.Item label="Nagad " value="Nagad" />
                   <Picker.Item label="Bank " value="Bank" />
                   <Picker.Item label="Cash " value="Cash" />
-                </Picker>
+                </Picker> */}
 
       </View>
 

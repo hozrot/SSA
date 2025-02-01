@@ -17,7 +17,7 @@ const data = [
   // ... more items
 ];
 
-export default function EmployeeDetails() {
+export default function EmployeeDetails( {navigation} ) {
   const [employeeList, setEmployeeList] = useState([])
   const [employeeCount, setEmployeeCount] = useState([])
 
@@ -63,6 +63,7 @@ export default function EmployeeDetails() {
               designation={item.designation}
               joindate={item.timestamp}
               mobile={item.mobile}
+              onPress={() => navigation.navigate("LoanList")}
             />
 
           )

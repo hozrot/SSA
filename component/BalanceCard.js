@@ -11,7 +11,7 @@ export default function BalanceCard({ onPress, balanceTitle, iconName, iconSize 
       <Text style={{ color: 'white' }} >  {balanceTitle}  </Text>
 
       <MaterialCommunityIcons name={iconName} size={iconSize} color={iconColor} />
-      <Text style={{ color: 'white', fontWeight: 'bold' }}  >  {balance}<MaterialCommunityIcons name={'currency-bdt'} size={16} color={iconColor} /> </Text>
+      <Text style={{ color: 'white', fontWeight: 'bold' }}  >  {balance} </Text>
 
     </TouchableOpacity>
   )

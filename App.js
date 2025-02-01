@@ -22,6 +22,8 @@ import LoanList from './screens/LoanList';
 import SavingsList from './screens/SavingsList';
 import ExpenseList from './screens/ExpenseList';
 import BalanceSheet from './screens/BalanceSheet';
+import GiveLoan from './screens/GiveLoan';
+import GiveSavings from './screens/GiveSavings';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -30,7 +32,7 @@ export default function App() {
 
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Home" component={Home} options={{ header: () => null }} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="AboutUs" component={AboutUs} />
         <Stack.Screen name="CollectMoney" component={CollectMoney} />
@@ -48,6 +50,8 @@ export default function App() {
         <Stack.Screen name="SavingsList" component={SavingsList} />
         <Stack.Screen name="ExpenseList" component={ExpenseList} />
         <Stack.Screen name="BalanceSheet" component={BalanceSheet} />
+        <Stack.Screen name="GiveLoan" component={GiveLoan} />
+        <Stack.Screen name="GiveSavings" component={GiveSavings} />
         <Stack.Screen name="Summary" component={Summary} />
       </Stack.Navigator>
 

@@ -32,7 +32,7 @@ export default function Home({ navigation }) {
       <Tab.Screen name="Expense" component={ExpenseEntry} options={{
         headerShown: false
       }} />
-      <Tab.Screen name="GiveLoan" component={LoanEntry} options={{
+      <Tab.Screen name="Given" component={LoanEntry} options={{
         headerShown: false
       }} />
 

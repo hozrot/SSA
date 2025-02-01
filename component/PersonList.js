@@ -10,9 +10,6 @@ function PersonList({ name, designation, image, mobile, joindate, onPress }) {
                 <Text> {mobile}</Text>
             </View>
             <View>
-
-
-
                 <Text> {designation}</Text>
                 <Text> {joindate}</Text>
 

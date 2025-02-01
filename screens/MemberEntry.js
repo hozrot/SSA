@@ -14,6 +14,7 @@ import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-a
 export default function MemberEntry({ navigation }) {
   const [enrollmentType, setEnrollmentType] = useState();
   const [memberno, setMemberno] = useState('');
+  const [memid, setmemid] = useState('');
   const [name, setName] = useState('');
   const [mobile, setMobile] = useState('');
   const [nid, setNid] = useState('');
@@ -32,7 +33,7 @@ export default function MemberEntry({ navigation }) {
 
 
   const addMember = () => {
-    if (!name || !mobile || !company || !enrollmentType || !nid) {
+    if (!name || !mobile || !company || !enrollmentType || !nid || !memid) {
       Dialog.show({
         type: ALERT_TYPE.WARNING,
         title: 'Error',
@@ -46,7 +47,8 @@ export default function MemberEntry({ navigation }) {
       name: name,
       mobile: mobile,
       company: company,
-      memid: uniqueId,
+      entryid: uniqueId,
+      memid: memid,
       enrollmentType: enrollmentType,
       nid: nid,
       timestamp: formattedDateTime,
@@ -56,6 +58,7 @@ export default function MemberEntry({ navigation }) {
     setCompany('')
     setEnrollmentType('')
     setNid('')
+    setmemid('')
     Dialog.show({
       type: ALERT_TYPE.SUCCESS,
       title: 'Success',
@@ -187,31 +190,7 @@ export default function MemberEntry({ navigation }) {
           onChangeText={(text) => setCompany(text)}
           style={{ fontSize: 14 }}
         />
-        <Text
-          style={{
-            fontFamily: "DMSans_500Medium",
-            fontSize: 16,
-            paddingBottom: 8,
-            paddingTop: 15,
-
-          }}
-        >
-          {" "}
-          Enrollment Type{" "}
-        </Text>
-        <Picker
-          selectedValue={enrollmentType}
-          onValueChange={(itemValue, itemIndex) =>
-            setEnrollmentType(itemValue)
-          }
-
-
-          style={{
-            backgroundColor: 'gray',
-          }}>
-          <Picker.Item label="Temporary" value="Temporary" />
-          <Picker.Item label="Parmanent" value="Parmanent" />
-        </Picker>
+       
 
         <Text
           style={{
@@ -239,6 +218,59 @@ export default function MemberEntry({ navigation }) {
           onChangeText={(text) => setNid(text)}
           style={{ fontSize: 14 }}
         />
+         <Text
+          style={{
+            fontFamily: "DMSans_500Medium",
+            fontSize: 16,
+            paddingBottom: 8,
+            paddingTop: 15,
+
+          }}
+        >
+          {" "}
+          Member no {" "}
+        </Text>
+
+        <TextInput
+          inputHieght={54}
+          inputAlign={"center"}
+          placeholder="Enter here...."
+          autoCapitalize="none"
+          keyboardType="number-pad"
+          keyboardAppearance="dark"
+          returnKeyType="next"
+          returnKeyLabel="next"
+          value={memid}
+          onChangeText={(text) => setmemid(text)}
+          style={{ fontSize: 14 }}
+        />
+
+<Text
+          style={{
+            fontFamily: "DMSans_500Medium",
+            fontSize: 16,
+            paddingBottom: 8,
+            paddingTop: 15,
+
+          }}
+        >
+          {" "}
+          Assinged Employee{" "}
+        </Text>
+        <Picker
+          selectedValue={enrollmentType}
+          onValueChange={(itemValue, itemIndex) =>
+            setEnrollmentType(itemValue)
+          }
+
+
+          style={{
+            backgroundColor: 'gray',
+          }}>
+          <Picker.Item label="Employee1" value="Employee1" />
+          <Picker.Item label="Employee2" value="Employee2" />
+          <Picker.Item label="Employee3" value="Employee3" />
+        </Picker>
         {/* <Text
           style={{
             fontFamily: "DMSans_500Medium",
@@ -282,6 +314,7 @@ const styles = StyleSheet.create({
   containerView: {
     flex: 1,
     backgroundColor: "acqua",
+    paddingTop:20
   },
   HeaderView: {
     flex: 0.2,

@@ -12,6 +12,7 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function CollectMoney() {
   return (
+    <View style={styles.containerView}>
     <Tab.Navigator>
      
      
@@ -38,7 +39,14 @@ export default function CollectMoney() {
       /> */}
     
     </Tab.Navigator>
+    </ View>
   )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  containerView: {
+    flex: 1,
+    backgroundColor: "#fff",
+    paddingTop: 30,
+  },
+})

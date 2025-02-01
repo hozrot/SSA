@@ -13,6 +13,7 @@ const Tab = createMaterialTopTabNavigator();
 export default function NewEntry({navigation}) {
   return (
 
+    <View style={styles.containerView}>
       <Tab.Navigator>
          
          
@@ -39,6 +40,7 @@ export default function NewEntry({navigation}) {
           /> */}
         
         </Tab.Navigator>
+        </View>
 
    
          
@@ -46,29 +48,11 @@ export default function NewEntry({navigation}) {
    }
    
    const styles = StyleSheet.create({
-     containerView: {
-       flex: 1,
-       backgroundColor: "acqua",
-     },
-     HeaderView: {
-       flex: 0.2,
-       padding: 20,
-       width: "100%",
-       justifyContent: "center",
-       alignItems: "center",
-       paddingTop: 20,
-     },
-     FormView: {
-       flex: 0.4,
-       width: "100%",
-       justifyContent: "center",
-       alignContent:'center',
-       padding: 10,
-     },
-     SubmitView: {
-       alignContent: "center",
-       alignItems: "center",
-       padding: 20,
-     },
+    containerView: {
+      flex: 1,
+      backgroundColor: "#fff",
+      paddingTop: 30,
+    },
+    
     
    })

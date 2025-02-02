@@ -3,14 +3,16 @@ import React from 'react'
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import MemberEntry from "./MemberEntry";
 import EmployeeEntry from "./EmployeeEntry";
-import DailyCollection from './SavingsCollection';
+import DailyCollection from './CollectionSavings';
 import MonthlyCollection from './MonthlyCollection';
-import LoanCollection from './LoanCollection';
-import SavingsCollection from './SavingsCollection';
+import CollectionLoan from './CollectionLoan';
+import SavingsCollection from './CollectionSavings';
+import CollectionSavings from './CollectionSavings';
+import CollectionCharges from './CollectionCharges';
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function CollectMoney() {
+export default function Collection() {
   return (
     <View style={styles.containerView}>
     <Tab.Navigator>
@@ -18,25 +20,25 @@ export default function CollectMoney() {
      
        <Tab.Screen
         name="Savings"
-        component={SavingsCollection}
+        component={CollectionSavings}
         options={{
-          tabBarLabel: "Savings Collection",
+          tabBarLabel: "Savings ",
         }}
       />
        <Tab.Screen
         name="Loan"
-        component={LoanCollection}
+        component={CollectionLoan}
         options={{
-          tabBarLabel: "Loan Collection",
+          tabBarLabel: "Loan ",
         }}
       />
-      {/* <Tab.Screen
-        name="Monthly"
-        component={MonthlyCollection}
+      <Tab.Screen
+        name="Charges"
+        component={CollectionCharges}
         options={{
-          tabBarLabel: "Monthly",
+          tabBarLabel: "Chareges",
         }}
-      /> */}
+      />
     
     </Tab.Navigator>
     </ View>
@@ -47,6 +49,6 @@ const styles = StyleSheet.create({
   containerView: {
     flex: 1,
     backgroundColor: "#fff",
-    paddingTop: 30,
+    paddingTop: 40,
   },
 })

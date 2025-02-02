@@ -77,6 +77,7 @@ export default function MemberEntry({ navigation }) {
           style={{
             fontFamily: "DMSans_500Bold",
             fontSize: 18,
+            textAlign: 'center',
           }}
         >
           {"সুন্দরগঞ্জ দোকান মালিক ব্যাবসায় সমবায় সমিতি"}
@@ -313,7 +314,8 @@ const styles = StyleSheet.create({
   containerView: {
     flex: 1,
     backgroundColor: "acqua",
-    paddingTop:20
+    paddingTop:20,
+  
   },
   HeaderView: {
     flex: 0.2,
@@ -333,7 +335,7 @@ const styles = StyleSheet.create({
   SubmitView: {
     alignContent: "center",
     alignItems: "center",
-    padding: 20,
+    padding: 30,
   },
 
 })

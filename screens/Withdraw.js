@@ -6,13 +6,15 @@ import TextInput from "../component/TextInput";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import MemberEntry from "./MemberEntry";
 import EmployeeEntry from "./EmployeeEntry";
-import CollectMoney from "./CollectMoney";
-import LoanEntry from "./LoanEntry";
-import GiveLoan from "./GiveLoan";
-import GiveSavings from "./GiveSavings";
+import CollectMoney from "./Collection";
+import LoanEntry from "./Withdraw";
+import GiveLoan from "./WithdrawLoan";
+import GiveSavings from "./WithdrawSavings";
+import WithdrawLoan from "./WithdrawLoan";
+import WithdrawSavings from "./WithdrawSavings";
 const Tab = createMaterialTopTabNavigator();
 
-export default function NewEntry({navigation}) {
+export default function Withdraw({navigation}) {
   return (
 
     <View style={styles.containerView}>
@@ -21,16 +23,16 @@ export default function NewEntry({navigation}) {
          
            <Tab.Screen
             name="Loan"
-            component={GiveLoan}
+            component={WithdrawLoan}
             options={{
-              tabBarLabel: "Give Loan Entry",
+              tabBarLabel: "Withdraw Loan",
             }}
           />
            <Tab.Screen
             name="Savings"
-            component={GiveSavings}
+            component={WithdrawSavings}
             options={{
-              tabBarLabel: "Give Savings Entry",
+              tabBarLabel: "Withdraw Savings",
             }}
           />
           {/* <Tab.Screen

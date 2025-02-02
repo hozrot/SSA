@@ -4,12 +4,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BottomTab from '../component/BottomTab';
 import Dashboard from './Dashboard';
 import NewEntry from './NewEntry';
-import CollectMoney from './CollectMoney';
+import CollectMoney from './Collection';
 import AboutUs from './AboutUs';
 import ExpenseEntry from './ExpenseEntry';
-import LoanEntry from './LoanEntry';
+import LoanEntry from './Withdraw';
 import { db } from '../config';
 import { ref, onValue } from 'firebase/database';
+import Collection from './Collection';
 
 
 //npm install @react-navigation/bottom-tabs
@@ -23,10 +24,10 @@ export default function Home({ navigation }) {
       <Tab.Screen name="Dashboard" component={Dashboard} options={{
         headerShown: false
       }} />
-      <Tab.Screen name="Entry" component={NewEntry} options={{
+      <Tab.Screen name="Registration" component={NewEntry} options={{
         headerShown: false
       }} />
-      <Tab.Screen name="Collection" component={CollectMoney} options={{
+      <Tab.Screen name="Collection" component={Collection} options={{
         headerShown: false
       }} />
       <Tab.Screen name="Expense" component={ExpenseEntry} options={{

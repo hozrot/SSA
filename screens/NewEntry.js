@@ -6,8 +6,8 @@ import TextInput from "../component/TextInput";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import MemberEntry from "./MemberEntry";
 import EmployeeEntry from "./EmployeeEntry";
-import CollectMoney from "./CollectMoney";
-import LoanEntry from "./LoanEntry";
+import CollectMoney from "./Collection";
+import LoanEntry from "./Withdraw";
 const Tab = createMaterialTopTabNavigator();
 
 export default function NewEntry({navigation}) {
@@ -24,13 +24,13 @@ export default function NewEntry({navigation}) {
               tabBarLabel: "Member Entry",
             }}
           />
-           <Tab.Screen
+           {/* <Tab.Screen
             name="Employee"
             component={EmployeeEntry}
             options={{
               tabBarLabel: "Employee Entry",
             }}
-          />
+          /> */}
           {/* <Tab.Screen
             name="Monthly"
             component={MonthlyCollection}

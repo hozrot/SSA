@@ -21,14 +21,15 @@ export default function MyLoanCollection() {
   const [loneList, setLoanList] = useState([])
   const [totalCollectionToday, setTotalCollectionToday] = useState([])
     const [totalLoanCollection, setTotalLoanCollection] = useState([])
-
+   // const enrollmentBy ="মোঃ জয়নাল আবেদীন";
+    const enrollmentBy ="মোঃ রাকিবুল ইসলাম";
 
   useEffect(() => {
-    const dataLink = ref(db, 'loanCollection/');
+    const dataLink = ref(db, 'CollectionLoan/');
     const employeeLoansQuery = query(
         dataLink,
         orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
-        equalTo("Employee1") // Filter for the specific employee
+        equalTo("Employee2") // Filter for the specific employee
       );
       onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
         const data = snapshot.val();
@@ -53,10 +54,10 @@ export default function MyLoanCollection() {
           if (data) {
             const today = moment().startOf('day'); // Get the start of today
             const formattedDate = today.format('D/M/YYYY')
-            console.log("today", formattedDate);
+           // console.log("today", formattedDate);
             const totalSaveAmountToday = Object.values(data).reduce((total, loan) => {
               const loanDate = moment(loan.timestamp, 'D/M/YYYY'); // Assuming loanDate is a timestamp or date string
-              console.log("database", loanDate);
+           //   console.log("database", loanDate);
               if (loanDate.isSame(today)) { // Check if the loan date is today
                 return total + (loan.loanamount || 0);
               }
@@ -82,11 +83,15 @@ export default function MyLoanCollection() {
 //   }, [])
   return (
     <ScrollView style={styles.container}>
-      
+      <View style={{ justifyContent: "center", alignItems: "center",paddingBottom:16}}>
+      <Text style={{ fontWeight:'bold',fontSize:20}}> Welcome,  {enrollmentBy}</Text>
+      </View>
+     
 
         <View style={{ justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
+         
         <BalanceCard
-                balanceTitle={"Total Collection"}
+                balanceTitle={"Total Collected Loan"}
                 iconName={"briefcase-search-outline"}
       
                 iconColor={"white"}

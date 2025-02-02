@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Dashboard from './screens/Dashboard';
 import Login from './screens/Login';
 import AboutUs from './screens/AboutUs';
-import CollectMoney from './screens/CollectMoney';
+import CollectMoney from './screens/Collection';
 import Home from './screens/Home';
 import NewEntry from './screens/NewEntry';
 import MemberEntry from './screens/MemberEntry';
@@ -22,9 +22,13 @@ import LoanList from './screens/LoanList';
 import SavingsList from './screens/SavingsList';
 import ExpenseList from './screens/ExpenseList';
 import BalanceSheet from './screens/BalanceSheet';
-import GiveLoan from './screens/GiveLoan';
-import GiveSavings from './screens/GiveSavings';
+import GiveLoan from './screens/WithdrawLoan';
+import GiveSavings from './screens/WithdrawSavings';
 import MyTransaction from './screens/MyTransaction';
+import Withdraw from './screens/Withdraw';
+import WithdrawLoan from './screens/WithdrawLoan';
+import WithdrawSavings from './screens/WithdrawSavings';
+import Collection from './screens/Collection';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -36,8 +40,8 @@ export default function App() {
         <Stack.Screen name="Home" component={Home} options={{ header: () => null }} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="AboutUs" component={AboutUs} />
-        <Stack.Screen name="CollectMoney" component={CollectMoney} />
-        <Stack.Screen name="NewEntry" component={NewEntry} />
+        <Stack.Screen name="Collection" component={Collection} />
+        <Stack.Screen name="Withdraw" component={Withdraw} />
         <Stack.Screen name="MemberEntry" component={MemberEntry} />
         <Stack.Screen name="EmployeeEntry" component={EmployeeEntry} />
         <Stack.Screen name="TransactionHistory" component={TransactionHistory} />
@@ -51,8 +55,8 @@ export default function App() {
         <Stack.Screen name="SavingsList" component={SavingsList} />
         <Stack.Screen name="ExpenseList" component={ExpenseList} />
         <Stack.Screen name="BalanceSheet" component={BalanceSheet} />
-        <Stack.Screen name="GiveLoan" component={GiveLoan} />
-        <Stack.Screen name="GiveSavings" component={GiveSavings} />
+        <Stack.Screen name="WithdrawLoan" component={WithdrawLoan} />
+        <Stack.Screen name="WithdrawSavings" component={WithdrawSavings} />
         <Stack.Screen name="MyTransaction" component={MyTransaction} />
         <Stack.Screen name="Summary" component={Summary} />
       </Stack.Navigator>

@@ -1,14 +1,15 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
+
 import Button from "../component/Button";
 import TextInput from "../component/TextInput";
 import { Picker } from '@react-native-picker/picker';
 import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-alert-notification';
+
 import React, { useState } from 'react'
 import { db } from '../config';
 import { ref, set } from 'firebase/database';
 
-
-export default function GiveLoan({ navigation }) {
+export default function WithdrawSavings({ navigation }) {
 
   const [memberno, setMemberno] = useState('');
   const [amount, setAmount] = useState('');
@@ -34,7 +35,7 @@ export default function GiveLoan({ navigation }) {
       });
       return; // Exit the function if any field is empty
     }
-    set(ref(db, 'loanGiven/' + uniqueId), {
+    set(ref(db, 'WithdrawSavings/' + uniqueId), {
       memberno: memberno,
       savingsamount: amount,
       enrollmentBy: enrollmentBy,
@@ -47,7 +48,7 @@ export default function GiveLoan({ navigation }) {
     Dialog.show({
       type: ALERT_TYPE.SUCCESS,
       title: 'Success',
-      textBody: 'New Loan Given',
+      textBody: 'Savings amount Adjusted',
       button: 'close',
     })
   }
@@ -119,7 +120,7 @@ export default function GiveLoan({ navigation }) {
           }}
         >
           {" "}
-          Loan Amount  {" "}
+          Withdraw Amount  {" "}
         </Text>
 
 
@@ -142,7 +143,6 @@ export default function GiveLoan({ navigation }) {
           }} 
           style={{ fontSize: 14 }}
         />
-
          <Text
                           style={{
                             fontFamily: "DMSans_500Medium",
@@ -165,8 +165,8 @@ export default function GiveLoan({ navigation }) {
                           style={{
                             backgroundColor: 'gray',
                           }}>
-                          <Picker.Item label="মো: জয়নাল আবেদীন" value="Employee1" />
-                                   <Picker.Item label="মো: রাকিবুল ইসলাম" value="Employee2" />
+                         <Picker.Item label="মো: জয়নাল আবেদীন" value="Employee1" />
+                                  <Picker.Item label="মো: রাকিবুল ইসলাম" value="Employee2" />
                         </Picker>
         {/* <Text
           style={{

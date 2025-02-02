@@ -1,72 +1,66 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native'
-
 import Button from "../component/Button";
 import TextInput from "../component/TextInput";
-import { Picker } from '@react-native-picker/picker';
-import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-alert-notification';
-
 import React, { useState } from 'react'
 import { db } from '../config';
 import {ref,set} from 'firebase/database';
+import { Picker } from '@react-native-picker/picker';
+import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-alert-notification';
 
-export default function SavingsCollection({ navigation }) {
 
-  const [memberno,setMemberno] = useState('');
-  const [amount,setAmount] = useState('');
-  const [enrollmentBy,setEnrollmentBy] = useState('');
-  const timestamp = Date.now(); // Get current timestamp in milliseconds
-
-// Create a Date object from the timestamp
-const date = new Date(timestamp);
-
-// Format the date and time using toLocaleString()
-//const formattedDateTime = date.toLocaleString(); 
-const formattedDate = date.toLocaleDateString(); 
-
-  const uniqueId = Math.floor(Math.random()*10000);
-  //const uniqueId = 1*1000;
+export default function CollectionCharges({ navigation }) {
+   const [memberno,setMemberno] = useState('');
+    const [amount,setAmount] = useState('');
+    const [enrollmentBy,setEnrollmentBy] = useState('');
+    const timestamp = Date.now(); // Get current timestamp in milliseconds
   
-
-  const addSavings = ()=>{
-     if (!amount || !memberno || !enrollmentBy) {
-          Dialog.show({
-            type: ALERT_TYPE.WARNING,
-            title: 'Error',
-            textBody: 'All fields are required.',
-            button: 'Close',
-          });
-          return; // Exit the function if any field is empty
-        }
-    set(ref(db,'savingsCollection/'+ uniqueId),{
-      memberno: memberno,
-      savingsamount: amount,
-      enrollmentBy: enrollmentBy,
-      scid: uniqueId, 
-      timestamp: formattedDate,
-    });
-    setMemberno('')
-    setAmount('')
-    setEnrollmentBy('')
-     Dialog.show({
-          type: ALERT_TYPE.SUCCESS,
-          title: 'Success',
-          textBody: 'New Savings Added',
-          button: 'close',
-        })
+  // Create a Date object from the timestamp
+  const date = new Date(timestamp);
+  
+  // Format the date and time using toLocaleString()
+  const formattedDateTime = date.toLocaleString(); 
+    const uniqueId = Math.floor(Math.random()*10000);
+    //const uniqueId = 1*1000;
     
-  }
-
+  
+    const addloancollection = ()=>{
+      if (!amount || !memberno || !enrollmentBy) {
+        Dialog.show({
+          type: ALERT_TYPE.WARNING,
+          title: 'Error',
+          textBody: 'All fields are required.',
+          button: 'Close',
+        });
+        return; // Exit the function if any field is empty
+      }
+      set(ref(db,'CollectionCharges/'+ uniqueId),{
+        memberno: memberno,
+        chargeamount: amount,
+        enrollmentBy: enrollmentBy,
+        scid: uniqueId, 
+        timestamp: formattedDateTime,
+      });
+      setMemberno('')
+      setAmount('')
+     
+      setEnrollmentBy('')
+      Dialog.show({
+        type: ALERT_TYPE.SUCCESS,
+        title: 'Success',
+        textBody: 'New Loan Collection Added',
+        button: 'close',
+      })
+    }
+  
   return (
 
     <ScrollView style={styles.containerView}>
-      <AlertNotificationRoot>
-            </AlertNotificationRoot>
 
       <View style={styles.HeaderView}>
         <Text
           style={{
             fontFamily: "DMSans_500Bold",
-            fontSize: 16,
+            fontSize: 18,
           }}
         >
           {"সুন্দরগঞ্জ দোকান মালিক ব্যাবসায় সমবায় সমিতি"}
@@ -101,17 +95,30 @@ const formattedDate = date.toLocaleDateString();
           style={{ fontSize: 14 }}
         />
         {/* <Text
-          style={{
-            fontFamily: "DMSans_500Medium",
-            fontSize: 16,
-            paddingBottom: 8,
-            paddingTop: 15,
+                           style={{
+                             fontFamily: "DMSans_500Medium",
+                             fontSize: 16,
+                             paddingBottom: 8,
+                             paddingTop: 15,
+                             
+                           }}
+                         >
+                           {" "}
+                           Loan Amount   :  {" "}
+                         </Text>
 
-          }}
-        >
-          {" "}
-          Total Savings :  {" "}
-        </Text> */}
+                         <Text
+                           style={{
+                             fontFamily: "DMSans_500Medium",
+                             fontSize: 16,
+                             paddingBottom: 8,
+                             paddingTop: 15,
+                             
+                           }}
+                         >
+                           {" "}
+                          Total Due :    {" "}
+                         </Text> */}
 
         <Text
           style={{
@@ -170,7 +177,7 @@ const formattedDate = date.toLocaleDateString();
                     backgroundColor: 'gray',
                   }}>
                   <Picker.Item label="মো: জয়নাল আবেদীন" value="Employee1" />
-                           <Picker.Item label="মো: রাকিবুল ইসলাম" value="Employee2" />
+                                                    <Picker.Item label="মো: রাকিবুল ইসলাম" value="Employee2" />
                 </Picker>
         {/* <Text
           style={{
@@ -185,7 +192,7 @@ const formattedDate = date.toLocaleDateString();
           Type of Payment {" "}
         </Text>
 
-         <Picker
+        <Picker
                   selectedValue={type}
                   onValueChange={(itemValue, itemIndex) =>
                     setType(itemValue)
@@ -194,7 +201,6 @@ const formattedDate = date.toLocaleDateString();
         
                   style={{
                     backgroundColor: 'gray',
-                    
                   }}>
                   <Picker.Item label="Bkash" value="Bkash" />
                   <Picker.Item label="Nagad " value="Nagad" />
@@ -202,27 +208,13 @@ const formattedDate = date.toLocaleDateString();
                   <Picker.Item label="Cash " value="Cash" />
                 </Picker> */}
 
-        {/* <TextInput
-          inputHieght={54}
-          inputAlign={"center"}
-          placeholder="Enter here...."
-          autoCapitalize="none"
-          keyboardType="email-address"
-          keyboardAppearance="dark"
-          returnKeyType="next"
-          returnKeyLabel="next"
-          value={type}
-          onChangeText={(text)=> setType(text)}
-          style={{ fontSize: 14 }}
-        /> */}
-
       </View>
 
 
       <View style={styles.SubmitView}>
 
 
-        <Button label="Save  Entry " onPress={addSavings} />
+        <Button label="Collect Loan Amount " onPress={addloancollection} />
       </View>
     </ScrollView>
 
@@ -240,7 +232,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 20,
+    paddingTop: 10,
   },
   FormView: {
     flex: 0.4,

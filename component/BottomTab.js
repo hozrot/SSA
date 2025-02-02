@@ -4,7 +4,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 export default function BottomTab({ state, descriptors, navigation }) {
     const icon = {
         Dashboard: (props) => <MaterialCommunityIcons name="camera-outline" size={20} {...props} />,
-        Entry: (props) => <MaterialCommunityIcons name="human-male-male" size={20} {...props} />,
+        Registration: (props) => <MaterialCommunityIcons name="human-male-male" size={20} {...props} />,
         Collection: (props) => <MaterialCommunityIcons name="currency-bdt" size={20} {...props} />,
         Expense: (props) => <MaterialCommunityIcons name="cart-variant" size={20} {...props} />,
         Given: (props) => <MaterialCommunityIcons name="briefcase-search-outline" size={20} {...props} />

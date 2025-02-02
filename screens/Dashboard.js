@@ -11,10 +11,11 @@ export default function Dashboard({ navigation }) {
 
   const [totalLoanAmount, setTotalLoanAmount] = useState([])
   const [totalSaveAmount, setTotalSaveAmount] = useState([])
+  const [totalChargeAmount, setTotalChargeAmount] = useState([])
   const [totalLoanGiven, setTotalLoanGiven] = useState([])
 
   useEffect(() => {
-    const dataLink = ref(db, 'loanCollection/');
+    const dataLink = ref(db, 'CollectionLoan/');
     onValue(dataLink, (snapshot) => {
       const data = snapshot.val();
       if (data) { 
@@ -28,7 +29,7 @@ export default function Dashboard({ navigation }) {
     });
   }, []);
   useEffect(() => {
-    const dataLink = ref(db, 'savingsCollection/');
+    const dataLink = ref(db, 'CollectionSavings/');
     onValue(dataLink, (snapshot) => {
       const data = snapshot.val();
       if (data) { 
@@ -42,7 +43,35 @@ export default function Dashboard({ navigation }) {
     });
   }, []);
   useEffect(() => {
-    const dataLink = ref(db, 'loanGiven/');
+    const dataLink = ref(db, 'CollectionCharges/');
+    onValue(dataLink, (snapshot) => {
+      const data = snapshot.val();
+      if (data) { 
+        const totalSaveAmount = Object.values(data).reduce((total, savings) => {
+          return total + (savings.chargeamount || 0); 
+        }, 0);
+        setTotalChargeAmount(totalSaveAmount); 
+      } else {
+        setTotalChargeAmount(0); 
+      }
+    });
+  }, []);
+  useEffect(() => {
+    const dataLink = ref(db, 'WithdrawLoan/');
+    onValue(dataLink, (snapshot) => {
+      const data = snapshot.val();
+      if (data) { 
+        const totalLoanGiven = Object.values(data).reduce((total, loan) => {
+          return total + (loan.savingsamount || 0); 
+        }, 0);
+        setTotalLoanGiven(totalLoanGiven); 
+      } else {
+        setTotalLoanGiven(0); 
+      }
+    });
+  }, []);
+  useEffect(() => {
+    const dataLink = ref(db, 'WithdrawSavings/');
     onValue(dataLink, (snapshot) => {
       const data = snapshot.val();
       if (data) { 
@@ -62,30 +91,58 @@ export default function Dashboard({ navigation }) {
         <Text> Total Paid : 1,10,500 </Text>
         <Text> Total Pending : 18,50,000 </Text>
         <Text> Total Asset : 5,000,000,000</Text> */}
-      <View style={{ flex: .30, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
+          <View style={styles.HeaderView}>
+                <Text
+                  style={{
+                    fontFamily: "DMSans_500Bold",
+                    fontSize: 18,
+                    textAlign: 'center',
+                    color: 'white',
+                  }}
+                >
+                  {"সুন্দরগঞ্জ দোকান মালিক ব্যাবসায় সমবায় সমিতি"}
+                  {" "}
+                </Text>
+                <Text  style={{
+                    fontFamily: "DMSans_500Bold",
+                    
+                    textAlign: 'center',
+                    color: 'white',
+                  }}> সুন্দরগঞ্জ , গাইবান্ধা ।   </Text>
+              </View>
+      <View style={{ flex: .20, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
         <BalanceCard
-          balanceTitle={"Collection"}
+          balanceTitle={"Total Collection"}
           iconName={"briefcase-search-outline"}
           iconSize={60}
           iconColor={"white"}
           balance={totalLoanAmount}
         />
         <BalanceCard
-          balanceTitle={"Savings "}
+          balanceTitle={"Withdraw Savings "}
           iconName={"briefcase-clock-outline"}
           iconColor={"white"}
           iconSize={60}
           balance={totalSaveAmount}
         />
+        </View>
+        <View style={{ flex: .20, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
         <BalanceCard
-          balanceTitle={"Loan Given "}
+          balanceTitle={" Withdraw Loan "}
           iconName={"briefcase-eye-outline"}
           iconSize={60}
           iconColor={"white"}
           balance={totalLoanGiven}
         />
+         <BalanceCard
+          balanceTitle={" Charges  "}
+          iconName={"briefcase-eye-outline"}
+          iconSize={60}
+          iconColor={"white"}
+          balance={totalChargeAmount}
+        />
       </View>
-      <View style={{ flex: .30, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
+      <View style={{ flex: .20, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
         <MenuCard
           menuTitle={"Transaction Hostory "}
           iconName={"history"}
@@ -101,7 +158,7 @@ export default function Dashboard({ navigation }) {
           onPress={() => navigation.navigate("MyTransaction")}
         />
       </View>
-      <View style={{ flex: .30, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
+      <View style={{ flex: .20, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
         <MenuCard
           menuTitle={"Employee Details"}
           iconName={"human-queue"}
@@ -117,7 +174,7 @@ export default function Dashboard({ navigation }) {
           onPress={() => navigation.navigate("MemberList")}
         />
       </View>
-      <View style={{ flex: .30, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
+      {/* <View style={{ flex: .20, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
         <MenuCard
           menuTitle={"Balancesheet"}
           iconName={"note"}
@@ -132,10 +189,19 @@ export default function Dashboard({ navigation }) {
           iconColor={"#6656FE"}
           onPress={() => navigation.navigate("Summary")}
         />
-      </View>
+      </View> */}
 
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  HeaderView: {
+    flex: 0.1,
+    padding: 20,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    
+  },
+});

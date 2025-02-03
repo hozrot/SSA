@@ -21,7 +21,7 @@ export default function LoanList() {
 
 
   useEffect(() => {
-    const dataLink = ref(db, 'loanCollection/');
+    const dataLink = ref(db, 'CollectionLoan/');
     onValue(dataLink, (snapshot) => {
       const data = snapshot.val();
       const allLoan = Object.keys(data).map(key => ({

@@ -30,9 +30,9 @@ export default function Home({ navigation }) {
       <Tab.Screen name="Collection" component={Collection} options={{
         headerShown: false
       }} />
-      <Tab.Screen name="Expense" component={ExpenseEntry} options={{
+      {/* <Tab.Screen name="Expense" component={ExpenseEntry} options={{
         headerShown: false
-      }} />
+      }} /> */}
       <Tab.Screen name="Given" component={LoanEntry} options={{
         headerShown: false
       }} />

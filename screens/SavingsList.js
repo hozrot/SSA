@@ -20,7 +20,7 @@ export default function SavingsList() {
 
 
   useEffect(() => {
-    const dataLink = ref(db, 'savingsCollection/');
+    const dataLink = ref(db, 'CollectionSavings/');
     onValue(dataLink, (snapshot) => {
       const data = snapshot.val();
       const allSavings = Object.keys(data).map(key => ({

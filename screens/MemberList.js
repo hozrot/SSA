@@ -37,14 +37,21 @@ export default function MemberList( {navigation} ) {
     <ScrollView style={styles.container}>
       <View style={{ justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
         <BalanceCard
-          balanceTitle={"Total Member"}
+          balanceTitle={"Total "}
           iconName={"briefcase-search-outline"}
 
           iconColor={"white"}
           balance={memberCount}
         />
         <BalanceCard
-          balanceTitle={"Take Loan"}
+          balanceTitle={"Loan "}
+          iconName={"briefcase-search-outline"}
+
+          iconColor={"white"}
+          balance={memberCount}
+        />
+         <BalanceCard
+          balanceTitle={"Savings"}
           iconName={"briefcase-search-outline"}
 
           iconColor={"white"}
@@ -55,9 +62,9 @@ export default function MemberList( {navigation} ) {
       {
         memberList.map((item, index) => {
           return (
-            <TouchableOpacity style={styles.item} key={index} onPress={() => navigation.navigate("LoanList")}>
+            <TouchableOpacity style={styles.item} key={index} 
+            onPress={() => navigation.navigate("MemberTransaction", { memid: item.memid })}>
               <Text>Name : {item.name}</Text>
-
               <Text>Id : {item.memid}</Text>
               <Text>Company :  {item.company}</Text>
               <Text>Mobile :  {item.mobile}</Text>

@@ -70,28 +70,14 @@ export default function Dashboard({ navigation }) {
       }
     });
   }, []);
-  useEffect(() => {
-    const dataLink = ref(db, 'WithdrawSavings/');
-    onValue(dataLink, (snapshot) => {
-      const data = snapshot.val();
-      if (data) { 
-        const totalLoanGiven = Object.values(data).reduce((total, loan) => {
-          return total + (loan.savingsamount || 0); 
-        }, 0);
-        setTotalLoanGiven(totalLoanGiven); 
-      } else {
-        setTotalLoanGiven(0); 
-      }
-    });
-  }, []);
   
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'green',paddingTop:20 }}>
+    <View style={{ flex: 1, justifyContent: 'space-around', alignItems: "center", backgroundColor: 'green',paddingTop:20 }}>
       {/* <Text> Total Collection : 1,50,000,000</Text>
         <Text> Total Paid : 1,10,500 </Text>
         <Text> Total Pending : 18,50,000 </Text>
         <Text> Total Asset : 5,000,000,000</Text> */}
-          <View style={styles.HeaderView}>
+      <View style={styles.HeaderView}>
                 <Text
                   style={{
                     fontFamily: "DMSans_500Bold",
@@ -109,8 +95,8 @@ export default function Dashboard({ navigation }) {
                     textAlign: 'center',
                     color: 'white',
                   }}> সুন্দরগঞ্জ , গাইবান্ধা ।   </Text>
-              </View>
-      <View style={{ flex: .20, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
+      </View>
+      {/* <View style={{ flex: .20, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
         <BalanceCard
           balanceTitle={"Total Collection"}
           iconName={"briefcase-search-outline"}
@@ -125,7 +111,7 @@ export default function Dashboard({ navigation }) {
           iconSize={60}
           balance={totalSaveAmount}
         />
-        </View>
+      </View>
         <View style={{ flex: .20, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
         <BalanceCard
           balanceTitle={" Withdraw Loan "}
@@ -141,37 +127,38 @@ export default function Dashboard({ navigation }) {
           iconColor={"white"}
           balance={totalChargeAmount}
         />
-      </View>
+      </View> */}
+     
       <View style={{ flex: .20, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
-        <MenuCard
-          menuTitle={"Transaction Hostory "}
-          iconName={"history"}
-          iconSize={80}
-          iconColor={"#6656FE"}
-          onPress={() => navigation.navigate("TransactionHistory")}
-        />
-        <MenuCard
-          menuTitle={"My Transactions"}
-          iconName={"currency-try"}
-          iconSize={80}
-          iconColor={"#6656FE"}
-          onPress={() => navigation.navigate("MyTransaction")}
-        />
-      </View>
-      <View style={{ flex: .20, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
-        <MenuCard
+        {/* <MenuCard
           menuTitle={"Employee Details"}
           iconName={"human-queue"}
           iconSize={80}
           iconColor={"#6656FE"}
           onPress={() => navigation.navigate("EmployeeDetails")}
-        />
+        /> */}
         <MenuCard
           menuTitle={"Member List"}
           iconName={"text-box-multiple"}
           iconSize={80}
           iconColor={"#6656FE"}
           onPress={() => navigation.navigate("MemberList")}
+        />
+      </View>
+      <View style={{ flex: .20, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
+        {/* <MenuCard
+          menuTitle={"Transaction Hostory "}
+          iconName={"history"}
+          iconSize={80}
+          iconColor={"#6656FE"}
+          onPress={() => navigation.navigate("TransactionHistory")}
+        /> */}
+        <MenuCard
+          menuTitle={"My Transactions"}
+          iconName={"currency-try"}
+          iconSize={80}
+          iconColor={"#6656FE"}
+          onPress={() => navigation.navigate("MyTransaction")}
         />
       </View>
       {/* <View style={{ flex: .20, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
@@ -191,7 +178,7 @@ export default function Dashboard({ navigation }) {
         />
       </View> */}
 
-    </SafeAreaView>
+    </View>
   );
 }
 

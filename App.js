@@ -29,6 +29,8 @@ import Withdraw from './screens/Withdraw';
 import WithdrawLoan from './screens/WithdrawLoan';
 import WithdrawSavings from './screens/WithdrawSavings';
 import Collection from './screens/Collection';
+import DayTransaction from './screens/DayTransaction';
+import MemberTransaction from './screens/MemberTransaction';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -58,6 +60,9 @@ export default function App() {
         <Stack.Screen name="WithdrawLoan" component={WithdrawLoan} />
         <Stack.Screen name="WithdrawSavings" component={WithdrawSavings} />
         <Stack.Screen name="MyTransaction" component={MyTransaction} />
+        <Stack.Screen name="DayTransaction" component={DayTransaction} />
+        <Stack.Screen name="MemberTransaction" component={MemberTransaction} />
+        
         <Stack.Screen name="Summary" component={Summary} />
       </Stack.Navigator>
 

@@ -7,8 +7,10 @@ import { db } from '../config';
 import { ref, onValue ,query, orderByChild, equalTo} from 'firebase/database';
 import BalanceCard from '../component/BalanceCard';
 import moment from 'moment';
-
-export default function MyLoanCollection({ navigation }) {
+import { useRoute } from '@react-navigation/native';
+export default function MemberTransaction({ navigation }) {
+    const route = useRoute();
+    const { memid } = route.params; 
   const [loneList, setLoanList] = useState([])
   const [totalCollectionToday, setTotalCollectionToday] = useState([])
     const [totalLoanCollection, setTotalLoanCollection] = useState([])
@@ -19,8 +21,8 @@ export default function MyLoanCollection({ navigation }) {
     const dataLink = ref(db, 'CollectionLoan/');
     const employeeLoansQuery = query(
         dataLink,
-        orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
-        equalTo("Employee2") // Filter for the specific employee
+        orderByChild('memberno'), // Assuming 'enrollmentBy' is the field in your data
+        equalTo(memid) // Filter for the specific employee
       );
       onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
         const data = snapshot.val();
@@ -74,7 +76,7 @@ export default function MyLoanCollection({ navigation }) {
   return (
     <ScrollView style={styles.container}>
       <View style={{ justifyContent: "center", alignItems: "center",paddingBottom:16}}>
-      <Text style={{ fontWeight:'bold',fontSize:20}}> Welcome,  {enrollmentBy}</Text>
+      <Text style={{ fontWeight:'bold',fontSize:20}}> Details of member id:  {memid}</Text>
       </View>
      
 

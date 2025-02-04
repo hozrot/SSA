@@ -37,13 +37,13 @@ export default function MemberList( {navigation} ) {
     <ScrollView style={styles.container}>
       <View style={{ justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
         <BalanceCard
-          balanceTitle={"Total "}
+          balanceTitle={"Total Member Registered "}
           iconName={"briefcase-search-outline"}
 
           iconColor={"white"}
           balance={memberCount}
         />
-        <BalanceCard
+        {/* <BalanceCard
           balanceTitle={"Loan "}
           iconName={"briefcase-search-outline"}
 
@@ -56,7 +56,7 @@ export default function MemberList( {navigation} ) {
 
           iconColor={"white"}
           balance={memberCount}
-        />
+        /> */}
       </View>
 
       {
@@ -74,17 +74,6 @@ export default function MemberList( {navigation} ) {
           )
         })
       }
-      {/* <FlatList
-           data={data}
-           keyExtractor={(item) => item.id.toString()} 
-           renderItem={({ item }) => (
-             <View style={styles.item}>
-               <Text>{item.title}</Text>
-               <Text>Loan Amount:  {item.Amount}</Text>
-               <Text>Savings  Amount:  {item.saving}</Text>
-             </View>
-           )}
-         /> */}
     </ScrollView>
   );
 };

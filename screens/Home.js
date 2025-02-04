@@ -11,6 +11,7 @@ import LoanEntry from './Withdraw';
 import { db } from '../config';
 import { ref, onValue } from 'firebase/database';
 import Collection from './Collection';
+import AllTransaction from './AllTransaction';
 
 
 //npm install @react-navigation/bottom-tabs
@@ -30,12 +31,15 @@ export default function Home({ navigation }) {
       <Tab.Screen name="Collection" component={Collection} options={{
         headerShown: false
       }} />
+      <Tab.Screen name="Transaction" component={AllTransaction} options={{
+        headerShown: false
+      }} />
       {/* <Tab.Screen name="Expense" component={ExpenseEntry} options={{
         headerShown: false
       }} /> */}
-      <Tab.Screen name="Given" component={LoanEntry} options={{
+      {/* <Tab.Screen name="Given" component={LoanEntry} options={{
         headerShown: false
-      }} />
+      }} /> */}
 
     </Tab.Navigator>
 

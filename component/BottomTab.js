@@ -7,7 +7,8 @@ export default function BottomTab({ state, descriptors, navigation }) {
         Registration: (props) => <MaterialCommunityIcons name="human-male-male" size={20} {...props} />,
         Collection: (props) => <MaterialCommunityIcons name="currency-bdt" size={20} {...props} />,
         Expense: (props) => <MaterialCommunityIcons name="cart-variant" size={20} {...props} />,
-        Given: (props) => <MaterialCommunityIcons name="briefcase-search-outline" size={20} {...props} />
+        Given: (props) => <MaterialCommunityIcons name="briefcase-search-outline" size={20} {...props} />,
+        Transaction: (props) => <MaterialCommunityIcons name="briefcase-search-outline" size={20} {...props} />
 
     }
     return (

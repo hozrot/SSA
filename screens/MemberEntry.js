@@ -12,9 +12,9 @@ import { ALERT_TYPE, Dialog, AlertNotificationRoot, Toast } from 'react-native-a
 
 
 export default function MemberEntry({ navigation }) {
-  const [enrollmentType, setEnrollmentType] = useState();
+  const [assingedEmployee, setassingedEmployee] = useState();
   const [memberno, setMemberno] = useState('');
-  const [memid, setmemid] = useState('');
+  const [memberId, setmemberId] = useState('');
   const [name, setName] = useState('');
   const [mobile, setMobile] = useState('');
   const [nid, setNid] = useState('');
@@ -33,7 +33,7 @@ export default function MemberEntry({ navigation }) {
 
 
   const addMember = () => {
-    if (!name || !company || !enrollmentType  || !memid) {
+    if (!name || !company || !assingedEmployee  || !memberId) {
       Dialog.show({
         type: ALERT_TYPE.WARNING,
         title: 'Error',
@@ -48,16 +48,16 @@ export default function MemberEntry({ navigation }) {
       mobile: mobile,
       company: company,
       entryid: uniqueId,
-      memid: memid,
-      enrollmentType: enrollmentType,
+      memberId: memberId,
+      assingedEmployee: assingedEmployee,
       timestamp: formattedDateTime,
     });
     setName('')
     setMobile('')
     setCompany('')
-    setEnrollmentType('')
+    setassingedEmployee('')
    
-    setmemid('')
+    setmemberId('')
     Dialog.show({
       type: ALERT_TYPE.SUCCESS,
       title: 'Success',
@@ -240,8 +240,13 @@ export default function MemberEntry({ navigation }) {
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-          value={memid}
-          onChangeText={(text) => setmemid(text)}
+          value={memberId.toString()}
+          onChangeText={(text) => {
+            const numericValue = parseFloat(text);
+            if (!isNaN(numericValue)) {
+              setmemberId(numericValue);
+            }
+          }}
           style={{ fontSize: 14 }}
         />
 
@@ -258,15 +263,16 @@ export default function MemberEntry({ navigation }) {
           Assinged Employee{" "}
         </Text>
         <Picker
-          selectedValue={enrollmentType}
+          selectedValue={assingedEmployee}
           onValueChange={(itemValue, itemIndex) =>
-            setEnrollmentType(itemValue)
+            setassingedEmployee(itemValue)
           }
 
 
           style={{
-            backgroundColor: 'gray',
+            backgroundColor: 'green',
           }}>
+             <Picker.Item label="Select Employee" value={null} />
           <Picker.Item label="মো: জয়নাল আবেদীন" value="Employee1" />
           <Picker.Item label="মো: রাকিবুল ইসলাম" value="Employee2" />
           

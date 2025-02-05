@@ -24,25 +24,25 @@ export default function MySummary({navigation }) {
         orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
         equalTo(enrollment) // Filter for the specific employee
       );
-      onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
-        const data = snapshot.val();
-        if (data) { // Check if data exists
-          const allLoan = Object.keys(data).map(key => ({
-            id: key,
-            ...data[key]
-          })).filter(loan => loan.category === "Loan" ); // Filter for the specific employee
-          setLoanList(allLoan);
-        } else {
-          setLoanList([]); // Set to empty array if no loans found for the employee
-        }
-        if (data) { 
-            const totalSaveAmount = Object.values(data).reduce((total, loan) => {
-              return total + (loan.amount || 0); 
-            }, 0);
-            setTotalLoanCollection(totalSaveAmount); 
-          } else {
-            setTotalLoanCollection(0); 
-          }
+     onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
+             const data = snapshot.val();
+             if (data) { // Check if data exists
+               const allLoan = Object.keys(data).map(key => ({
+                 id: key,
+                 ...data[key]
+               })).filter(loan => loan.category === "Loan" ); // Filter for the specific employee
+               setLoanList(allLoan);
+             } else {
+               setLoanList([]); // Set to empty array if no loans found for the employee
+             }
+             if (data) { 
+                 const totalSaveAmount = Object.values(data).reduce((total, loan) => {
+                   return total + (loan.amount || 0); 
+                 }, 0);
+                 setTotalLoanCollection(totalSaveAmount); 
+               } else {
+                 setTotalLoanCollection(0); 
+               }
       });
   
     }, []); // Add employeeId to the dependency array
@@ -118,7 +118,6 @@ export default function MySummary({navigation }) {
         <BalanceCard
                 balanceTitle={" Total  Loan  "}
                 iconName={"briefcase-search-outline"}
-      
                 iconColor={"white"}
                 balance={totalLoanCollection }
               />

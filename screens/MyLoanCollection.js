@@ -9,37 +9,37 @@ import BalanceCard from '../component/BalanceCard';
 import moment from 'moment';
 
 export default function MyLoanCollection({ navigation }) {
-  const [loneList, setLoanList] = useState([])
-  const [totalCollectionToday, setTotalCollectionToday] = useState([])
-    const [totalLoanCollection, setTotalLoanCollection] = useState([])
+  const [transactionList, setTransactionList] = useState([])
+  const [totalTransactionToday, setTotalTransactionToday] = useState([])
+    const [totalTransaction, setTotalTransaction] = useState([])
     const enrollmentBy ="মোঃ জয়নাল আবেদীন";
   //  const enrollmentBy ="মোঃ রাকিবুল ইসলাম";
 
   useEffect(() => {
     const dataLink = ref(db, 'AllTransaction/');
-    const employeeLoansQuery = query(
+    const transactionQuery = query(
         dataLink,
         orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
         equalTo("Employee1") // Filter for the specific employee
       );
-      onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
+      onValue(transactionQuery, (snapshot) => { // Use the filtered query
         const data = snapshot.val();
         if (data) { // Check if data exists
-          const allLoan = Object.keys(data).map(key => ({
+          const allTransaction = Object.keys(data).map(key => ({
             id: key,
             ...data[key]
-          })).filter(loan => loan.category === "Loan" ); // Filter for the specific employee
-          setLoanList(allLoan);
+          })).filter(transaction => transaction.category === "Loan" ); // Filter for the specific employee
+          setTransactionList(allTransaction);
         } else {
-          setLoanList([]); // Set to empty array if no loans found for the employee
+          setTransactionList([]); // Set to empty array if no loans found for the employee
         }
         if (data) { 
-            const totalSaveAmount = Object.values(data).reduce((total, loan) => {
-              return total + (loan.amount || 0); 
+            const totalAmount = Object.values(data).reduce((total, amount) => {
+              return total + (amount.amount || 0); 
             }, 0);
-            setTotalLoanCollection(totalSaveAmount); 
+            setTotalTransaction(totalAmount); 
           } else {
-            setTotalLoanCollection(0); 
+            setTotalTransaction(0); 
           }
 
           if (data) {
@@ -63,9 +63,9 @@ export default function MyLoanCollection({ navigation }) {
               return total;
             }, 0);
           
-            setTotalCollectionToday(totalLoanAmountToday);
+            setTotalTransactionToday(totalLoanAmountToday);
           } else {
-            setTotalCollectionToday(0);
+            setTotalTransactionToday(0);
           }
       });
   
@@ -85,18 +85,18 @@ export default function MyLoanCollection({ navigation }) {
                 iconName={"briefcase-search-outline"}
       
                 iconColor={"white"}
-                balance={totalLoanCollection }
+                balance={totalTransaction }
               />
                <BalanceCard
                 balanceTitle={"Today's Collection"}
                 iconName={"briefcase-search-outline"}
                 iconColor={"white"}
                 //onPress={()=>navigation.navigate("DayTransaction")}
-                balance={totalCollectionToday}
+                balance={totalTransactionToday}
               />
       </View>
       {
-        loneList.map((item, index) => {
+        transactionList.map((item, index) => {
           return (
             <ListOne
               key={index}

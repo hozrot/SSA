@@ -54,7 +54,7 @@ export default function AllTransaction({ navigation }) {
   }, [selectedMemberId, memberList]);
 
   const addloancollection = () => {
-    if (!amount || !memberno || !enrollmentBy || !type || !category) {
+    if (!amount || !selectedMemberId || !enrollmentBy || !type || !category) {
       Dialog.show({
         type: ALERT_TYPE.WARNING,
         title: "Error",
@@ -64,15 +64,15 @@ export default function AllTransaction({ navigation }) {
       return; // Exit the function if any field is empty
     }
     set(ref(db, "AllTransaction/" + uniqueId), {
-      memberno: memberno,
-      loanamount: amount,
+      memberno: selectedMemberId,
+      amount: amount,
       enrollmentBy: enrollmentBy,
       scid: uniqueId,
       timestamp: formattedDateTime,
       type: type,
       category: category,
     });
-    setMemberno("");
+    setSelectedMemberId("");
     setAmount("");
     setCategory("");
     setType("");
@@ -81,7 +81,7 @@ export default function AllTransaction({ navigation }) {
     Dialog.show({
       type: ALERT_TYPE.SUCCESS,
       title: "Success",
-      textBody: "New Loan Collection Added",
+      textBody: "New Transaction Added",
       button: "close",
     });
   };
@@ -171,7 +171,7 @@ export default function AllTransaction({ navigation }) {
           placeholder={{ label: "Select an option...", value: null }}
           style={styles.picker}
         >
-             <Picker.Item label="Select Type" value={null} />
+             <Picker.Item label="Select Employee" value={null} />
           <Picker.Item label="Collection" value="Collection" />
           <Picker.Item label="Withdraw " value="Withdraw" />
         </Picker>

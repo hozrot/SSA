@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-export default function ListOne({ name, type, onPress, date, iconName, iconSize, amount,
+export default function ListOne({ name, type, onPress, date, iconName, iconSize, amount,category,
     iconColor = 'green' }) {
     return (
         <TouchableOpacity style={styles.List} onPress={onPress}>
@@ -19,7 +19,7 @@ export default function ListOne({ name, type, onPress, date, iconName, iconSize,
                         <Text style={{ fontSize: 12 }}>{date}</Text>
                     </View>
 
-                    <Text style={{ fontWeight: 'bold', fontSize: 16 }}> {type}</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 16 }}> {category}</Text>
 
                 </View>
                 <View style={{ justifyContent: 'flex-end', alignContent: 'center', alignItems: 'center', flex: 40, flexDirection: 'row', padding: 10 }} >

@@ -10,7 +10,7 @@ import moment from 'moment';
 import { useRoute } from '@react-navigation/native';
 export default function MemberTransaction({ navigation }) {
     const route = useRoute();
-    const { memid } = route.params; 
+    const { memberId } = route.params; 
   const [loneList, setLoanList] = useState([])
   const [totalCollectionToday, setTotalCollectionToday] = useState([])
     const [totalLoanCollection, setTotalLoanCollection] = useState([])
@@ -18,11 +18,11 @@ export default function MemberTransaction({ navigation }) {
     const enrollmentBy ="মোঃ রাকিবুল ইসলাম";
 
   useEffect(() => {
-    const dataLink = ref(db, 'CollectionLoan/');
+    const dataLink = ref(db, 'AllTransaction/');
     const employeeLoansQuery = query(
         dataLink,
         orderByChild('memberno'), // Assuming 'enrollmentBy' is the field in your data
-        equalTo(memid) // Filter for the specific employee
+        equalTo(memberId) // Filter for the specific employee
       );
       onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
         const data = snapshot.val();
@@ -37,7 +37,7 @@ export default function MemberTransaction({ navigation }) {
         }
         if (data) { 
             const totalSaveAmount = Object.values(data).reduce((total, loan) => {
-              return total + (loan.loanamount || 0); 
+              return total + (loan.amount || 0); 
             }, 0);
             setTotalLoanCollection(totalSaveAmount); 
           } else {
@@ -60,7 +60,7 @@ export default function MemberTransaction({ navigation }) {
               console.log("database", loanDate);
           
               if (loanDate.isSame(todayMoment, 'day')) { 
-                return total + (loan.loanamount || 0);
+                return total + (loan.amount || 0);
               }
               return total;
             }, 0);
@@ -76,7 +76,7 @@ export default function MemberTransaction({ navigation }) {
   return (
     <ScrollView style={styles.container}>
       <View style={{ justifyContent: "center", alignItems: "center",paddingBottom:16}}>
-      <Text style={{ fontWeight:'bold',fontSize:20}}> Details of member id:  {memid}</Text>
+      <Text style={{ fontWeight:'bold',fontSize:20}}> Details of member id:  {memberId}</Text>
       </View>
      
 
@@ -104,7 +104,7 @@ export default function MemberTransaction({ navigation }) {
               key={index}
               name={item.memberno}
               date={item.timestamp}
-              amount={item.loanamount}
+              amount={item.amount}
               iconName={"arrow-split-vertical"}
               iconColor={'#8300FD'}
             />

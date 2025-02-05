@@ -28,9 +28,9 @@ export default function Home({ navigation }) {
       <Tab.Screen name="Registration" component={NewEntry} options={{
         headerShown: false
       }} />
-      <Tab.Screen name="Collection" component={Collection} options={{
+      {/* <Tab.Screen name="Collection" component={Collection} options={{
         headerShown: false
-      }} />
+      }} /> */}
       <Tab.Screen name="Transaction" component={AllTransaction} options={{
         headerShown: false
       }} />

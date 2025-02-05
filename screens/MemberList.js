@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import { FlatList, StyleSheet, Text, View, ScrollView ,TouchableOpacity} from 'react-native';
 import BalanceCard from '../component/BalanceCard';
@@ -63,9 +61,9 @@ export default function MemberList( {navigation} ) {
         memberList.map((item, index) => {
           return (
             <TouchableOpacity style={styles.item} key={index} 
-            onPress={() => navigation.navigate("MemberTransaction", { memid: item.memid })}>
+            onPress={() => navigation.navigate("MemberTransaction", { memberId: item.memberId })}>
               <Text>Name : {item.name}</Text>
-              <Text>Id : {item.memid}</Text>
+              <Text>Id : {item.memberId}</Text>
               <Text>Company :  {item.company}</Text>
               <Text>Mobile :  {item.mobile}</Text>
               <Text>Member from  :  {item.timestamp}</Text>

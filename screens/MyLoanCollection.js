@@ -12,15 +12,15 @@ export default function MyLoanCollection({ navigation }) {
   const [loneList, setLoanList] = useState([])
   const [totalCollectionToday, setTotalCollectionToday] = useState([])
     const [totalLoanCollection, setTotalLoanCollection] = useState([])
-   // const enrollmentBy ="মোঃ জয়নাল আবেদীন";
-    const enrollmentBy ="মোঃ রাকিবুল ইসলাম";
+    const enrollmentBy ="মোঃ জয়নাল আবেদীন";
+  //  const enrollmentBy ="মোঃ রাকিবুল ইসলাম";
 
   useEffect(() => {
-    const dataLink = ref(db, 'CollectionLoan/');
+    const dataLink = ref(db, 'AllTransaction/');
     const employeeLoansQuery = query(
         dataLink,
         orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
-        equalTo("Employee2") // Filter for the specific employee
+        equalTo("Employee1") // Filter for the specific employee
       );
       onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
         const data = snapshot.val();
@@ -28,14 +28,14 @@ export default function MyLoanCollection({ navigation }) {
           const allLoan = Object.keys(data).map(key => ({
             id: key,
             ...data[key]
-          }));
+          })).filter(loan => loan.category === "Loan" ); // Filter for the specific employee
           setLoanList(allLoan);
         } else {
           setLoanList([]); // Set to empty array if no loans found for the employee
         }
         if (data) { 
             const totalSaveAmount = Object.values(data).reduce((total, loan) => {
-              return total + (loan.loanamount || 0); 
+              return total + (loan.amount || 0); 
             }, 0);
             setTotalLoanCollection(totalSaveAmount); 
           } else {
@@ -57,8 +57,8 @@ export default function MyLoanCollection({ navigation }) {
               const loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); // Corrected format string
               console.log("database", loanDate);
           
-              if (loanDate.isSame(todayMoment, 'day')) { 
-                return total + (loan.loanamount || 0);
+              if (loanDate.isSame(todayMoment, 'day') && loan.category === 'Loan') { 
+                return total + (loan.amount || 0);
               }
               return total;
             }, 0);
@@ -102,9 +102,11 @@ export default function MyLoanCollection({ navigation }) {
               key={index}
               name={item.memberno}
               date={item.timestamp}
-              amount={item.loanamount}
+              amount={item.amount}
               iconName={"arrow-split-vertical"}
               iconColor={'#8300FD'}
+              type={item.type}
+              category={item.category}
             />
 
           )

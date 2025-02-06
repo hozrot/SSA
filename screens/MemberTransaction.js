@@ -11,11 +11,20 @@ import { useRoute } from '@react-navigation/native';
 export default function MemberTransaction({ navigation }) {
     const route = useRoute();
     const { memberId } = route.params; 
-  const [loneList, setLoanList] = useState([])
-  const [totalCollectionToday, setTotalCollectionToday] = useState([])
+    const [loneList, setLoanList] = useState([])
+    const [totalCollectionToday, setTotalCollectionToday] = useState([])
     const [totalLoanCollection, setTotalLoanCollection] = useState([])
+    const [totalLoanWithdraw, setTotalLoanWithdraw] = useState([])
+    const [totalSavingsCollection, setTotalSavingsCollection] = useState([])
+    const [totalChargeCollection, setTotalChargeCollection] = useState([])
+    const [totalSavingsWithdraw, setTotalSavingsWithdraw] = useState([])
    // const enrollmentBy ="মোঃ জয়নাল আবেদীন";
     const enrollmentBy ="মোঃ রাকিবুল ইসলাম";
+
+    const balance=
+      (totalLoanCollection || 0) - (totalLoanWithdraw || 0) + 
+      (totalSavingsCollection || 0) - (totalSavingsWithdraw || 0)
+    
 
   useEffect(() => {
     const dataLink = ref(db, 'AllTransaction/');
@@ -36,38 +45,54 @@ export default function MemberTransaction({ navigation }) {
           setLoanList([]); // Set to empty array if no loans found for the employee
         }
         if (data) { 
-            const totalSaveAmount = Object.values(data).reduce((total, loan) => {
+            const totalAmount = Object.values(data)
+            .filter(loan => loan.type === 'Withdraw' && loan.category === 'Loan')
+            .reduce((total, loan) => {
               return total + (loan.amount || 0); 
             }, 0);
-            setTotalLoanCollection(totalSaveAmount); 
+            setTotalLoanWithdraw(totalAmount); 
+          } else {
+            setTotalLoanWithdraw(0); 
+          }
+          if (data) { 
+            const totalAmount = Object.values(data)
+            .filter(loan => loan.type === 'Collection' && loan.category === 'Loan')
+            .reduce((total, loan) => {
+              return total + (loan.amount || 0); 
+            }, 0);
+            setTotalLoanCollection(totalAmount); 
           } else {
             setTotalLoanCollection(0); 
           }
-
-          if (data) {
-            const today = new Date(); 
-            const day = today.getDate().toString().padStart(2, '0'); 
-            const month = (today.getMonth() + 1).toString().padStart(2, '0'); 
-            const year = today.getFullYear();
-            const formattedDate = `${month}/${day}/${year}`; 
-          
-            console.log("today", formattedDate); 
-          
-            const todayMoment = moment(formattedDate, 'MM/DD/YYYY'); // Corrected format string
-          
-            const totalLoanAmountToday = Object.values(data).reduce((total, loan) => {
-              const loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); // Corrected format string
-              console.log("database", loanDate);
-          
-              if (loanDate.isSame(todayMoment, 'day')) { 
-                return total + (loan.amount || 0);
-              }
-              return total;
+          if (data) { 
+            const totalAmount = Object.values(data)
+            .filter(savings => savings.type === 'Collection' && savings.category === 'Savings')
+            .reduce((total, savings) => {
+              return total + (savings.amount || 0); 
             }, 0);
-          
-            setTotalCollectionToday(totalLoanAmountToday);
+            setTotalSavingsCollection(totalAmount); 
           } else {
-            setTotalCollectionToday(0);
+            setTotalSavingsCollection(0); 
+          }
+          if (data) { 
+            const totalAmount = Object.values(data)
+            .filter(savings => savings.type === 'Withdraw' && savings.category === 'Savings')
+            .reduce((total, savings) => {
+              return total + (savings.amount || 0); 
+            }, 0);
+            setTotalSavingsWithdraw(totalAmount); 
+          } else {
+            setTotalSavingsWithdraw(0); 
+          }
+          if (data) { 
+            const totalAmount = Object.values(data)
+            .filter(charge => charge.type === 'Collection' && charge.category === 'Charge')
+            .reduce((total, charge) => {
+              return total + (charge.amount || 0); 
+            }, 0);
+            setTotalChargeCollection(totalAmount); 
+          } else {
+            setTotalChargeCollection(0); 
           }
       });
   
@@ -79,24 +104,57 @@ export default function MemberTransaction({ navigation }) {
       <Text style={{ fontWeight:'bold',fontSize:20}}> Details of member id:  {memberId}</Text>
       </View>
      
-
+      <View style={{ justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
+         
+         <BalanceCard
+           balanceTitle={"Total Loan Withdrawn"}
+           iconName={"access-point-plus"}
+ 
+           iconColor={"white"}
+           balance={totalLoanWithdraw}
+         />
+          <BalanceCard
+           balanceTitle={"Total Loan Return Amount"}
+           iconName={"access-point-minus"}
+           iconColor={"white"}
+           //onPress={()=>navigation.navigate("DayTransaction")}
+           balance={totalLoanCollection}
+         />
+   </View>
         <View style={{ justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
          
-        <BalanceCard
-                balanceTitle={"Total Collected Loan"}
-                iconName={"briefcase-search-outline"}
+              <BalanceCard
+                balanceTitle={"Total Savings Given"}
+                iconName={"arrow-down-bold-hexagon-outline"}
       
                 iconColor={"white"}
-                balance={totalLoanCollection }
+                balance={totalSavingsCollection }
               />
                <BalanceCard
-                balanceTitle={"Today's Collection"}
-                iconName={"briefcase-search-outline"}
+                balanceTitle={"Total Savings Withdrawn"}
+                iconName={"arrow-up-bold-hexagon-outline"}
                 iconColor={"white"}
                 //onPress={()=>navigation.navigate("DayTransaction")}
-                balance={totalCollectionToday}
+                balance={totalSavingsWithdraw}
               />
-      </View>
+        </View>
+        <View style={{ justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
+         
+         <BalanceCard
+           balanceTitle={"Total Charges Given"}
+           iconName={"archive-plus"}
+ 
+           iconColor={"yellow"}
+           balance={totalChargeCollection }
+         />
+         <BalanceCard
+           balanceTitle={"Total Balance"}
+           iconName={"basket"}
+           iconColor={balance >= 0 ? 'white' : 'red'}
+           balance={balance}
+         />
+         
+   </View>
       {
         loneList.map((item, index) => {
           return (
@@ -107,6 +165,8 @@ export default function MemberTransaction({ navigation }) {
               amount={item.amount}
               iconName={"arrow-split-vertical"}
               iconColor={'#8300FD'}
+              type={item.type}
+              category={item.category}
             />
 
           )
@@ -119,7 +179,7 @@ export default function MemberTransaction({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    paddingBottom: 16,
   },
   item: {
     backgroundColor: 'green',

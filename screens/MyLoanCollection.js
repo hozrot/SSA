@@ -34,7 +34,9 @@ export default function MyLoanCollection({ navigation }) {
           setTransactionList([]); // Set to empty array if no loans found for the employee
         }
         if (data) { 
-            const totalAmount = Object.values(data).reduce((total, amount) => {
+            const totalAmount = Object.values(data)
+            .filter((item) => item.category === "Loan") 
+            .reduce((total, amount) => {
               return total + (amount.amount || 0); 
             }, 0);
             setTotalTransaction(totalAmount); 
@@ -82,14 +84,14 @@ export default function MyLoanCollection({ navigation }) {
          
         <BalanceCard
                 balanceTitle={"Total Collected Loan"}
-                iconName={"briefcase-search-outline"}
+                iconName={"arrow-down-bold-hexagon-outline"}
       
                 iconColor={"white"}
                 balance={totalTransaction }
               />
                <BalanceCard
                 balanceTitle={"Today's Collection"}
-                iconName={"briefcase-search-outline"}
+                iconName={"calendar-check"}
                 iconColor={"white"}
                 //onPress={()=>navigation.navigate("DayTransaction")}
                 balance={totalTransactionToday}

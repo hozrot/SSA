@@ -34,7 +34,9 @@ export default function MyChargeCollections({ navigation }) {
           setLoanList([]); // Set to empty array if no loans found for the employee
         }
         if (data) { 
-            const totalSaveAmount = Object.values(data).reduce((total, loan) => {
+            const totalSaveAmount = Object.values(data)
+            .filter((item) => item.category === "Charge") 
+            .reduce((total, loan) => {
               return total + (loan.amount || 0); 
             }, 0);
             setTotalLoanCollection(totalSaveAmount); 
@@ -48,14 +50,13 @@ export default function MyChargeCollections({ navigation }) {
             const month = (today.getMonth() + 1).toString().padStart(2, '0'); 
             const year = today.getFullYear();
             const formattedDate = `${month}/${day}/${year}`; 
-          
-            console.log("today", formattedDate); 
+            //console.log("today", formattedDate); 
           
             const todayMoment = moment(formattedDate, 'MM/DD/YYYY'); // Corrected format string
           
             const totalLoanAmountToday = Object.values(data).reduce((total, loan) => {
               const loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); // Corrected format string
-              console.log("database", loanDate);
+             // console.log("database", loanDate);
           
               if (loanDate.isSame(todayMoment, 'day') && loan.category === "Charge" ) { 
                 return total + (loan.amount || 0);
@@ -81,8 +82,8 @@ export default function MyChargeCollections({ navigation }) {
         <View style={{ justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
          
         <BalanceCard
-                balanceTitle={"Total Collected Loan"}
-                iconName={"briefcase-search-outline"}
+                balanceTitle={"Total Collected Charge"}
+                iconName={"access-point-minus"}
       
                 iconColor={"white"}
                 balance={totalLoanCollection }

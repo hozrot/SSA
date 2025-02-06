@@ -36,7 +36,9 @@ export default function MySummary({navigation }) {
                setLoanList([]); // Set to empty array if no loans found for the employee
              }
              if (data) { 
-                 const totalSaveAmount = Object.values(data).reduce((total, loan) => {
+                 const totalSaveAmount = Object.values(data)
+                 .filter((item) => item.category === "Loan") 
+                 .reduce((total, loan) => {
                    return total + (loan.amount || 0); 
                  }, 0);
                  setTotalLoanCollection(totalSaveAmount); 
@@ -65,7 +67,9 @@ export default function MySummary({navigation }) {
             setLoanList([]); // Set to empty array if no loans found for the employee
           }
           if (data) { 
-              const totalSaveAmount = Object.values(data).reduce((total, loan) => {
+              const totalSaveAmount = Object.values(data)
+              .filter((item) => item.category === "Savings") 
+              .reduce((total, loan) => {
                 return total + (loan.amount || 0); 
               }, 0);
               setTotalSavingsCollection(totalSaveAmount); 
@@ -94,7 +98,9 @@ export default function MySummary({navigation }) {
               setLoanList([]); // Set to empty array if no loans found for the employee
             }
             if (data) { 
-                const totalSaveAmount = Object.values(data).reduce((total, loan) => {
+                const totalSaveAmount = Object.values(data)
+                .filter((item) => item.category === "Charge")
+                .reduce((total, loan) => {
                   return total + (loan.amount || 0); 
                 }, 0);
                 setTotalChargeCollection(totalSaveAmount); 
@@ -117,32 +123,32 @@ export default function MySummary({navigation }) {
          
         <BalanceCard
                 balanceTitle={" Total  Loan  "}
-                iconName={"briefcase-search-outline"}
+                iconName={"access-point-minus"}
                 iconColor={"white"}
                 balance={totalLoanCollection }
               />
                <BalanceCard
                 balanceTitle={"Total  Savings"}
-                iconName={"briefcase-search-outline"}
+                iconName={"access-point-plus"}
                 iconColor={"white"}
                 //onPress={()=>navigation.navigate("DayTransaction")}
                 balance={totalSavingsCollection}
               />
-      </View>
-      <View style={{ justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
-         
-         <BalanceCard
+               <BalanceCard
                  balanceTitle={"Total Charges"}
-                 iconName={"briefcase-search-outline"}
+                 iconName={"database-plus"}
        
                  iconColor={"white"}
                  balance={totalChargeCollection }
                />
+      </View>
+      <View style={{ justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
+         
+        
                 <BalanceCard
                  balanceTitle={"Total  Collection"}
-                 iconName={"briefcase-search-outline"}
+                 iconName={"database-settings"}
                  iconColor={"white"}
-                
                  balance={totalLoanCollection+totalSavingsCollection+totalChargeCollection}
                />
        </View>
@@ -150,7 +156,7 @@ export default function MySummary({navigation }) {
          
          <BalanceCard
                  balanceTitle={"Today's Collection"}
-                 iconName={"briefcase-search-outline"}
+                 iconName={"calendar-check"}
                  onPress={()=>navigation.navigate("DayTransaction")}
                  iconColor={"red"}
                  balance={"All List  " }

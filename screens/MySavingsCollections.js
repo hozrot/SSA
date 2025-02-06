@@ -34,7 +34,9 @@ export default function MySavingsCollection({ navigation }) {
           setLoanList([]); // Set to empty array if no loans found for the employee
         }
         if (data) { 
-            const totalSaveAmount = Object.values(data).reduce((total, loan) => {
+            const totalSaveAmount = Object.values(data)
+            .filter((item) => item.category === "Savings") 
+            .reduce((total, loan) => {
               return total + (loan.amount || 0); 
             }, 0);
             setTotalLoanCollection(totalSaveAmount); 
@@ -81,15 +83,15 @@ export default function MySavingsCollection({ navigation }) {
         <View style={{ justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
          
         <BalanceCard
-                balanceTitle={"Total Collected Loan"}
-                iconName={"briefcase-search-outline"}
+                balanceTitle={"Total Collected savings"}
+                iconName={"archive-plus"}
       
                 iconColor={"white"}
                 balance={totalLoanCollection }
               />
                <BalanceCard
                 balanceTitle={"Today's Collection"}
-                iconName={"briefcase-search-outline"}
+                iconName={"calendar-check"}
                 iconColor={"white"}
                 //onPress={()=>navigation.navigate("DayTransaction")}
                 balance={totalCollectionToday}

@@ -11,7 +11,7 @@ export default function BalanceCard({
   iconColor = "#6656FE",
 }) {
   return (
-    <TouchableOpacity style={styles.Container} onPress={onPress}>
+    <TouchableOpacity style={styles.Container } onPress={onPress}>
       <View
         style={{
           justifyContent: "center",
@@ -20,7 +20,7 @@ export default function BalanceCard({
         }}
       >
         {" "}
-        <Text style={{ color: "white" }}> {balanceTitle} </Text>{" "}
+        <Text style={{ color: "white",textAlign:'center' }}> {balanceTitle} </Text>{" "}
       </View>
 
       <MaterialCommunityIcons

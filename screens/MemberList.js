@@ -26,7 +26,8 @@ export default function MemberList( {navigation} ) {
       const allmember = Object.keys(data).map(key => ({
         id: key,
         ...data[key]
-      }));
+      }))
+      //.filter(member => member.assingedEmployee === "Employee1");
       setMemberList(allmember);
       setMemberCount(allmember.length);
     });
@@ -36,8 +37,8 @@ export default function MemberList( {navigation} ) {
       <View style={{ justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
         <BalanceCard
           balanceTitle={"Total Member Registered "}
-          iconName={"briefcase-search-outline"}
-
+          iconName={"account-arrow-left-outline"}
+          iconSize={54}
           iconColor={"white"}
           balance={memberCount}
         />

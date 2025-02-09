@@ -28,7 +28,14 @@ export default function AllTransaction({ navigation }) {
   const [memberList, setMemberList] = useState([]);
   const [selectedMemberId, setSelectedMemberId] = useState(null);
   const [selectedMember, setSelectedMember] = useState(null);
+  const [searchText, setSearchText] = useState(''); 
 
+  const handleSearchTextChange = (text) => {
+    setSearchText(text);
+  };
+  const filteredMemberList = memberList.filter((member) => 
+    member.memberId.toString().includes(searchText) 
+  );
   useEffect(() => {
     const dataLink = ref(db, "member/");
     onValue(dataLink, (snapshot) => {
@@ -102,7 +109,15 @@ export default function AllTransaction({ navigation }) {
         <Text style={styles.AllText}> সুন্দরগঞ্জ , গাইবান্ধা । </Text>
       </View>
       <View style={styles.FormView}>
-        <Text
+       
+        <TextInput 
+        style={styles.searchInput} 
+        placeholder="Search Member No.." 
+        value={searchText} 
+        keyboardType="number-pad"
+        onChangeText={handleSearchTextChange} 
+      />
+       <Text
           style={{
             fontFamily: "DMSans_500Medium",
             fontSize: 16,
@@ -118,7 +133,7 @@ export default function AllTransaction({ navigation }) {
           onValueChange={(itemValue) => setSelectedMemberId(itemValue)}
         >
           <Picker.Item label="Select Member" value={null} />
-          {memberList.map((member) => (
+          {filteredMemberList.map((member) => (
             <Picker.Item
               key={member.memberId}
               label={member.memberId}

@@ -51,13 +51,13 @@ export default function MySavingsCollection({ navigation }) {
             const year = today.getFullYear();
             const formattedDate = `${month}/${day}/${year}`; 
           
-            console.log("today", formattedDate); 
+           // console.log("today", formattedDate); 
           
             const todayMoment = moment(formattedDate, 'MM/DD/YYYY'); // Corrected format string
           
             const totalLoanAmountToday = Object.values(data).reduce((total, loan) => {
               const loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); // Corrected format string
-              console.log("database", loanDate);
+             // console.log("database", loanDate);
           
               if (loanDate.isSame(todayMoment, 'day') && loan.category === "Savings" ) { 
                 return total + (loan.amount || 0);
@@ -87,14 +87,14 @@ export default function MySavingsCollection({ navigation }) {
                 iconName={"archive-plus"}
       
                 iconColor={"white"}
-                balance={totalLoanCollection }
+                balance={totalLoanCollection +' ৳' }
               />
                <BalanceCard
                 balanceTitle={"Today's Collection"}
                 iconName={"calendar-check"}
                 iconColor={"white"}
                 //onPress={()=>navigation.navigate("DayTransaction")}
-                balance={totalCollectionToday}
+                balance={totalCollectionToday +' ৳'} 
               />
       </View>
       {
@@ -105,8 +105,8 @@ export default function MySavingsCollection({ navigation }) {
               name={item.memberno}
               date={item.timestamp}
               amount={item.amount}
-              iconName={"arrow-split-vertical"}
-              iconColor={'#8300FD'}
+              iconName={item.type === 'Collection' ? 'account-arrow-left' : 'account-arrow-right'}
+              iconColor={item.type === 'Collection' ? '#8300FD' : "red"}
               type={item.type}
               category={item.category}            />
 
@@ -120,7 +120,7 @@ export default function MySavingsCollection({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    paddingBottom: 10,
   },
   item: {
     backgroundColor: 'green',

@@ -81,7 +81,7 @@ export default function MyLoanCollection({ navigation }) {
                 iconName={"calendar-check"}
                 iconColor={"white"}
                 onPress={()=>navigation.navigate("DayTransaction")}
-                balance={totalCollectionToday}
+                balance={totalCollectionToday +' ৳'}
               />
       </View>
      
@@ -93,9 +93,11 @@ export default function MyLoanCollection({ navigation }) {
               name={item.memberno}
               date={item.timestamp}
               amount={item.amount}
-              iconName={"arrow-split-vertical"}
-              iconColor={'#8300FD'}
-            />
+              iconName={item.type === 'Collection' ? 'account-arrow-left' : 'account-arrow-right'}
+              iconColor={item.type === 'Collection' ? '#8300FD' : "red"}
+              type={item.type}
+              category={item.category}    
+              backgroundColor={"yellow"}          />
 
           )
         })

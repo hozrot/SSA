@@ -9,9 +9,10 @@ export default function BalanceCard({
   iconSize = 40,
   balance,
   iconColor = "#6656FE",
+  backgroundColor='#6656FE',
 }) {
   return (
-    <TouchableOpacity style={styles.Container } onPress={onPress}>
+    <TouchableOpacity style={[styles.Container, { backgroundColor: backgroundColor }]}  onPress={onPress}>
       <View
         style={{
           justifyContent: "center",

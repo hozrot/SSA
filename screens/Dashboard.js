@@ -96,40 +96,71 @@ export default function Dashboard({ navigation }) {
                     color: 'white',
                   }}> সুন্দরগঞ্জ , গাইবান্ধা ।   </Text>
       </View>
-      {/* <View style={{ flex: .20, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
-        <BalanceCard
-          balanceTitle={"Total Collection"}
-          iconName={"briefcase-search-outline"}
-          iconSize={60}
-          iconColor={"white"}
-          balance={totalLoanAmount}
-        />
-        <BalanceCard
-          balanceTitle={"Withdraw Savings "}
-          iconName={"briefcase-clock-outline"}
-          iconColor={"white"}
-          iconSize={60}
-          balance={totalSaveAmount}
-        />
-      </View>
-        <View style={{ flex: .20, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
-        <BalanceCard
-          balanceTitle={" Withdraw Loan "}
-          iconName={"briefcase-eye-outline"}
-          iconSize={60}
-          iconColor={"white"}
-          balance={totalLoanGiven}
-        />
-         <BalanceCard
-          balanceTitle={" Charges  "}
-          iconName={"briefcase-eye-outline"}
-          iconSize={60}
-          iconColor={"white"}
-          balance={totalChargeAmount}
-        />
-      </View> */}
+      
+
+       <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "row",
+                
+              }}
+            >
+              <BalanceCard
+                balanceTitle={"Loan"}
+                iconName={"arrow-down-bold-hexagon-outline"}
+                iconColor={"white"}
+             //   balance={totalSavingsCollection+'৳'}
+              />
+              <BalanceCard
+                balanceTitle={" Withdrawn"}
+                iconName={"arrow-up-bold-hexagon-outline"}
+                iconColor={"white"}
+                //onPress={()=>navigation.navigate("DayTransaction")}
+                //balance={totalSavingsWithdraw+'৳'}
+              />
+               <BalanceCard
+                balanceTitle={" Balance"}
+                iconName={"hexagon-slice-6"}
+                iconColor={"white"}
+                //onPress={()=>navigation.navigate("DayTransaction")}
+                //balance={totalSavingsCollection-totalSavingsWithdraw+'৳'}
+              />
+       </View>
+      
+        <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "row",
+                      flex: .15,
+                      paddingBottom: 15,
+                     
+                    }}
+                  >
+                    <BalanceCard
+                      balanceTitle={"Savings"}
+                      iconName={"arrow-down-bold-hexagon-outline"}
+                      iconColor={"white"}
+                      //balance={totalSavingsCollection+'৳'}
+                    />
+                    <BalanceCard
+                      balanceTitle={" Withdrawn"}
+                      iconName={"arrow-up-bold-hexagon-outline"}
+                      iconColor={"white"}
+                      //onPress={()=>navigation.navigate("DayTransaction")}
+                     // balance={totalSavingsWithdraw+'৳'}
+                    />
+                     <BalanceCard
+                      balanceTitle={" Balance"}
+                      iconName={"hexagon-slice-6"}
+                      iconColor={"white"}
+                      //onPress={()=>navigation.navigate("DayTransaction")}
+                     // balance={totalSavingsCollection-totalSavingsWithdraw+'৳'}
+                    />
+        </View>
      
-      <View style={{ flex: .20, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
+      <View style={{ flex: .25, justifyContent: "center", alignItems: "center", flexDirection: 'row',paddingBottom:10 }}>
         {/* <MenuCard
           menuTitle={"Employee Details"}
           iconName={"human-queue"}
@@ -140,27 +171,47 @@ export default function Dashboard({ navigation }) {
         <MenuCard
           menuTitle={"Member List"}
           iconName={"text-box-multiple"}
-          iconSize={80}
+          iconSize={60}
           iconColor={"#6656FE"}
           onPress={() => navigation.navigate("MemberList")}
+          
         />
-      </View>
-      <View style={{ flex: .20, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
-        {/* <MenuCard
-          menuTitle={"Transaction Hostory "}
-          iconName={"history"}
-          iconSize={80}
-          iconColor={"#6656FE"}
-          onPress={() => navigation.navigate("TransactionHistory")}
-        /> */}
         <MenuCard
-          menuTitle={"My Transactions"}
+          menuTitle={"Transactions"}
           iconName={"currency-try"}
-          iconSize={80}
+          iconSize={60}
           iconColor={"#6656FE"}
           onPress={() => navigation.navigate("MyTransaction")}
         />
       </View>
+      <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                flexDirection: "row",
+                flex: .15,
+                
+                padding: 30,
+              }}
+            >
+              {/* <BalanceCard
+                balanceTitle={"Expense"}
+                iconName={"arrow-down-bold-hexagon-outline"}
+                iconColor={"white"}
+             //   balance={totalSavingsCollection+'৳'}
+              /> */}
+              
+               <BalanceCard
+                balanceTitle={" Balance Sheet"}
+                iconName={"google-spreadsheet"}
+                iconColor={"white"}
+                iconSize={60}
+                onPress={() => navigation.navigate("BalanceSheet")}
+                //onPress={()=>navigation.navigate("DayTransaction")}
+                //balance={totalSavingsCollection-totalSavingsWithdraw+'৳'}
+              />
+       </View>
+      
       {/* <View style={{ flex: .20, justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
         <MenuCard
           menuTitle={"Balancesheet"}
@@ -184,8 +235,8 @@ export default function Dashboard({ navigation }) {
 
 const styles = StyleSheet.create({
   HeaderView: {
-    flex: 0.1,
-    padding: 20,
+    flex: 0.10,
+    padding: 10,
     width: "100%",
     justifyContent: "center",
     alignItems: "center",

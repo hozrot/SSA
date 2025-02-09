@@ -83,17 +83,17 @@ export default function MyChargeCollections({ navigation }) {
          
         <BalanceCard
                 balanceTitle={"Total Collected Charge"}
-                iconName={"access-point-minus"}
+                iconName={"alarm-plus"}
       
                 iconColor={"white"}
-                balance={totalLoanCollection }
+                balance={totalLoanCollection +' ৳' }
               />
                <BalanceCard
                 balanceTitle={"Today's Collection"}
-                iconName={"briefcase-search-outline"}
+                iconName={"calendar-check"}
                 iconColor={"white"}
                 //onPress={()=>navigation.navigate("DayTransaction")}
-                balance={totalCollectionToday}
+                balance={totalCollectionToday +' ৳'}
               />
       </View>
       {
@@ -104,10 +104,12 @@ export default function MyChargeCollections({ navigation }) {
               name={item.memberno}
               date={item.timestamp}
               amount={item.amount}
-              iconName={"arrow-split-vertical"}
+              iconName={"account-arrow-down"}
               iconColor={'#8300FD'}
               type={item.type}
-              category={item.category}            />
+              category={item.category}  
+              backgroundColor={"tomato"}
+            />
 
           )
         })
@@ -119,7 +121,7 @@ export default function MyChargeCollections({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    paddingBottom: 10,
   },
   item: {
     backgroundColor: 'green',

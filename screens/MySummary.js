@@ -123,43 +123,45 @@ export default function MySummary({navigation }) {
          
         <BalanceCard
                 balanceTitle={" Total  Loan  "}
-                iconName={"access-point-minus"}
+                iconName={"archive-minus"}
                 iconColor={"white"}
-                balance={totalLoanCollection }
+                balance={totalLoanCollection  +' ৳'}
               />
                <BalanceCard
                 balanceTitle={"Total  Savings"}
-                iconName={"access-point-plus"}
+                iconName={"archive-plus"}
                 iconColor={"white"}
                 //onPress={()=>navigation.navigate("DayTransaction")}
-                balance={totalSavingsCollection}
+                balance={totalSavingsCollection +' ৳'}
               />
-               <BalanceCard
-                 balanceTitle={"Total Charges"}
-                 iconName={"database-plus"}
-       
-                 iconColor={"white"}
-                 balance={totalChargeCollection }
-               />
+               
       </View>
       <View style={{ justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
          
-        
+      <BalanceCard
+                 balanceTitle={"Total Charges"}
+                 iconName={"archive-refresh"}
+        backgroundColor='green'
+                 iconColor={"white"}
+                 balance={totalChargeCollection +' ৳' }
+               />
                 <BalanceCard
                  balanceTitle={"Total  Collection"}
-                 iconName={"database-settings"}
+                 iconName={"archive"}
                  iconColor={"white"}
-                 balance={totalLoanCollection+totalSavingsCollection+totalChargeCollection}
+                 balance={totalLoanCollection+totalSavingsCollection+totalChargeCollection +' ৳'}
+                 backgroundColor='red'
                />
        </View>
        <View style={{ justifyContent: "center", alignItems: "center", flexDirection: 'row' }}>
          
          <BalanceCard
                  balanceTitle={"Today's Collection"}
-                 iconName={"calendar-check"}
+                 iconName={"hours-24"}
                  onPress={()=>navigation.navigate("DayTransaction")}
-                 iconColor={"red"}
-                 balance={"All List  " }
+                 iconColor={"white"}
+                 balance={"All List " }
+                 iconSize={60}
                  
                />
                

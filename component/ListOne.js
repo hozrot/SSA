@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-export default function ListOne({ name, type, onPress, date, iconName, iconSize, amount,category,
+export default function ListOne({ name, type, onPress, date, iconName, iconSize, amount,category,backgroundColor='#7FC56C',
     iconColor = 'green' }) {
     return (
-        <TouchableOpacity style={styles.List} onPress={onPress}>
+        <TouchableOpacity style={[styles.List, { backgroundColor: backgroundColor }]} onPress={onPress}>
             <View style={{ justifyContent: 'center', alignContent: 'center', alignItems: 'center', flex: .20, paddingRight: 10 }}>
                 {/* <MaterialCommunityIcons name={'arrow-split-vertical'} size={36} color={"red"} /> */}
                 <MaterialCommunityIcons name={iconName} size={48} color={iconColor} />
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         margin: 5,
         padding: 5,
-        backgroundColor: '#7FC56C',
+        backgroundColor: 'green',
         borderColor: 'gray',
         borderWidth: 2,
         borderRadius: 15,

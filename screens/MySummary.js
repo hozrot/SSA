@@ -21,8 +21,8 @@ export default function MySummary({navigation }) {
     const dataLink = ref(db, 'AllTransaction/');
     const employeeLoansQuery = query(
         dataLink,
-        orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
-        equalTo(enrollment) // Filter for the specific employee
+        // orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
+        // equalTo(enrollment) // Filter for the specific employee
       );
      onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
              const data = snapshot.val();
@@ -30,7 +30,7 @@ export default function MySummary({navigation }) {
                const allLoan = Object.keys(data).map(key => ({
                  id: key,
                  ...data[key]
-               })).filter(loan => loan.category === "Loan" ); // Filter for the specific employee
+               }))//.filter(loan => loan.category === "Loan" ); // Filter for the specific employee
                setLoanList(allLoan);
              } else {
                setLoanList([]); // Set to empty array if no loans found for the employee
@@ -47,13 +47,14 @@ export default function MySummary({navigation }) {
                }
       });
   
-    }, []); // Add employeeId to the dependency array
+    }, []);
+    
     useEffect(() => {
       const dataLink = ref(db, 'AllTransaction/');
       const employeeLoansQuery = query(
           dataLink,
-          orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
-          equalTo(enrollment) // Filter for the specific employee
+          // orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
+          // equalTo(enrollment) // Filter for the specific employee
         );
         onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
           const data = snapshot.val();
@@ -61,7 +62,7 @@ export default function MySummary({navigation }) {
             const allLoan = Object.keys(data).map(key => ({
               id: key,
               ...data[key]
-            })).filter(loan => loan.category === "Savings" ); // Filter for the specific employee
+            }))//.filter(loan => loan.category === "Savings" ); // Filter for the specific employee
             setLoanList(allLoan);
           } else {
             setLoanList([]); // Set to empty array if no loans found for the employee
@@ -83,8 +84,8 @@ export default function MySummary({navigation }) {
         const dataLink = ref(db, 'AllTransaction/');
         const employeeLoansQuery = query(
             dataLink,
-            orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
-            equalTo(enrollment) // Filter for the specific employee
+            // orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
+            // equalTo(enrollment) // Filter for the specific employee
           );
           onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
             const data = snapshot.val();
@@ -92,7 +93,7 @@ export default function MySummary({navigation }) {
               const allLoan = Object.keys(data).map(key => ({
                 id: key,
                 ...data[key]
-              })).filter(loan => loan.category === "Charge" ); // Filter for the specific employee
+              }))//.filter(loan => loan.category === "Charge" ); // Filter for the specific employee
               setLoanList(allLoan);
             } else {
               setLoanList([]); // Set to empty array if no loans found for the employee

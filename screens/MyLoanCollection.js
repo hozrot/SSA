@@ -19,8 +19,8 @@ export default function MyLoanCollection({ navigation }) {
     const dataLink = ref(db, 'AllTransaction/');
     const transactionQuery = query(
         dataLink,
-        orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
-        equalTo("Employee1") // Filter for the specific employee
+        // orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
+        // equalTo("Employee1") // Filter for the specific employee
       );
       onValue(transactionQuery, (snapshot) => { // Use the filtered query
         const data = snapshot.val();

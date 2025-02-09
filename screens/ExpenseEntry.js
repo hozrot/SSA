@@ -5,11 +5,86 @@ import React, { useState, useEffect } from "react";
 import { db } from "../config";
 import { ref, set, onValue } from "firebase/database";
 import { Picker } from "@react-native-picker/picker";
+import DatePicker from 'react-native-date-picker'
+
+import {
+  ALERT_TYPE,
+  Dialog,
+  AlertNotificationRoot,
+  Toast,
+} from "react-native-alert-notification";
+
 
 export default function ExpenseEntry({ navigation }) {
-   const [otherAmount, setOtherAmount] = useState("");
+   const [otherAmount, setOtherAmount] = useState(0);
+   const [salary, setSalary] = useState(0);
+   const [bonus, setBonus] = useState(0);
+   const [donation, setDonation] = useState(0);
+   const [officeRent, setOfficeRent] = useState(0);
+   const [elllictricBill, setEllictricBill] = useState(0);
+   const [loanExpenss, setLoanExpenss] = useState(0);
+   const [officeExpenss, setOfficeExpenss] = useState(0);
+
+   const [inputdate, setInputDate] = useState(new Date())
+   const [open, setOpen] = useState(false)
+
+   const timestamp = Date.now(); // Get current timestamp in milliseconds
+   // Create a Date object from the timestamp
+   const date = new Date(timestamp);
+   // Format the date and time using toLocaleString()
+   const formattedDateTime = date.toLocaleString();
+   const month = (date).toLocaleString('default', { month: 'long'  }); 
+   const uniqueId = Math.floor(Math.random() * 10000);
+
+   const today = new Date();
+const previousMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1); 
+const previousMonthName = previousMonth.toLocaleString('default', { month: 'long' }); 
+
+
+   const addExpenss = () => {
+       if (  !salary  || !officeRent || !elllictricBill || !officeExpenss) {
+         Dialog.show({
+           type: ALERT_TYPE.WARNING,
+           title: "Error",
+           textBody: "Salary,Office Rent,Elllictric Bill and Office Expense fields are required.",
+           button: "Close",
+         });
+         return; // Exit the function if any field is empty
+       }
+       set(ref(db, "AllExpenss/" + uniqueId), {
+          otherAmount: otherAmount, 
+          salary: salary,
+          bonus: bonus,
+          donation: donation,
+          officeRent: officeRent,
+          elllictricBill: elllictricBill,
+          loanExpenss: loanExpenss,
+          officeExpenss: officeExpenss,
+         scid: uniqueId,
+         timestamp: formattedDateTime,
+       });
+       setOtherAmount(0);
+        setSalary(0);
+        setBonus(0);
+        setDonation(0);
+        setOfficeRent(0);
+        setEllictricBill(0);
+        setLoanExpenss(0);
+        setOfficeExpenss(0);
+
+   
+       Dialog.show({
+         type: ALERT_TYPE.SUCCESS,
+         title: "Success",
+         textBody: "New Expense Added",
+         button: "close",
+       });
+     };
+ 
   return (
     <ScrollView style={styles.containerView}>
+      <AlertNotificationRoot>
+      </AlertNotificationRoot>
 
       <View style={styles.HeaderView}>
         <Text
@@ -25,7 +100,24 @@ export default function ExpenseEntry({ navigation }) {
         </Text>
         <Text style={styles.AllText}> সুন্দরগঞ্জ , গাইবান্ধা ।   </Text>
       </View>
+      <Text
+          style={{
+            fontFamily: 'bold',
+            textDecorationLine: 'underline',
+            fontSize: 24,
+            paddingBottom: 8,
+            paddingTop: 15,
+            textAlign: 'center',
+
+          }}
+        >
+          {" "}
+          Expense of  {previousMonthName}{" "}  
+        </Text>
+
+       
       <View style={styles.FormView}>
+     
       
         <Text
           style={{
@@ -52,11 +144,13 @@ export default function ExpenseEntry({ navigation }) {
           value={otherAmount.toString()}
           onChangeText={(text) => {
             const numericValue = parseFloat(text);
-            if (!isNaN(numericValue)) {
+            if (isNaN(numericValue)) {
+              setOtherAmount('');
+            }
+            else {
               setOtherAmount(numericValue);
             }
           }}
-          style={{ fontSize: 14 }}
         />
 
         <Text
@@ -77,12 +171,20 @@ export default function ExpenseEntry({ navigation }) {
           inputAlign={"center"}
           placeholder="Enter here...."
           autoCapitalize="none"
-          keyboardType="email-address"
+          keyboardType="number-pad"
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
-          style={{ fontSize: 14 }}
+          value={salary.toString()}
+          onChangeText={(text) => {
+            const numericValue = Number(text);
+            if (isNaN(numericValue)) {
+              setSalary('');
+            }
+            else {
+              setSalary(numericValue);
+            }
+          }}
         />
 
 
@@ -104,12 +206,20 @@ export default function ExpenseEntry({ navigation }) {
           inputAlign={"center"}
           placeholder="Enter here...."
           autoCapitalize="none"
-          keyboardType="email-address"
+          keyboardType="number-pad"
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
-          style={{ fontSize: 14 }}
+          value={bonus.toString()}
+          onChangeText={(text) => {
+            const numericValue = parseFloat(text);
+            if (isNaN(numericValue)) {
+              setBonus('');
+            }
+            else {
+              setBonus(numericValue);
+            }
+          }}
         />
         <Text
           style={{
@@ -129,12 +239,20 @@ export default function ExpenseEntry({ navigation }) {
           inputAlign={"center"}
           placeholder="Enter here...."
           autoCapitalize="none"
-          keyboardType="email-address"
+          keyboardType="number-pad"
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
-          style={{ fontSize: 14 }}
+          value={donation.toString()}
+          onChangeText={(text) => {
+            const numericValue = parseFloat(text);
+            if (isNaN(numericValue)) {
+              setDonation('');
+            }
+            else {
+              setDonation(numericValue);
+            }
+          }}
         />
 
         <Text
@@ -155,12 +273,20 @@ export default function ExpenseEntry({ navigation }) {
           inputAlign={"center"}
           placeholder="Enter here...."
           autoCapitalize="none"
-          keyboardType="email-address"
+          keyboardType="number-pad"
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
-          style={{ fontSize: 14 }}
+          value={officeRent.toString()}
+          onChangeText={(text) => {
+            const numericValue = parseFloat(text);
+            if (isNaN(numericValue)) {
+              setOfficeRent('');
+            }
+            else {
+              setOfficeRent(numericValue);
+            }
+          }}
         />
 
 
@@ -182,12 +308,20 @@ export default function ExpenseEntry({ navigation }) {
           inputAlign={"center"}
           placeholder="Enter here...."
           autoCapitalize="none"
-          keyboardType="email-address"
+          keyboardType="number-pad"
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
-          style={{ fontSize: 14 }}
+          value={elllictricBill.toString()}
+          onChangeText={(text) => {
+            const numericValue = parseFloat(text);
+            if (isNaN(numericValue)) {
+              setEllictricBill('');
+            }
+            else {
+              setEllictricBill(numericValue);
+            }
+          }}
         />
         <Text
           style={{
@@ -201,19 +335,27 @@ export default function ExpenseEntry({ navigation }) {
           {" "}
           Loan Expenss {" "}
         </Text>
-
         <TextInput
           inputHieght={54}
           inputAlign={"center"}
           placeholder="Enter here...."
           autoCapitalize="none"
-          keyboardType="email-address"
+          keyboardType="number-pad"
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
-          style={{ fontSize: 14 }}
+          value={loanExpenss.toString()}
+          onChangeText={(text) => {
+            const numericValue = parseFloat(text);
+            if (isNaN(numericValue)) {
+              setLoanExpenss('');
+            }
+            else {
+              setLoanExpenss(numericValue);
+            }
+          }}
         />
+
         <Text
           style={{
             fontFamily: "DMSans_500Medium",
@@ -227,42 +369,26 @@ export default function ExpenseEntry({ navigation }) {
           Office Expense  {" "}
         </Text>
 
+       
         <TextInput
           inputHieght={54}
           inputAlign={"center"}
           placeholder="Enter here...."
           autoCapitalize="none"
-          keyboardType="email-address"
+          keyboardType="number-pad"
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-
-          style={{ fontSize: 14 }}
-        />
-        <Text
-          style={{
-            fontFamily: "DMSans_500Medium",
-            fontSize: 16,
-            paddingBottom: 8,
-            paddingTop: 15,
-
+          value={officeExpenss.toString()}
+          onChangeText={(text) => {
+            const numericValue = parseFloat(text);
+            if (isNaN(numericValue)) {
+              setOfficeExpenss('');
+            }
+            else {
+              setOfficeExpenss(numericValue);
+            }
           }}
-        >
-          {" "}
-          Month  {" "}
-        </Text>
-
-        <TextInput
-          inputHieght={54}
-          inputAlign={"center"}
-          placeholder="Enter here...."
-          autoCapitalize="none"
-          keyboardType="email-address"
-          keyboardAppearance="dark"
-          returnKeyType="next"
-          returnKeyLabel="next"
-
-          style={{ fontSize: 14 }}
         />
         <Text
           style={{
@@ -274,12 +400,13 @@ export default function ExpenseEntry({ navigation }) {
           }}
         >
           {" "}
-          Total :   Taka   {" "}
+          Total :   {otherAmount + salary + bonus + donation + officeRent + elllictricBill + loanExpenss + officeExpenss}{"৳"}   
         </Text>
+       
       </View>
 
       <View style={styles.SubmitView}>
-        <Button label="Submit Entry " onPress={() => navigation.navigate("Dashboard")} />
+        <Button label="Submit Entry " onPress={addExpenss} />
       </View>
     </ScrollView>
   )

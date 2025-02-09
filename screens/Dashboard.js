@@ -5,71 +5,91 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import MenuCard from "../component/MenuCard";
 import BalanceCard from "../component/BalanceCard";
 import { db } from '../config';
-import { ref, onValue } from 'firebase/database';
+import { ref, onValue ,query, orderByChild, equalTo} from 'firebase/database';
 
 export default function Dashboard({ navigation }) {
 
-  const [totalLoanAmount, setTotalLoanAmount] = useState([])
+   const [loneList, setLoanList] = useState([])
+  const [totalLoanWithdraw, setTotalLoanWithdraw] = useState([])
+  const [totalsavingsWithdraw, setTotalSavingsWithdraw] = useState([])
   const [totalSaveAmount, setTotalSaveAmount] = useState([])
   const [totalChargeAmount, setTotalChargeAmount] = useState([])
-  const [totalLoanGiven, setTotalLoanGiven] = useState([])
+  const [totalLoanCollection, setTotalLoanCollection] = useState([])
 
-  useEffect(() => {
-    const dataLink = ref(db, 'CollectionLoan/');
-    onValue(dataLink, (snapshot) => {
-      const data = snapshot.val();
-      if (data) { 
-        const totalLoanAmount = Object.values(data).reduce((total, loan) => {
-          return total + (loan.loanamount || 0); 
-        }, 0);
-        setTotalLoanAmount(totalLoanAmount); 
-      } else {
-        setTotalLoanAmount(0); 
-      }
-    });
-  }, []);
-  useEffect(() => {
-    const dataLink = ref(db, 'CollectionSavings/');
-    onValue(dataLink, (snapshot) => {
-      const data = snapshot.val();
-      if (data) { 
-        const totalSaveAmount = Object.values(data).reduce((total, savings) => {
-          return total + (savings.savingsamount || 0); 
-        }, 0);
-        setTotalSaveAmount(totalSaveAmount); 
-      } else {
-        setTotalSaveAmount(0); 
-      }
-    });
-  }, []);
-  useEffect(() => {
-    const dataLink = ref(db, 'CollectionCharges/');
-    onValue(dataLink, (snapshot) => {
-      const data = snapshot.val();
-      if (data) { 
-        const totalSaveAmount = Object.values(data).reduce((total, savings) => {
-          return total + (savings.chargeamount || 0); 
-        }, 0);
-        setTotalChargeAmount(totalSaveAmount); 
-      } else {
-        setTotalChargeAmount(0); 
-      }
-    });
-  }, []);
-  useEffect(() => {
-    const dataLink = ref(db, 'WithdrawLoan/');
-    onValue(dataLink, (snapshot) => {
-      const data = snapshot.val();
-      if (data) { 
-        const totalLoanGiven = Object.values(data).reduce((total, loan) => {
-          return total + (loan.savingsamount || 0); 
-        }, 0);
-        setTotalLoanGiven(totalLoanGiven); 
-      } else {
-        setTotalLoanGiven(0); 
-      }
-    });
-  }, []);
+useEffect(() => {
+    const dataLink = ref(db, 'AllTransaction/');
+    const employeeTransactionQuery = query(
+        dataLink,
+        // orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
+        // equalTo(enrollment) // Filter for the specific employee
+      );
+     onValue(employeeTransactionQuery, (snapshot) => { // Use the filtered query
+             const data = snapshot.val();
+             if (data) { // Check if data exists
+               const allLoan = Object.keys(data).map(key => ({
+                 id: key,
+                 ...data[key]
+               }))//.filter(loan => loan.category === "Loan" ); // Filter for the specific employee
+               setLoanList(allLoan);
+             } else {
+               setLoanList([]); // Set to empty array if no loans found for the employee
+             }
+             if (data) { 
+                 const totalAmount = Object.values(data)
+                 .filter((item) => item.category === "Loan" && item.type === "Withdraw") 
+                 .reduce((total, loan) => {
+                   return total + (loan.amount || 0); 
+                 }, 0);
+                 setTotalLoanWithdraw(totalAmount); 
+               } else {
+                setTotalLoanWithdraw(0); 
+               }
+
+               if (data) { 
+                const totalAmount = Object.values(data)
+                .filter((item) => item.category === "Loan" && item.type === "Collection") 
+                .reduce((total, loan) => {
+                  return total + (loan.amount || 0); 
+                }, 0);
+                setTotalLoanCollection(totalAmount); 
+              } else {
+                setTotalLoanCollection(0); 
+              }
+
+              if (data) { 
+                const totalAmount = Object.values(data)
+                .filter((item) => item.category === "Savings" && item.type === "Collection") 
+                .reduce((total, loan) => {
+                  return total + (loan.amount || 0); 
+                }, 0);
+                setTotalSaveAmount(totalAmount); 
+              } else {
+                setTotalSaveAmount(0); 
+              }
+
+              if (data) { 
+                const totalAmount = Object.values(data)
+                .filter((item) => item.category === "Savings" && item.type === "Withdraw") 
+                .reduce((total, loan) => {
+                  return total + (loan.amount || 0); 
+                }, 0);
+                setTotalSavingsWithdraw(totalAmount); 
+              } else {
+                setTotalSavingsWithdraw(0); 
+              }
+              if (data) { 
+                const totalAmount = Object.values(data)
+                .filter((item) => item.category === "Charge" && item.type === "Collection") 
+                .reduce((total, loan) => {
+                  return total + (loan.amount || 0); 
+                }, 0);
+                setTotalChargeAmount(totalAmount); 
+              } else {
+                setTotalChargeAmount(0); 
+              }
+      });
+  
+    }, []);
   
   return (
     <View style={{ flex: 1, justifyContent: 'space-around', alignItems: "center", backgroundColor: 'green',paddingTop:20 }}>
@@ -107,24 +127,24 @@ export default function Dashboard({ navigation }) {
               }}
             >
               <BalanceCard
-                balanceTitle={"Loan"}
+                balanceTitle={"Loan Given"}
                 iconName={"arrow-down-bold-hexagon-outline"}
                 iconColor={"white"}
-             //   balance={totalSavingsCollection+'৳'}
+                balance={totalLoanWithdraw+'৳'}
               />
               <BalanceCard
-                balanceTitle={" Withdrawn"}
+                balanceTitle={" Collection Loan "}
                 iconName={"arrow-up-bold-hexagon-outline"}
                 iconColor={"white"}
                 //onPress={()=>navigation.navigate("DayTransaction")}
-                //balance={totalSavingsWithdraw+'৳'}
+                balance={totalLoanCollection+'৳'}
               />
                <BalanceCard
-                balanceTitle={" Balance"}
+                balanceTitle={" Collection Charge"}
                 iconName={"hexagon-slice-6"}
                 iconColor={"white"}
                 //onPress={()=>navigation.navigate("DayTransaction")}
-                //balance={totalSavingsCollection-totalSavingsWithdraw+'৳'}
+                balance={totalChargeAmount+'৳'}
               />
        </View>
       
@@ -142,21 +162,21 @@ export default function Dashboard({ navigation }) {
                       balanceTitle={"Savings"}
                       iconName={"arrow-down-bold-hexagon-outline"}
                       iconColor={"white"}
-                      //balance={totalSavingsCollection+'৳'}
+                      balance={totalSaveAmount+'৳'}
                     />
                     <BalanceCard
                       balanceTitle={" Withdrawn"}
                       iconName={"arrow-up-bold-hexagon-outline"}
                       iconColor={"white"}
                       //onPress={()=>navigation.navigate("DayTransaction")}
-                     // balance={totalSavingsWithdraw+'৳'}
+                      balance={totalsavingsWithdraw+'৳'}
                     />
                      <BalanceCard
                       balanceTitle={" Balance"}
                       iconName={"hexagon-slice-6"}
                       iconColor={"white"}
                       //onPress={()=>navigation.navigate("DayTransaction")}
-                     // balance={totalSavingsCollection-totalSavingsWithdraw+'৳'}
+                     balance={totalSaveAmount-totalsavingsWithdraw+'৳'}
                     />
         </View>
      

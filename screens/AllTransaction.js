@@ -23,7 +23,6 @@ export default function AllTransaction({ navigation }) {
   const date = new Date(timestamp);
   // Format the date and time using toLocaleString()
   const formattedDateTime = date.toLocaleString();
-
   const uniqueId = Math.floor(Math.random() * 10000);
   //const uniqueId = 1*1000;
   const [memberList, setMemberList] = useState([]);
@@ -221,7 +220,10 @@ export default function AllTransaction({ navigation }) {
           value={amount.toString()}
           onChangeText={(text) => {
             const numericValue = parseFloat(text);
-            if (!isNaN(numericValue)) {
+            if (isNaN(numericValue)) {
+              setAmount('');
+            }
+            else {
               setAmount(numericValue);
             }
           }}

@@ -9,7 +9,7 @@ import moment from "moment";
 import { useRoute } from "@react-navigation/native";
 export default function MemberTransaction({ navigation }) {
   const route = useRoute();
-  const { memberId } = route.params;
+  const { memberId,name } = route.params;
   const [loneList, setLoanList] = useState([]);
   const [totalCollectionToday, setTotalCollectionToday] = useState([]);
   const [totalLoanCollection, setTotalLoanCollection] = useState([]);
@@ -123,7 +123,8 @@ export default function MemberTransaction({ navigation }) {
       >
         <Text style={{ fontWeight: "bold", fontSize: 20 }}>
           {" "}
-          Details of member id: {memberId}
+         
+            {name}
         </Text>
       </View>
       <View

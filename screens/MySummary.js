@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { FlatList, StyleSheet, Text, View, ScrollView } from 'react-native';
 import PersonList from "../component/PersonList";
@@ -45,60 +44,18 @@ export default function MySummary({navigation }) {
                } else {
                  setTotalLoanCollection(0); 
                }
-      });
-  
-    }, []);
-    
-    useEffect(() => {
-      const dataLink = ref(db, 'AllTransaction/');
-      const employeeLoansQuery = query(
-          dataLink,
-          // orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
-          // equalTo(enrollment) // Filter for the specific employee
-        );
-        onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
-          const data = snapshot.val();
-          if (data) { // Check if data exists
-            const allLoan = Object.keys(data).map(key => ({
-              id: key,
-              ...data[key]
-            }))//.filter(loan => loan.category === "Savings" ); // Filter for the specific employee
-            setLoanList(allLoan);
-          } else {
-            setLoanList([]); // Set to empty array if no loans found for the employee
-          }
-          if (data) { 
-              const totalSaveAmount = Object.values(data)
-              .filter((item) => item.category === "Savings") 
-              .reduce((total, loan) => {
-                return total + (loan.amount || 0); 
-              }, 0);
-              setTotalSavingsCollection(totalSaveAmount); 
-            } else {
-              setTotalSavingsCollection(0); 
-            }
-        });
-    
-      }, []);
-      useEffect(() => {
-        const dataLink = ref(db, 'AllTransaction/');
-        const employeeLoansQuery = query(
-            dataLink,
-            // orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
-            // equalTo(enrollment) // Filter for the specific employee
-          );
-          onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
-            const data = snapshot.val();
-            if (data) { // Check if data exists
-              const allLoan = Object.keys(data).map(key => ({
-                id: key,
-                ...data[key]
-              }))//.filter(loan => loan.category === "Charge" ); // Filter for the specific employee
-              setLoanList(allLoan);
-            } else {
-              setLoanList([]); // Set to empty array if no loans found for the employee
-            }
-            if (data) { 
+               if (data) { 
+                const totalSaveAmount = Object.values(data)
+                .filter((item) => item.category === "Savings") 
+                .reduce((total, loan) => {
+                  return total + (loan.amount || 0); 
+                }, 0);
+                setTotalSavingsCollection(totalSaveAmount); 
+              } else {
+                setTotalSavingsCollection(0); 
+              }
+
+              if (data) { 
                 const totalSaveAmount = Object.values(data)
                 .filter((item) => item.category === "Charge")
                 .reduce((total, loan) => {
@@ -108,10 +65,9 @@ export default function MySummary({navigation }) {
               } else {
                 setTotalChargeCollection(0); 
               }
-          });
-      
-        }, []);
-
+      });
+  
+    }, []);
   
   return (
     <ScrollView style={styles.container}>

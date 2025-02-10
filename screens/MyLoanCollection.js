@@ -35,7 +35,7 @@ export default function MyLoanCollection({ navigation }) {
         }
         if (data) { 
             const totalAmount = Object.values(data)
-            .filter((item) => item.category === "Loan") 
+            .filter((item) => item.category === "Loan" && item.type === "Collection") 
             .reduce((total, amount) => {
               return total + (amount.amount || 0); 
             }, 0);
@@ -59,7 +59,7 @@ export default function MyLoanCollection({ navigation }) {
               const loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); // Corrected format string
             //  console.log("database", loanDate);
           
-              if (loanDate.isSame(todayMoment, 'day') && loan.category === 'Loan') { 
+              if (loanDate.isSame(todayMoment, 'day') && loan.category === 'Loan' && loan.type === 'Collection') { 
                 return total + (loan.amount || 0);
               }
               return total;

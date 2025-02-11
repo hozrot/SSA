@@ -15,6 +15,11 @@ import {
 export default function AllTransaction({ navigation }) {
   const [memberno, setMemberno] = useState("");
   const [amount, setAmount] = useState("");
+  const [chargeAmount, setChargeAmount] = useState(0);
+  const [loanAmount, setLoanAmount] = useState(0);
+  const [loanWithdrawAmount, setLoanWithdrawAmount] = useState(0);
+  const [savingsAmount, setSavingsAmount] = useState(0);
+  const [savingsWithdrawAmount, setSavingsWithdrawAmount] = useState(0);
   const [type, setType] = useState("");
   const [category, setCategory] = useState("");
   const [enrollmentBy, setEnrollmentBy] = useState("");
@@ -60,29 +65,35 @@ export default function AllTransaction({ navigation }) {
   }, [selectedMemberId, memberList]);
 
   const addloancollection = () => {
-    if (!amount || !selectedMemberId || !enrollmentBy || !type || !category) {
+    if ( !selectedMemberId || !enrollmentBy) {
       Dialog.show({
         type: ALERT_TYPE.WARNING,
         title: "Error",
-        textBody: "All fields are required.",
+        textBody: "All fields are required...........",
         button: "Close",
       });
       return; // Exit the function if any field is empty
     }
     set(ref(db, "AllTransaction/" + uniqueId), {
       memberno: selectedMemberId,
-      amount: amount,
       enrollmentBy: enrollmentBy,
       scid: uniqueId,
       timestamp: formattedDateTime,
+      loanAmount: loanAmount,
+      savingsAmount: savingsAmount,
+      chargeAmount: chargeAmount,
+      loanWithdrawAmount: loanWithdrawAmount,
+      savingsWithdrawAmount: savingsWithdrawAmount,
       type: type,
-      category: category,
     });
     setSelectedMemberId("");
-    setAmount("");
-    setCategory("");
-    setType("");
     setEnrollmentBy("");
+    setLoanAmount(0);
+    setSavingsAmount(0);
+    setChargeAmount(0);
+    setLoanWithdrawAmount(0);
+    setSavingsWithdrawAmount(0);
+    setType("");
 
     Dialog.show({
       type: ALERT_TYPE.SUCCESS,
@@ -185,11 +196,11 @@ export default function AllTransaction({ navigation }) {
           placeholder={{ label: "Select an option...", value: null }}
           style={styles.picker}
         >
-             <Picker.Item label="Select Employee" value={null} />
+             <Picker.Item label="Select Transaction Type" value={null} />
           <Picker.Item label="Collection" value="Collection" />
           <Picker.Item label="Withdraw " value="Withdraw" />
         </Picker>
-        <Text
+        {/* <Text
           style={{
             fontFamily: "DMSans_500Medium",
             fontSize: 16,
@@ -209,8 +220,9 @@ export default function AllTransaction({ navigation }) {
           <Picker.Item label="Charge" value="Charge" />
           <Picker.Item label="Loan" value="Loan" />
           <Picker.Item label="Savings" value="Savings" />
-        </Picker>
-
+        </Picker> */}
+         {type === 'Collection' && (
+<View style={styles.FormView}>
         <Text
           style={{
             fontFamily: "DMSans_500Medium",
@@ -220,7 +232,7 @@ export default function AllTransaction({ navigation }) {
           }}
         >
           {" "}
-          Amount to pay{" "}
+          Loan Collection Amount{" "}
         </Text>
 
         <TextInput
@@ -232,18 +244,156 @@ export default function AllTransaction({ navigation }) {
           keyboardAppearance="dark"
           returnKeyType="next"
           returnKeyLabel="next"
-          value={amount.toString()}
+          value={loanAmount.toString()}
           onChangeText={(text) => {
             const numericValue = parseFloat(text);
             if (isNaN(numericValue)) {
-              setAmount('');
+              setLoanAmount('');
             }
             else {
-              setAmount(numericValue);
+              setLoanAmount(numericValue);
             }
           }}
           style={{ fontSize: 14 }}
         />
+         <Text
+          style={{
+            fontFamily: "DMSans_500Medium",
+            fontSize: 16,
+            paddingBottom: 8,
+            paddingTop: 15,
+          }}
+        >
+          {" "}
+          Savings Collection Amount{" "}
+        </Text>
+
+        <TextInput
+          inputHieght={54}
+          inputAlign={"center"}
+          placeholder="Enter here...."
+          autoCapitalize="none"
+          keyboardType="number-pad"
+          keyboardAppearance="dark"
+          returnKeyType="next"
+          returnKeyLabel="next"
+          value={savingsAmount.toString()}
+          onChangeText={(text) => {
+            const numericValue = parseFloat(text);
+            if (isNaN(numericValue)) {
+              setSavingsAmount('');
+            }
+            else {
+              setSavingsAmount(numericValue);
+            }
+          }}
+          style={{ fontSize: 14 }}
+        />
+         <Text
+          style={{
+            fontFamily: "DMSans_500Medium",
+            fontSize: 16,
+            paddingBottom: 8,
+            paddingTop: 15,
+          }}
+        >
+          {" "}
+          Charge Collection Amount{" "}
+        </Text>
+
+        <TextInput
+          inputHieght={54}
+          inputAlign={"center"}
+          placeholder="Enter here...."
+          autoCapitalize="none"
+          keyboardType="number-pad"
+          keyboardAppearance="dark"
+          returnKeyType="next"
+          returnKeyLabel="next"
+          value={chargeAmount.toString()}
+          onChangeText={(text) => {
+            const numericValue = parseFloat(text);
+            if (isNaN(numericValue)) {
+              setChargeAmount('');
+            }
+            else {
+              setChargeAmount(numericValue);
+            }
+          }}
+          style={{ fontSize: 14 }}
+        />
+        </View>)}
+
+        {type === 'Withdraw' && (
+<View style={styles.FormView}>
+<Text
+          style={{
+            fontFamily: "DMSans_500Medium",
+            fontSize: 16,
+            paddingBottom: 8,
+            paddingTop: 15,
+          }}
+        >
+          {" "}
+          Loan Withdraw  Amount{" "}
+        </Text>
+
+        <TextInput
+          inputHieght={54}
+          inputAlign={"center"}
+          placeholder="Enter here...."
+          autoCapitalize="none"
+          keyboardType="number-pad"
+          keyboardAppearance="dark"
+          returnKeyType="next"
+          returnKeyLabel="next"
+          value={loanWithdrawAmount.toString()}
+          onChangeText={(text) => {
+            const numericValue = parseFloat(text);
+            if (isNaN(numericValue)) {
+              setLoanWithdrawAmount('');
+            }
+            else {
+              setLoanWithdrawAmount(numericValue);
+            }
+          }}
+          style={{ fontSize: 14 }}
+        />
+        <Text
+          style={{
+            fontFamily: "DMSans_500Medium",
+            fontSize: 16,
+            paddingBottom: 8,
+            paddingTop: 15,
+          }}
+        >
+          {" "}
+          Savings Withdraw  Amount{" "}
+        </Text>
+
+        <TextInput
+          inputHieght={54}
+          inputAlign={"center"}
+          placeholder="Enter here...."
+          autoCapitalize="none"
+          keyboardType="number-pad"
+          keyboardAppearance="dark"
+          returnKeyType="next"
+          returnKeyLabel="next"
+          value={savingsWithdrawAmount.toString()}
+          onChangeText={(text) => {
+            const numericValue = parseFloat(text);
+            if (isNaN(numericValue)) {
+              setSavingsWithdrawAmount('');
+            }
+            else {
+              setSavingsWithdrawAmount(numericValue);
+            }
+          }}
+          style={{ fontSize: 14 }}
+        />
+
+  </View>)}
       </View>
 
       <View style={styles.SubmitView}>

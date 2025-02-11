@@ -1,12 +1,15 @@
-
-import React, { useState, useEffect } from 'react';
-import { FlatList, StyleSheet, Text, View, ScrollView } from 'react-native';
+import React, { useState, useEffect,useRef  } from 'react';
+import { FlatList, StyleSheet, Text, View, ScrollView,Platform  } from 'react-native';
 import PersonList from "../component/PersonList";
 import ListOne from '../component/ListOne';
 import { db } from '../config';
 import { ref, onValue ,query, orderByChild, equalTo, andOperator } from 'firebase/database';
 import BalanceCard from '../component/BalanceCard';
 import moment from 'moment';
+
+import Button from '../component/Button';
+//import { shareAsync } from 'expo-sharing';
+//import { captureRef } from 'react-native-view-shot';
 
 export default function MyLoanCollection({ navigation }) {
   const [loneList, setLoanList] = useState([])
@@ -21,12 +24,15 @@ export default function MyLoanCollection({ navigation }) {
     const formattedDate = `${month}/${day}/${year}`;  
     const todayMoment = moment(formattedDate, 'MM/DD/YYYY'); 
 
+    const viewRef = useRef(null);
+
+  
   useEffect(() => {
     const dataLink = ref(db, 'AllTransaction/'); 
     const employeeLoansQuery = query(
         dataLink,
-        orderByChild('enrollmentBy'), 
-            equalTo("Employee1"),
+        // orderByChild('enrollmentBy'), 
+        //     equalTo("Employee1"),
     );
       onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
         const data = snapshot.val();
@@ -55,7 +61,7 @@ export default function MyLoanCollection({ navigation }) {
             const totalLoanAmountToday = Object.values(data).reduce((total, loan) => {
               const loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); //console.log("database", loanDate);
               if (loanDate.isSame(todayMoment, 'day')) { 
-                return total + (loan.amount || 0);
+                return total + (loan.loanAmount + loan.chargeAmount + loan.savingsAmount || 0);
               }
               return total;
             }, 0);
@@ -83,7 +89,9 @@ export default function MyLoanCollection({ navigation }) {
                 onPress={()=>navigation.navigate("DayTransaction")}
                 balance={totalCollectionToday +' ৳'}
               />
+              
       </View>
+      <Button label="Create PDF" />
      
       {
         loneList.map((item, index) => {
@@ -92,7 +100,7 @@ export default function MyLoanCollection({ navigation }) {
               key={index}
               name={item.memberno}
               date={item.timestamp}
-              amount={item.amount}
+              amount={item.loanAmount}
               iconName={item.type === 'Collection' ? 'account-arrow-left' : 'account-arrow-right'}
               iconColor={item.type === 'Collection' ? '#8300FD' : "red"}
               type={item.type}

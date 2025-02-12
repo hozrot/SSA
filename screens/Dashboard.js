@@ -36,9 +36,9 @@ useEffect(() => {
              }
              if (data) { 
                  const totalAmount = Object.values(data)
-                 .filter((item) => item.category === "Loan" && item.type === "Withdraw") 
+                 //.filter((item) => item.category === "Loan" && item.type === "Withdraw") 
                  .reduce((total, loan) => {
-                   return total + (loan.amount || 0); 
+                   return total + (loan.loanWithdrawAmount || 0); 
                  }, 0);
                  setTotalLoanWithdraw(totalAmount); 
                } else {
@@ -47,9 +47,9 @@ useEffect(() => {
 
                if (data) { 
                 const totalAmount = Object.values(data)
-                .filter((item) => item.category === "Loan" && item.type === "Collection") 
+                //.filter((item) => item.category === "Loan" && item.type === "Collection") 
                 .reduce((total, loan) => {
-                  return total + (loan.amount || 0); 
+                  return total + (loan.loanAmount || 0); 
                 }, 0);
                 setTotalLoanCollection(totalAmount); 
               } else {
@@ -58,9 +58,9 @@ useEffect(() => {
 
               if (data) { 
                 const totalAmount = Object.values(data)
-                .filter((item) => item.category === "Savings" && item.type === "Collection") 
+               // .filter((item) => item.category === "Savings" && item.type === "Collection") 
                 .reduce((total, loan) => {
-                  return total + (loan.amount || 0); 
+                  return total + (loan.savingsAmount || 0); 
                 }, 0);
                 setTotalSaveAmount(totalAmount); 
               } else {
@@ -69,9 +69,9 @@ useEffect(() => {
 
               if (data) { 
                 const totalAmount = Object.values(data)
-                .filter((item) => item.category === "Savings" && item.type === "Withdraw") 
+                //.filter((item) => item.category === "Savings" && item.type === "Withdraw") 
                 .reduce((total, loan) => {
-                  return total + (loan.amount || 0); 
+                  return total + (loan.savingsWithdrawAmount || 0); 
                 }, 0);
                 setTotalSavingsWithdraw(totalAmount); 
               } else {
@@ -79,9 +79,9 @@ useEffect(() => {
               }
               if (data) { 
                 const totalAmount = Object.values(data)
-                .filter((item) => item.category === "Charge" && item.type === "Collection") 
+               // .filter((item) => item.category === "Charge" && item.type === "Collection") 
                 .reduce((total, loan) => {
-                  return total + (loan.amount || 0); 
+                  return total + (loan.chargeAmount || 0); 
                 }, 0);
                 setTotalChargeAmount(totalAmount); 
               } else {

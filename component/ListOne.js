@@ -30,6 +30,7 @@ export default function ListOne({ name, type, onPress, date, iconName, iconSize,
                     <Text style={{ fontWeight: 'bold', fontSize: 18 }}>{amount}</Text>
 
                 </View>
+                
             </View>
         </TouchableOpacity>
     );

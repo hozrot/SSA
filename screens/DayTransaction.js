@@ -6,6 +6,8 @@ import { db } from '../config';
 import { ref, onValue ,query, orderByChild, equalTo, andOperator } from 'firebase/database';
 import BalanceCard from '../component/BalanceCard';
 import moment from 'moment';
+import * as Print from 'expo-print';
+import { shareAsync } from 'expo-sharing';
 
 import Button from '../component/Button';
 //import { shareAsync } from 'expo-sharing';
@@ -24,7 +26,71 @@ export default function MyLoanCollection({ navigation }) {
     const formattedDate = `${month}/${day}/${year}`;  
     const todayMoment = moment(formattedDate, 'MM/DD/YYYY'); 
 
-    const viewRef = useRef(null);
+    const html = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+          table {
+            width: 100%;
+            border-collapse: collapse;
+          }
+          th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+          }
+            h1,h2 {
+            text-align: center;}
+        </style>
+      </head>
+      <body>
+      <h1>Today's Collection for </h1>
+      <h2> ${enrollmentBy}</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Member No</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Type</th>
+             
+            </tr>
+          </thead>
+          <tbody>
+            ${loneList.map(item => `
+              <tr>
+                <td>${item.memberno}</td>
+                <td>${item.timestamp}</td>
+                <td>${item.loanAmount+item.savingsAmount+item.chargeAmount}</td>
+                <td>${item.type}</td>
+               
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </body>
+    </html>
+  `;
+
+const [selectedPrinter, setSelectedPrinter] = useState();
+
+const print = async () => {
+  // On iOS/android prints the given html. On web prints the HTML from the current page.
+  await Print.printAsync({
+    html,
+    printerUrl: selectedPrinter?.url, // iOS only
+  });
+};
+
+
+const selectPrinter = async () => {
+  const printer = await Print.selectPrinterAsync(); // iOS only
+  setSelectedPrinter(printer);
+};
+
 
   
   useEffect(() => {
@@ -91,7 +157,7 @@ export default function MyLoanCollection({ navigation }) {
               />
               
       </View>
-      <Button label="Create PDF" />
+     <View style={{ paddingLeft:50,paddingRight:50 }}> <Button label="Daily Report" onPress={print} /> </View>
      
       {
         loneList.map((item, index) => {
@@ -100,7 +166,7 @@ export default function MyLoanCollection({ navigation }) {
               key={index}
               name={item.memberno}
               date={item.timestamp}
-              amount={item.loanAmount}
+              amount={item.loanAmount+item.chargeAmount+item.savingsAmount}
               iconName={item.type === 'Collection' ? 'account-arrow-left' : 'account-arrow-right'}
               iconColor={item.type === 'Collection' ? '#8300FD' : "red"}
               type={item.type}

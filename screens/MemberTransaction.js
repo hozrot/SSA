@@ -49,10 +49,10 @@ export default function MemberTransaction({ navigation }) {
       if (data) {
         const totalAmount = Object.values(data)
           .filter(
-            (loan) => loan.type === "Withdraw" && loan.category === "Loan"
+            (loan) => loan.type === "Withdraw"
           )
           .reduce((total, loan) => {
-            return total + (loan.amount || 0);
+            return total + (loan.loanAmount || 0);
           }, 0);
         setTotalLoanWithdraw(totalAmount);
       } else {
@@ -61,10 +61,10 @@ export default function MemberTransaction({ navigation }) {
       if (data) {
         const totalAmount = Object.values(data)
           .filter(
-            (loan) => loan.type === "Collection" && loan.category === "Loan"
+            (loan) => loan.type === "Collection" 
           )
           .reduce((total, loan) => {
-            return total + (loan.amount || 0);
+            return total + (loan.loanAmount || 0) ;
           }, 0);
         setTotalLoanCollection(totalAmount);
       } else {
@@ -74,10 +74,10 @@ export default function MemberTransaction({ navigation }) {
         const totalAmount = Object.values(data)
           .filter(
             (savings) =>
-              savings.type === "Collection" && savings.category === "Savings"
+              savings.type === "Collection" 
           )
           .reduce((total, savings) => {
-            return total + (savings.amount || 0);
+            return total + (savings.savingsAmount || 0);
           }, 0);
         setTotalSavingsCollection(totalAmount);
       } else {
@@ -87,10 +87,10 @@ export default function MemberTransaction({ navigation }) {
         const totalAmount = Object.values(data)
           .filter(
             (savings) =>
-              savings.type === "Withdraw" && savings.category === "Savings"
+              savings.type === "Withdraw" 
           )
           .reduce((total, savings) => {
-            return total + (savings.amount || 0);
+            return total + (savings.savingsWithdrawAmount || 0);
           }, 0);
         setTotalSavingsWithdraw(totalAmount);
       } else {
@@ -100,10 +100,10 @@ export default function MemberTransaction({ navigation }) {
         const totalAmount = Object.values(data)
           .filter(
             (charge) =>
-              charge.type === "Collection" && charge.category === "Charge"
+              charge.type === "Collection" 
           )
           .reduce((total, charge) => {
-            return total + (charge.amount || 0);
+            return total + (charge.chargeAmount || 0);
           }, 0);
         setTotalChargeCollection(totalAmount);
       } else {
@@ -233,7 +233,7 @@ export default function MemberTransaction({ navigation }) {
             key={index}
             name={item.memberno}
             date={item.timestamp}
-            amount={item.amount}
+            amount={item.type === 'Collection' ? item.loanAmount+item.chargeAmount+item.savingsAmount : item.savingsWithdrawAmount+item.loanWithdrawAmount}
             iconName={item.type === 'Collection' ? 'account-arrow-left' : 'account-arrow-right'}
               iconColor={item.type === 'Collection' ? '#8300FD' : "red"}
             type={item.type}

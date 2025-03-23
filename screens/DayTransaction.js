@@ -166,7 +166,7 @@ const selectPrinter = async () => {
               key={index}
               name={item.memberno}
               date={item.timestamp}
-              amount={item.loanAmount+item.chargeAmount+item.savingsAmount}
+              amount={item.type === 'Collection' ? item.loanAmount+item.chargeAmount+item.savingsAmount : item.savingsWithdrawAmount+item.loanWithdrawAmount}
               iconName={item.type === 'Collection' ? 'account-arrow-left' : 'account-arrow-right'}
               iconColor={item.type === 'Collection' ? '#8300FD' : "red"}
               type={item.type}

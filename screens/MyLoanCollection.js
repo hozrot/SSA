@@ -13,6 +13,7 @@ export default function MyLoanCollection({ navigation }) {
   const [totalTransactionToday, setTotalTransactionToday] = useState([])
     const [totalTransaction, setTotalTransaction] = useState([])
     const enrollmentBy ="মোঃ জয়নাল আবেদীন";
+   
   //  const enrollmentBy ="মোঃ রাকিবুল ইসলাম";
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function MyLoanCollection({ navigation }) {
           const allTransaction = Object.keys(data).map(key => ({
             id: key,
             ...data[key]
-          })).filter(transaction => transaction.type ="Collection" ); // Filter for the specific employee
+          })).filter(loan => loan.loanAmount > 0 || loan.loanWithdrawAmount > 0);// Filter for the specific employee
           setTransactionList(allTransaction);
         } else {
           setTransactionList([]); // Set to empty array if no loans found for the employee
@@ -56,8 +57,8 @@ export default function MyLoanCollection({ navigation }) {
             const todayMoment = moment(formattedDate, 'MM/DD/YYYY'); // Corrected format string
           
             const totalLoanAmountToday = Object.values(data).reduce((total, loan) => {
-              const loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); // Corrected format string
-            //  console.log("database", loanDate);
+              const loanDate = moment(loan.timestamp, 'DD/MM/YYYY'); // Corrected format string
+             console.log("database", loanDate);
           
               if (loanDate.isSame(todayMoment, 'day') &&  loan.type === 'Collection') { 
                 return total + (loan.loanAmount || 0);
@@ -104,7 +105,7 @@ export default function MyLoanCollection({ navigation }) {
               key={index}
               name={item.memberno}
               date={item.timestamp}
-              amount={item.loanAmount}
+              amount={item.type === 'Collection' ? item.loanAmount : item.loanWithdrawAmount}
               iconName={item.type === 'Collection' ? 'account-arrow-left' : 'account-arrow-right'}
               iconColor={item.type === 'Collection' ? '#8300FD' : "red"}
               type={item.type}

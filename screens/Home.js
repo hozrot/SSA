@@ -17,7 +17,8 @@ import AllTransaction from './AllTransaction';
 //npm install @react-navigation/bottom-tabs
 const Tab = createBottomTabNavigator();
 
-export default function Home({ navigation }) {
+export default function Home({ navigation, route }) {
+  const { username } = route.params;
   
   return (
     <Tab.Navigator tabBar={props => <BottomTab {...props} />}>

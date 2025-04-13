@@ -7,8 +7,8 @@ import BalanceCard from "../component/BalanceCard";
 import { db } from '../config';
 import { ref, onValue ,query, orderByChild, equalTo} from 'firebase/database';
 
-export default function Dashboard({ navigation }) {
-
+export default function Dashboard({ navigation, route }) {
+ 
    const [loneList, setLoanList] = useState([])
   const [totalLoanWithdraw, setTotalLoanWithdraw] = useState([])
   const [totalsavingsWithdraw, setTotalSavingsWithdraw] = useState([])
@@ -115,6 +115,12 @@ useEffect(() => {
                     textAlign: 'center',
                     color: 'white',
                   }}> সুন্দরগঞ্জ , গাইবান্ধা ।   </Text>
+                   <Text  style={{
+                    fontFamily: "DMSans_500Bold",
+                    
+                    textAlign: 'center',
+                    color: 'white',
+                  }}> </Text>
       </View>
       
 
@@ -127,7 +133,7 @@ useEffect(() => {
               }}
             >
               <BalanceCard
-                balanceTitle={"Loan Given"}
+                balanceTitle={"Loan Withdrawn"}
                 iconName={"arrow-down-bold-hexagon-outline"}
                 iconColor={"white"}
                 balance={totalLoanWithdraw+'৳'}
@@ -165,7 +171,7 @@ useEffect(() => {
                       balance={totalSaveAmount+'৳'}
                     />
                     <BalanceCard
-                      balanceTitle={" Withdrawn"}
+                      balanceTitle={" Savings Withdrawn"}
                       iconName={"arrow-up-bold-hexagon-outline"}
                       iconColor={"white"}
                       //onPress={()=>navigation.navigate("DayTransaction")}

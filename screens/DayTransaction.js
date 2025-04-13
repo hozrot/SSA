@@ -64,7 +64,7 @@ export default function MyLoanCollection({ navigation }) {
               <tr>
                 <td>${item.memberno}</td>
                 <td>${item.timestamp}</td>
-                <td>${item.loanAmount+item.savingsAmount+item.chargeAmount}</td>
+                <td>${item.loanAmount+item.savingsAmount+item.chargeAmount+item.savingsWithdrawAmount+item.loanWithdrawAmount}</td>
                 <td>${item.type}</td>
                
               </tr>
@@ -110,7 +110,7 @@ const selectPrinter = async () => {
             ...data[key]
           })).filter(loan => { 
             const  loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); 
-            return loanDate.isSame(todayMoment,  'Day'); }); // Filter for the specific employee
+            return loanDate.isSame(todayMoment,  'Day');  } ); // Filter for the specific employee
           setLoanList(allLoan);
           //console.log("today...........", loan.timestamp);
         } else {
@@ -118,14 +118,8 @@ const selectPrinter = async () => {
         }
 
           if (data) {
-            // const today = new Date(); 
-            // const day = today.getDate().toString().padStart(2, '0'); 
-            // const month = (today.getMonth() + 1).toString().padStart(2, '0'); 
-            // const year = today.getFullYear();
-            // const formattedDate = `${month}/${day}/${year}`;  //console.log("today", formattedDate); 
-            // const todayMoment = moment(formattedDate, 'MM/DD/YYYY'); // Corrected format string
             const totalLoanAmountToday = Object.values(data).reduce((total, loan) => {
-              const loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); //console.log("database", loanDate);
+              const loanDate = moment(loan.timestamp,'MM/DD/YYYY'); //console.log("database", loanDate);
               if (loanDate.isSame(todayMoment, 'day')) { 
                 return total + (loan.loanAmount + loan.chargeAmount + loan.savingsAmount || 0);
               }
@@ -169,8 +163,7 @@ const selectPrinter = async () => {
               amount={item.type === 'Collection' ? item.loanAmount+item.chargeAmount+item.savingsAmount : item.savingsWithdrawAmount+item.loanWithdrawAmount}
               iconName={item.type === 'Collection' ? 'account-arrow-left' : 'account-arrow-right'}
               iconColor={item.type === 'Collection' ? '#8300FD' : "red"}
-              type={item.type}
-              category={item.category}    
+              type={item.type}  
               backgroundColor={"yellow"}          />
 
           )

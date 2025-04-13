@@ -9,9 +9,11 @@ import BalanceCard from '../component/BalanceCard';
 import moment from 'moment';
 
 export default function MySavingsCollection({ navigation }) {
-  const [loneList, setLoanList] = useState([])
-  const [totalCollectionToday, setTotalCollectionToday] = useState([])
-    const [totalLoanCollection, setTotalLoanCollection] = useState([])
+  const [savingsList, setSavingsList] = useState([])
+  const [totalSavingsToday, setTotalSavingsToday] = useState([])
+  const [totalSavingsCollection, setTotalSavingsCollection] = useState([])
+   
+   
     const enrollmentBy ="মোঃ জয়নাল আবেদীন";
   //  const enrollmentBy ="মোঃ রাকিবুল ইসলাম";
 
@@ -25,23 +27,23 @@ export default function MySavingsCollection({ navigation }) {
       onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
         const data = snapshot.val();
         if (data) { // Check if data exists
-          const allLoan = Object.keys(data).map(key => ({
+          const allSavings = Object.keys(data).map(key => ({
             id: key,
             ...data[key]
-          })).filter(loan => loan.category === "Savings" ); // Filter for the specific employee
-          setLoanList(allLoan);
+          })).filter(savings =>  savings.savingsWithdrawAmount > 0 || savings.savingsAmount > 0); // Filter for the specific employee
+          setSavingsList(allSavings);
         } else {
-          setLoanList([]); // Set to empty array if no loans found for the employee
+          setSavingsList([]); // Set to empty array if no loans found for the employee
         }
         if (data) { 
             const totalSaveAmount = Object.values(data)
-            .filter((item) => item.category === "Savings" && item.type === "Collection") 
-            .reduce((total, loan) => {
-              return total + (loan.amount || 0); 
+            .filter((item) => item.type === "Collection") 
+            .reduce((total, savings) => {
+              return total + (savings.savingsAmount || 0); 
             }, 0);
-            setTotalLoanCollection(totalSaveAmount); 
+            setTotalSavingsCollection(totalSaveAmount); 
           } else {
-            setTotalLoanCollection(0); 
+            setTotalSavingsCollection(0); 
           }
 
           if (data) {
@@ -56,18 +58,18 @@ export default function MySavingsCollection({ navigation }) {
             const todayMoment = moment(formattedDate, 'MM/DD/YYYY'); // Corrected format string
           
             const totalLoanAmountToday = Object.values(data).reduce((total, loan) => {
-              const loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); // Corrected format string
+              const loanDate = moment(loan.timestamp, 'DD/MM/YYYY'); // Corrected format string
              // console.log("database", loanDate);
           
-              if (loanDate.isSame(todayMoment, 'day') && loan.category === "Savings"&& loan.type === "Collection") { 
-                return total + (loan.amount || 0);
+              if (loanDate.isSame(todayMoment, 'day') && loan.type === "Collection") { 
+                return total +(loan.savingsAmount || 0);
               }
               return total;
             }, 0);
           
-            setTotalCollectionToday(totalLoanAmountToday);
+            setTotalSavingsToday(totalLoanAmountToday);
           } else {
-            setTotalCollectionToday(0);
+            setTotalSavingsToday(0);
           }
       });
   
@@ -87,24 +89,24 @@ export default function MySavingsCollection({ navigation }) {
                 iconName={"archive-plus"}
       
                 iconColor={"white"}
-                balance={totalLoanCollection +' ৳' }
+                balance={totalSavingsCollection +' ৳' }
               />
                <BalanceCard
                 balanceTitle={"Today's Collection"}
                 iconName={"calendar-check"}
                 iconColor={"white"}
                 //onPress={()=>navigation.navigate("DayTransaction")}
-                balance={totalCollectionToday +' ৳'} 
+                balance={totalSavingsToday +' ৳'} 
               />
       </View>
       {
-        loneList.map((item, index) => {
+        savingsList.map((item, index) => {
           return (
             <ListOne
               key={index}
               name={item.memberno}
               date={item.timestamp}
-              amount={item.amount}
+              amount={item.type === 'Collection' ? item.savingsAmount : item.savingsWithdrawAmount}
               iconName={item.type === 'Collection' ? 'account-arrow-left' : 'account-arrow-right'}
               iconColor={item.type === 'Collection' ? '#8300FD' : "red"}
               type={item.type}

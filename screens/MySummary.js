@@ -36,9 +36,9 @@ export default function MySummary({navigation }) {
              }
              if (data) { 
                  const totalSaveAmount = Object.values(data)
-                 .filter((item) => item.category === "Loan") 
+                 .filter((item) => item.type === "Collection") 
                  .reduce((total, loan) => {
-                   return total + (loan.amount || 0); 
+                   return total + (loan.loanAmount || 0); 
                  }, 0);
                  setTotalLoanCollection(totalSaveAmount); 
                } else {
@@ -46,9 +46,9 @@ export default function MySummary({navigation }) {
                }
                if (data) { 
                 const totalSaveAmount = Object.values(data)
-                .filter((item) => item.category === "Savings") 
-                .reduce((total, loan) => {
-                  return total + (loan.amount || 0); 
+                .filter((item) => item.type === "Collection") 
+                 .reduce((total, loan) => {
+                   return total + (loan.savingsAmount || 0); 
                 }, 0);
                 setTotalSavingsCollection(totalSaveAmount); 
               } else {
@@ -57,9 +57,9 @@ export default function MySummary({navigation }) {
 
               if (data) { 
                 const totalSaveAmount = Object.values(data)
-                .filter((item) => item.category === "Charge")
+                .filter((item) => item.type === "Collection") 
                 .reduce((total, loan) => {
-                  return total + (loan.amount || 0); 
+                  return total + (loan.chargeAmount || 0); 
                 }, 0);
                 setTotalChargeCollection(totalSaveAmount); 
               } else {

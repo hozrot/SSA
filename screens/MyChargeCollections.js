@@ -9,9 +9,10 @@ import BalanceCard from '../component/BalanceCard';
 import moment from 'moment';
 
 export default function MyChargeCollections({ navigation }) {
-  const [loneList, setLoanList] = useState([])
-  const [totalCollectionToday, setTotalCollectionToday] = useState([])
-    const [totalLoanCollection, setTotalLoanCollection] = useState([])
+  const [chargeList, setChargeList] = useState([])
+  const [totalChageToday, setTotalChargeToday] = useState([])
+  const [totalChargeCollection, setTotalChargeCollection] = useState([])
+
     const enrollmentBy ="মোঃ জয়নাল আবেদীন";
   //  const enrollmentBy ="মোঃ রাকিবুল ইসলাম";
 
@@ -25,23 +26,23 @@ export default function MyChargeCollections({ navigation }) {
       onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
         const data = snapshot.val();
         if (data) { // Check if data exists
-          const allLoan = Object.keys(data).map(key => ({
+          const allCharge = Object.keys(data).map(key => ({
             id: key,
             ...data[key]
-          })).filter(loan => loan.category === "Charge" ); // Filter for the specific employee
-          setLoanList(allLoan);
+          })).filter(charge => charge.type === "Collection" && charge.chargeAmount > 0); // Filter for the specific employee
+          setChargeList(allCharge);
         } else {
-          setLoanList([]); // Set to empty array if no loans found for the employee
+          setChargeList([]); // Set to empty array if no loans found for the employee
         }
         if (data) { 
-            const totalSaveAmount = Object.values(data)
-            .filter((item) => item.category === "Charge") 
-            .reduce((total, loan) => {
-              return total + (loan.amount || 0); 
+            const totalChargeAmount = Object.values(data)
+            .filter((item) => item.type === "Collection") 
+            .reduce((total, charge) => {
+              return total + (charge.chargeAmount || 0); 
             }, 0);
-            setTotalLoanCollection(totalSaveAmount); 
+            setTotalChargeCollection(totalChargeAmount); 
           } else {
-            setTotalLoanCollection(0); 
+            setTotalChargeCollection(0); 
           }
 
           if (data) {
@@ -54,19 +55,19 @@ export default function MyChargeCollections({ navigation }) {
           
             const todayMoment = moment(formattedDate, 'MM/DD/YYYY'); // Corrected format string
           
-            const totalLoanAmountToday = Object.values(data).reduce((total, loan) => {
-              const loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); // Corrected format string
+            const totalChargeAmountToday = Object.values(data).reduce((total, charge) => {
+              const chargeDate = moment(charge.timestamp, 'DD/MM/YYYY'); // Corrected format string
              // console.log("database", loanDate);
           
-              if (loanDate.isSame(todayMoment, 'day') && loan.category === "Charge" ) { 
-                return total + (loan.amount || 0);
+              if (chargeDate.isSame(todayMoment, 'day') && charge.type === "Collection" ) { 
+                return total + (charge.chargeAmount || 0);
               }
               return total;
             }, 0);
           
-            setTotalCollectionToday(totalLoanAmountToday);
+            setTotalChargeToday(totalChargeAmountToday);
           } else {
-            setTotalCollectionToday(0);
+            setTotalChargeToday(0);
           }
       });
   
@@ -86,28 +87,27 @@ export default function MyChargeCollections({ navigation }) {
                 iconName={"alarm-plus"}
       
                 iconColor={"white"}
-                balance={totalLoanCollection +' ৳' }
+                balance={totalChargeCollection +' ৳' }
               />
                <BalanceCard
                 balanceTitle={"Today's Collection"}
                 iconName={"calendar-check"}
                 iconColor={"white"}
                 //onPress={()=>navigation.navigate("DayTransaction")}
-                balance={totalCollectionToday +' ৳'}
+                balance={totalChageToday +' ৳'}
               />
       </View>
       {
-        loneList.map((item, index) => {
+        chargeList.map((item, index) => {
           return (
             <ListOne
               key={index}
               name={item.memberno}
               date={item.timestamp}
-              amount={item.amount}
+              amount={item.chargeAmount}
               iconName={"account-arrow-down"}
               iconColor={'#8300FD'}
-              type={item.type}
-              category={item.category}  
+              type={item.type}  
               backgroundColor={"tomato"}
             />
 

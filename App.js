@@ -32,10 +32,13 @@ import Collection from './screens/Collection';
 import DayTransaction from './screens/DayTransaction';
 import MemberTransaction from './screens/MemberTransaction';
 import AllTransaction from './screens/AllTransaction';
+import { UserProvider } from './UserContext';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
+    <UserProvider>
+      
     <NavigationContainer>
 
       <Stack.Navigator initialRouteName="Login">
@@ -69,6 +72,7 @@ export default function App() {
       </Stack.Navigator>
 
     </NavigationContainer>
+    </UserProvider>
     //  <SafeAreaView>
     //   <Text> test </Text>
     //   <Button title="Go to Details"  onPress={() => navigation.navigate("Home")} />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { FlatList, StyleSheet, Text, View, ScrollView } from 'react-native';
 import PersonList from "../component/PersonList";
 import ListOne from '../component/ListOne';
@@ -6,8 +6,9 @@ import { db } from '../config';
 import { ref, onValue ,query, orderByChild, equalTo} from 'firebase/database';
 import BalanceCard from '../component/BalanceCard';
 import moment from 'moment';
-
+import { UserContext } from '../UserContext';
 export default function MySummary({navigation }) {
+    const {user} =useContext(UserContext);
     const [loneList, setLoanList] = useState([])
     const [totalLoanCollection, setTotalLoanCollection] = useState([])
     const [totalSavingsCollection, setTotalSavingsCollection] = useState([])
@@ -20,8 +21,8 @@ export default function MySummary({navigation }) {
     const dataLink = ref(db, 'AllTransaction/');
     const employeeLoansQuery = query(
         dataLink,
-        // orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
-        // equalTo(enrollment) // Filter for the specific employee
+        orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
+                   equalTo(user.username === 'মোঃ জয়নাল আবেদীন' ? 'Employee1' : 'Employee2')
       );
      onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
              const data = snapshot.val();

@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { FlatList, StyleSheet, Text, View, ScrollView } from 'react-native';
 import PersonList from "../component/PersonList";
 import ListOne from '../component/ListOne';
@@ -7,8 +7,10 @@ import { db } from '../config';
 import { ref, onValue ,query, orderByChild, equalTo} from 'firebase/database';
 import BalanceCard from '../component/BalanceCard';
 import moment from 'moment';
+import { UserContext } from '../UserContext';
 
 export default function MyLoanCollection({ navigation }) {
+  const {user} =useContext(UserContext);
   const [transactionList, setTransactionList] = useState([])
   const [totalTransactionToday, setTotalTransactionToday] = useState([])
     const [totalTransaction, setTotalTransaction] = useState([])
@@ -16,13 +18,28 @@ export default function MyLoanCollection({ navigation }) {
    
   //  const enrollmentBy ="মোঃ রাকিবুল ইসলাম";
 
+  if(user.username === "মোঃ জয়নাল আবেদীন"){
+    const enrollmentBy ="Employee1";
+  }
+
   useEffect(() => {
     const dataLink = ref(db, 'AllTransaction/');
-    const transactionQuery = query(
-        dataLink,
-        // orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
-        // equalTo("Employee1") // Filter for the specific employee
-      );
+    let transactionQuery = dataLink;
+
+if (user.username === 'Super Admin') {
+  transactionQuery = query(
+    dataLink,
+    orderByChild('enrollmentBy') // No equalTo() to get all data
+  );
+} else {
+  transactionQuery = query(
+    dataLink,
+    orderByChild('enrollmentBy'),
+    equalTo(
+      user.username === 'মোঃ জয়নাল আবেদীন' ? 'Employee1' : 'Employee2'
+    )
+  );
+}
       onValue(transactionQuery, (snapshot) => { // Use the filtered query
         const data = snapshot.val();
         if (data) { // Check if data exists
@@ -77,7 +94,7 @@ export default function MyLoanCollection({ navigation }) {
   return (
     <ScrollView style={styles.container}>
       <View style={{ justifyContent: "center", alignItems: "center",paddingBottom:16}}>
-      <Text style={{ fontWeight:'bold',fontSize:20}}> Welcome,  {enrollmentBy}</Text>
+      {/* <Text style={{ fontWeight:'bold',fontSize:20}}> Welcome,  {enrollmentBy}</Text> */}
       </View>
      
 

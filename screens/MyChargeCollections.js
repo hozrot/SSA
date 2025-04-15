@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { FlatList, StyleSheet, Text, View, ScrollView } from 'react-native';
 import PersonList from "../component/PersonList";
 import ListOne from '../component/ListOne';
@@ -7,8 +7,10 @@ import { db } from '../config';
 import { ref, onValue ,query, orderByChild, equalTo} from 'firebase/database';
 import BalanceCard from '../component/BalanceCard';
 import moment from 'moment';
+import { UserContext } from '../UserContext';
 
 export default function MyChargeCollections({ navigation }) {
+  const {user} =useContext(UserContext);
   const [chargeList, setChargeList] = useState([])
   const [totalChageToday, setTotalChargeToday] = useState([])
   const [totalChargeCollection, setTotalChargeCollection] = useState([])
@@ -20,8 +22,8 @@ export default function MyChargeCollections({ navigation }) {
     const dataLink = ref(db, 'AllTransaction/');
     const employeeLoansQuery = query(
         dataLink,
-        // orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
-        // equalTo("Employee1") // Filter for the specific employee
+        orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
+          equalTo(user.username === 'মোঃ জয়নাল আবেদীন' ? 'Employee1' : 'Employee2')
       );
       onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
         const data = snapshot.val();
@@ -76,7 +78,7 @@ export default function MyChargeCollections({ navigation }) {
   return (
     <ScrollView style={styles.container}>
       <View style={{ justifyContent: "center", alignItems: "center",paddingBottom:16}}>
-      <Text style={{ fontWeight:'bold',fontSize:20}}> Welcome,  {enrollmentBy}</Text>
+    
       </View>
      
 

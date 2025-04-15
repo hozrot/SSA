@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { FlatList, StyleSheet, Text, View, ScrollView } from "react-native";
 import PersonList from "../component/PersonList";
 import ListOne from "../component/ListOne";
@@ -7,9 +7,11 @@ import { ref, onValue, query, orderByChild, equalTo } from "firebase/database";
 import BalanceCard from "../component/BalanceCard";
 import moment from "moment";
 import { useRoute } from "@react-navigation/native";
+import { UserContext } from "../UserContext";
 export default function MemberTransaction({ navigation }) {
+  const { user } = useContext(UserContext);
   const route = useRoute();
-  const { memberId,name } = route.params;
+  const { memberId,name,assingedEmployee } = route.params;
   const [loneList, setLoanList] = useState([]);
   const [totalCollectionToday, setTotalCollectionToday] = useState([]);
   const [totalLoanCollection, setTotalLoanCollection] = useState([]);
@@ -52,7 +54,7 @@ export default function MemberTransaction({ navigation }) {
             (loan) => loan.type === "Withdraw"
           )
           .reduce((total, loan) => {
-            return total + (loan.loanAmount || 0);
+            return total + (loan.loanWithdrawAmount || 0);
           }, 0);
         setTotalLoanWithdraw(totalAmount);
       } else {
@@ -125,6 +127,11 @@ export default function MemberTransaction({ navigation }) {
           {" "}
          
             {name}
+        </Text>
+        <Text style={{ fontWeight: "bold", fontSize: 12 }}>
+          {" Assinged by: "}
+         
+            {assingedEmployee=='Employee1' ? "মোঃ জয়নাল আবেদীন" : "মোঃ রাকিবুল ইসলাম"}
         </Text>
       </View>
       <View

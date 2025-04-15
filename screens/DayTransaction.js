@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef  } from 'react';
+import React, { useState, useEffect,useContext  } from 'react';
 import { FlatList, StyleSheet, Text, View, ScrollView,Platform  } from 'react-native';
 import PersonList from "../component/PersonList";
 import ListOne from '../component/ListOne';
@@ -8,12 +8,14 @@ import BalanceCard from '../component/BalanceCard';
 import moment from 'moment';
 import * as Print from 'expo-print';
 import { shareAsync } from 'expo-sharing';
+import { UserContext } from '../UserContext';
 
 import Button from '../component/Button';
 //import { shareAsync } from 'expo-sharing';
 //import { captureRef } from 'react-native-view-shot';
 
 export default function MyLoanCollection({ navigation }) {
+   const {user} =useContext(UserContext);
   const [loneList, setLoanList] = useState([])
   const [totalCollectionToday, setTotalCollectionToday] = useState([])
    // const [totalLoanCollection, setTotalLoanCollection] = useState([])
@@ -48,7 +50,12 @@ export default function MyLoanCollection({ navigation }) {
       </head>
       <body>
       <h1>Today's Collection for </h1>
-      <h2> ${enrollmentBy}</h2>
+        
+      <h2>  ${user.username === 'মোঃ জয়নাল আবেদীন'
+    ? 'Employee1'
+    : user.username === 'Super Admin'
+      ? 'Administrator'
+        : 'Employee2'}</h2>
         <table>
           <thead>
             <tr>
@@ -95,12 +102,23 @@ const selectPrinter = async () => {
   
   useEffect(() => {
     const dataLink = ref(db, 'AllTransaction/'); 
-    const employeeLoansQuery = query(
-        dataLink,
-        // orderByChild('enrollmentBy'), 
-        //     equalTo("Employee1"),
-    );
-      onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
+    let transactionQuery = dataLink;
+   
+   if (user.username === 'Super Admin') {
+     transactionQuery = query(
+       dataLink,
+       orderByChild('enrollmentBy') // No equalTo() to get all data
+     );
+   } else {
+     transactionQuery = query(
+       dataLink,
+       orderByChild('enrollmentBy'),
+       equalTo(
+         user.username === 'মোঃ জয়নাল আবেদীন' ? 'Employee1' : 'Employee2'
+       )
+     );
+   }
+      onValue(transactionQuery, (snapshot) => { // Use the filtered query
         const data = snapshot.val();
         // console.log("today...........", todayMoment);
         if (data) { // Check if data exists

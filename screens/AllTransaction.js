@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import Button from "../component/Button";
 import TextInput from "../component/TextInput";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext, use } from "react";
 import { db } from "../config";
 import { ref, set, onValue } from "firebase/database";
 import { Picker } from "@react-native-picker/picker";
+import { UserContext } from "../UserContext";
 import {
   ALERT_TYPE,
   Dialog,
@@ -13,6 +14,7 @@ import {
 } from "react-native-alert-notification";
 
 export default function AllTransaction({ navigation }) {
+  const {user} =useContext(UserContext);
   const [memberno, setMemberno] = useState("");
   const [amount, setAmount] = useState("");
   const [chargeAmount, setChargeAmount] = useState(0);
@@ -65,7 +67,7 @@ export default function AllTransaction({ navigation }) {
   }, [selectedMemberId, memberList]);
 
   const addloancollection = () => {
-    if ( !selectedMemberId || !enrollmentBy) {
+    if ( !selectedMemberId) {
       Dialog.show({
         type: ALERT_TYPE.WARNING,
         title: "Error",
@@ -76,7 +78,7 @@ export default function AllTransaction({ navigation }) {
     }
     set(ref(db, "AllTransaction/" + uniqueId), {
       memberno: selectedMemberId,
-      enrollmentBy: enrollmentBy,
+      enrollmentBy: user.username,
       scid: uniqueId,
       timestamp: formattedDateTime,
       loanAmount: loanAmount,
@@ -118,6 +120,7 @@ export default function AllTransaction({ navigation }) {
           {"সুন্দরগঞ্জ দোকান মালিক ব্যাবসায় সমবায় সমিতি"}{" "}
         </Text>
         <Text style={styles.AllText}> সুন্দরগঞ্জ , গাইবান্ধা । </Text>
+          <Text style={{ fontWeight:'bold',fontSize:20}}> Welcome,  {user.username}</Text>
       </View>
       <View style={styles.FormView}>
        
@@ -158,7 +161,7 @@ export default function AllTransaction({ navigation }) {
             {selectedMember.company}
           </Text>
         )}
-        <Text
+        {/* <Text
           style={{
             fontFamily: "DMSans_500Medium",
             fontSize: 16,
@@ -177,7 +180,7 @@ export default function AllTransaction({ navigation }) {
             <Picker.Item label="Select Employee" value={null} />
           <Picker.Item label="মো: জয়নাল আবেদীন" value="Employee1" />
           <Picker.Item label="মো: রাকিবুল ইসলাম" value="Employee2" />
-        </Picker>
+        </Picker> */}
         <Text
           style={{
             fontFamily: "DMSans_500Medium",

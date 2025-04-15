@@ -1,13 +1,15 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 // need to import MenuCard Template like bellow
 import MenuCard from "../component/MenuCard";
 import BalanceCard from "../component/BalanceCard";
 import { db } from '../config';
 import { ref, onValue ,query, orderByChild, equalTo} from 'firebase/database';
+import { UserContext } from '../UserContext';
 
-export default function Dashboard({ navigation, route }) {
+export default function Dashboard({ navigation }) {
+ const {user} =useContext(UserContext);
  
    const [loneList, setLoanList] = useState([])
   const [totalLoanWithdraw, setTotalLoanWithdraw] = useState([])
@@ -18,25 +20,54 @@ export default function Dashboard({ navigation, route }) {
 
 useEffect(() => {
     const dataLink = ref(db, 'AllTransaction/');
-    const employeeTransactionQuery = query(
-        dataLink,
-        // orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
-        // equalTo(enrollment) // Filter for the specific employee
-      );
+    let employeeTransactionQuery = dataLink;
+   
+   if (user.username === 'Super Admin') {
+    employeeTransactionQuery = query(
+       dataLink,
+       orderByChild('enrollmentBy') // No equalTo() to get all data
+     );
+   } else {
+    employeeTransactionQuery = query(
+       dataLink,
+       orderByChild('enrollmentBy'),
+       equalTo(
+         user.username === 'মোঃ জয়নাল আবেদীন' ? 'Employee1' : 'Employee2'
+       )
+     );
+   }
      onValue(employeeTransactionQuery, (snapshot) => { // Use the filtered query
              const data = snapshot.val();
              if (data) { // Check if data exists
                const allLoan = Object.keys(data).map(key => ({
                  id: key,
                  ...data[key]
-               }))//.filter(loan => loan.category === "Loan" ); // Filter for the specific employee
+               }))
+              //  .filter(member => {
+              //   if (user.username === 'Super Admin') {
+              //     return true; // Show all data for 'super Admin'
+              //   } else if (user.username === 'মোঃ জয়নাল আবেদীন') {
+              //     return member.enrollmentBy === 'Employee1';
+              //   } else {
+              //     return member.enrollmentBy === 'Employee2';
+              //   }
+              // }); // Filter for the specific employee
                setLoanList(allLoan);
              } else {
                setLoanList([]); // Set to empty array if no loans found for the employee
              }
              if (data) { 
                  const totalAmount = Object.values(data)
-                 //.filter((item) => item.category === "Loan" && item.type === "Withdraw") 
+                // .filter(loan => loan.enrollmentBy === "Employee2") 
+                 .filter(member => {
+                  if (user.username === 'Super Admin') {
+                    return true; // Show all data for 'super Admin'
+                  } else if (user.username === 'মোঃ জয়নাল আবেদীন') {
+                    return member.enrollmentBy === 'Employee1';
+                  } else {
+                    return member.enrollmentBy === 'Employee2';
+                  }
+                })
                  .reduce((total, loan) => {
                    return total + (loan.loanWithdrawAmount || 0); 
                  }, 0);
@@ -47,7 +78,15 @@ useEffect(() => {
 
                if (data) { 
                 const totalAmount = Object.values(data)
-                //.filter((item) => item.category === "Loan" && item.type === "Collection") 
+                .filter(member => {
+                  if (user.username === 'Super Admin') {
+                    return true; // Show all data for 'super Admin'
+                  } else if (user.username === 'মোঃ জয়নাল আবেদীন') {
+                    return member.enrollmentBy === 'Employee1';
+                  } else {
+                    return member.enrollmentBy === 'Employee2';
+                  }
+                })
                 .reduce((total, loan) => {
                   return total + (loan.loanAmount || 0); 
                 }, 0);
@@ -58,7 +97,15 @@ useEffect(() => {
 
               if (data) { 
                 const totalAmount = Object.values(data)
-               // .filter((item) => item.category === "Savings" && item.type === "Collection") 
+                .filter(member => {
+                  if (user.username === 'Super Admin') {
+                    return true; // Show all data for 'super Admin'
+                  } else if (user.username === 'মোঃ জয়নাল আবেদীন') {
+                    return member.enrollmentBy === 'Employee1';
+                  } else {
+                    return member.enrollmentBy === 'Employee2';
+                  }
+                })
                 .reduce((total, loan) => {
                   return total + (loan.savingsAmount || 0); 
                 }, 0);
@@ -69,7 +116,15 @@ useEffect(() => {
 
               if (data) { 
                 const totalAmount = Object.values(data)
-                //.filter((item) => item.category === "Savings" && item.type === "Withdraw") 
+                .filter(member => {
+                  if (user.username === 'Super Admin') {
+                    return true; // Show all data for 'super Admin'
+                  } else if (user.username === 'মোঃ জয়নাল আবেদীন') {
+                    return member.enrollmentBy === 'Employee1';
+                  } else {
+                    return member.enrollmentBy === 'Employee2';
+                  }
+                })
                 .reduce((total, loan) => {
                   return total + (loan.savingsWithdrawAmount || 0); 
                 }, 0);
@@ -79,7 +134,15 @@ useEffect(() => {
               }
               if (data) { 
                 const totalAmount = Object.values(data)
-               // .filter((item) => item.category === "Charge" && item.type === "Collection") 
+                .filter(member => {
+                  if (user.username === 'Super Admin') {
+                    return true; // Show all data for 'super Admin'
+                  } else if (user.username === 'মোঃ জয়নাল আবেদীন') {
+                    return member.enrollmentBy === 'Employee1';
+                  } else {
+                    return member.enrollmentBy === 'Employee2';
+                  }
+                })
                 .reduce((total, loan) => {
                   return total + (loan.chargeAmount || 0); 
                 }, 0);
@@ -120,7 +183,7 @@ useEffect(() => {
                     
                     textAlign: 'center',
                     color: 'white',
-                  }}> </Text>
+                  }}> {user.username}  </Text>
       </View>
       
 

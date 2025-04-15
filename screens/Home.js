@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Button } from 'react-native'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BottomTab from '../component/BottomTab';
 import Dashboard from './Dashboard';
@@ -12,13 +12,15 @@ import { db } from '../config';
 import { ref, onValue } from 'firebase/database';
 import Collection from './Collection';
 import AllTransaction from './AllTransaction';
+import { UserContext } from '../UserContext';
+
 
 
 //npm install @react-navigation/bottom-tabs
 const Tab = createBottomTabNavigator();
 
 export default function Home({ navigation, route }) {
-  const { username } = route.params;
+  const {user} =useContext(UserContext);
   
   return (
     <Tab.Navigator tabBar={props => <BottomTab {...props} />}>

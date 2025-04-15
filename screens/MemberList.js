@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import {
   FlatList,
   StyleSheet,
@@ -10,20 +10,13 @@ import {
 import BalanceCard from "../component/BalanceCard";
 import { db } from "../config";
 import { ref, onValue } from "firebase/database";
+import { UserContext } from "../UserContext";
 import TextInput from "../component/TextInput";
 //import { ScrollView } from 'react-native-gesture-handler';
 
-const data = [
-  { id: 1, title: "Name 1", Amount: "25,000 Taka", saving: 850 },
-  { id: 2, title: "Name 2" },
-  { id: 3, title: "Name 3" },
-  { id: 4, title: "Name 4" },
-  { id: 5, title: "Name 5" },
-  { id: 6, title: "Name 6" },
-  // ... more items
-];
 
 export default function MemberList({ navigation }) {
+  const { user } = useContext(UserContext);
   const [memberList, setMemberList] = useState([]);
   const [searchId, setSearchId] = useState('');
   const [memberCount, setMemberCount] = useState([]);
@@ -40,8 +33,17 @@ export default function MemberList({ navigation }) {
       const allmember = Object.keys(data).map((key) => ({
         id: key,
         ...data[key],
-      }));
-      //.filter(member => member.assingedEmployee === "Employee1");
+      })).filter(member => {
+        if (user.username === 'Super Admin') {
+          return true; // Show all data for 'super Admin'
+        } else if (user.username === 'মোঃ জয়নাল আবেদীন') {
+          return member.assingedEmployee === 'Employee1';
+        } else {
+          return member.assingedEmployee === 'Employee2';
+        }
+      });
+
+     
       setMemberList(allmember);
       setMemberCount(allmember.length);
     });
@@ -109,7 +111,7 @@ export default function MemberList({ navigation }) {
             key={index}
             onPress={() =>
               navigation.navigate("MemberTransaction", {
-                memberId: item.memberId,name:item.name
+                memberId: item.memberId,name:item.name, assingedEmployee:item.assingedEmployee
               })
             }
           >
@@ -118,6 +120,7 @@ export default function MemberList({ navigation }) {
             <Text>Company : {item.company}</Text>
             <Text>Mobile : {item.mobile}</Text>
             <Text>Member from : {item.timestamp}</Text>
+            <Text>Assigned Employee : {item.assingedEmployee =='Employee1' ? "মোঃ জয়নাল আবেদীন" : "মোঃ রাকিবুল ইসলাম"}</Text>
           </TouchableOpacity>
         );
       })}

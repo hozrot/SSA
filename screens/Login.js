@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View, TouchableOpacity,ScrollView} from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useContext } from 'react'
 import Button from "../component/Button";
 import TextInput from "../component/TextInput";
 import { Alert } from 'react-native';
+import { UserContext } from '../UserContext';
 
 export default function Login({navigation}) {
+  const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -15,9 +17,9 @@ export default function Login({navigation}) {
 
  const  handleLogin = () => {
   const users = [
-    { email: "admin@ssa.com", password: "superadmin@2025", username: "Super Admin" },
-    { email: "user1@ssa.com", password: "user1mja", username: "মোঃ জয়নাল আবেদীন" },
-    { email: "user2@ssa.com", password: "user2mri", username: "মোঃ রাকিবুল ইসলাম" },
+    { id: 1, email: "admin@ssa.com", password: "superadmin@2025", username: "Super Admin" },
+    { id: 2, email: "user1@ssa.com", password: "user1mja", username: "মোঃ জয়নাল আবেদীন" },
+    { id: 3, email: "user2@ssa.com", password: "user2mri", username: "মোঃ রাকিবুল ইসলাম" },
   ];
 
 
@@ -33,6 +35,10 @@ export default function Login({navigation}) {
   );
 
   if (loggedInUser) {
+    // Successfully logged in
+    // Set the user in the context
+    setUser(loggedInUser);
+    // Set the user in the context
     Alert.alert("Success", `Login successful for ${loggedInUser.username}`);
     // Navigate to the Home screen and pass the username as a parameter
     navigation.navigate("Home", { username: loggedInUser.username });

@@ -4,6 +4,12 @@ import Button from "../component/Button";
 import TextInput from "../component/TextInput";
 import { Alert } from 'react-native';
 import { UserContext } from '../UserContext';
+import {
+  ALERT_TYPE,
+  Dialog,
+  AlertNotificationRoot,
+  Toast,
+} from "react-native-alert-notification";
 
 export default function Login({navigation}) {
   const { user, setUser } = useContext(UserContext);
@@ -25,7 +31,12 @@ export default function Login({navigation}) {
 
 
   if (email === "" || password === "") {
-    Alert.alert("Error", "Email and Password cannot be empty");
+      Dialog.show({
+            type: ALERT_TYPE.WARNING,
+            title: "Error",
+            textBody: "Please enter both email and password",
+            button: "Close",
+          });
     return;
   }
 
@@ -39,16 +50,30 @@ export default function Login({navigation}) {
     // Set the user in the context
     setUser(loggedInUser);
     // Set the user in the context
-    Alert.alert("Success", `Login successful for ${loggedInUser.username}`);
+   
+    // Alert.alert("Success", `Login successful for ${loggedInUser.username}`);
     // Navigate to the Home screen and pass the username as a parameter
     navigation.navigate("Home", { username: loggedInUser.username });
+    Dialog.show({
+      type: ALERT_TYPE.SUCCESS,
+      title: "Success",
+      textBody: `Login successful for ${loggedInUser.username}`,
+      button: "Close",
+    });
   } else {
-    Alert.alert("Error", "Invalid email or password");
+    Dialog.show({
+      type: ALERT_TYPE.WARNING,
+      title: "Error",
+      textBody: "Invalid email or password",
+      button: "Close",
+    });
   }
   }
     return (
 
       <ScrollView style={styles.containerView}>
+         <AlertNotificationRoot>
+                            </AlertNotificationRoot>
 
         <View style={styles.HeaderView}>
           <Text
@@ -137,14 +162,16 @@ const styles = StyleSheet.create({
   containerView: {
     flex: 1,
     backgroundColor: "acqua",
+    
+
   },
   HeaderView: {
-    flex: 0.2,
+    flex: 0.4,
     padding: 20,
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 20,
+    paddingTop: 60,
   },
   FormView: {
     flex: 0.4,
@@ -155,6 +182,7 @@ const styles = StyleSheet.create({
     
   },
   SubmitView: {
+    flex: 0.2,
     alignContent: "center",
     alignItems: "center",
     padding: 20,

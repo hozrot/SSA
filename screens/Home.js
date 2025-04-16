@@ -28,18 +28,24 @@ export default function Home({ navigation, route }) {
       <Tab.Screen name="Dashboard" component={Dashboard} options={{
         headerShown: false
       }} />
+       {user && user.username !== 'Super Admin' && (
       <Tab.Screen name="Registration" component={NewEntry} options={{
         headerShown: false
-      }} />
+      }} /> )}
       {/* <Tab.Screen name="Collection" component={Collection} options={{
         headerShown: false
       }} /> */}
+       {user && user.username !== 'Super Admin' && (
       <Tab.Screen name="Transaction" component={AllTransaction} options={{
         headerShown: false
-      }} />
-      <Tab.Screen name="Expense" component={ExpenseEntry} options={{
-        headerShown: false
-      }} />
+      }} />)}
+       {user && user.username === 'Super Admin' && (
+        <Tab.Screen
+          name="Expense"
+          component={ExpenseEntry}
+          options={{ headerShown: false }}
+        />
+      )}
       {/* <Tab.Screen name="Given" component={LoanEntry} options={{
         headerShown: false
       }} /> */}

@@ -42,7 +42,7 @@ export default function App() {
     <NavigationContainer>
 
       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Login" component={Login}  options={{ header: () => null }}/>
         <Stack.Screen name="Home" component={Home} options={{ header: () => null }} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
         <Stack.Screen name="AboutUs" component={AboutUs} />

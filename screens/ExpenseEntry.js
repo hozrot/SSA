@@ -32,6 +32,7 @@ export default function ExpenseEntry({ navigation }) {
    // Create a Date object from the timestamp
    const date = new Date(timestamp);
    // Format the date and time using toLocaleString()
+   
    const formattedDateTime = date.toLocaleString();
    const month = (date).toLocaleString('default', { month: 'long'  }); 
    const uniqueId = Math.floor(Math.random() * 10000);
@@ -103,7 +104,7 @@ const previousMonthName = previousMonth.toLocaleString('default', { month: 'long
       <Text
           style={{
             fontFamily: 'bold',
-            textDecorationLine: 'underline',
+            
             fontSize: 24,
             paddingBottom: 8,
             paddingTop: 15,
@@ -112,7 +113,7 @@ const previousMonthName = previousMonth.toLocaleString('default', { month: 'long
           }}
         >
           {" "}
-          Expense of  {previousMonthName}{" "}  
+          Expense of  {previousMonthName}, {today.getFullYear()}{" "} 
         </Text>
 
        

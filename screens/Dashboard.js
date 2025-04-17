@@ -41,6 +41,7 @@ useEffect(() => {
        dataLink,
        orderByChild('enrollmentBy'),
        equalTo(user.username)
+       
      );
    }
      onValue(employeeTransactionQuery, (snapshot) => { // Use the filtered query
@@ -50,30 +51,13 @@ useEffect(() => {
                  id: key,
                  ...data[key]
                }))
-              //  .filter(member => {
-              //   if (user.username === 'Super Admin') {
-              //     return true; // Show all data for 'super Admin'
-              //   } else if (user.username === 'মোঃ জয়নাল আবেদীন') {
-              //     return member.enrollmentBy === 'Employee1';
-              //   } else {
-              //     return member.enrollmentBy === 'Employee2';
-              //   }
-              // }); // Filter for the specific employee
                setLoanList(allLoan);
              } else {
                setLoanList([]); // Set to empty array if no loans found for the employee
              }
              if (data) { 
                  const totalAmount = Object.values(data)
-                 .filter(loan => loan.enrollmentBy === user.username)
-                // .filter(loan => loan.enrollmentBy === "Employee2") 
-                //  .filter(member => {
-                //   if (user.username === 'Super Admin') {
-                //     return true; // Show all data for 'super Admin'
-                //   } else {
-                //     return member.enrollmentBy;
-                //   }
-                // })
+                 .filter(loan => user.username === 'Super Admin' || loan.enrollmentBy === user.username)
                  .reduce((total, loan) => {
                    return total + (loan.loanWithdrawAmount || 0); 
                  }, 0);
@@ -84,15 +68,7 @@ useEffect(() => {
 
                if (data) { 
                 const totalAmount = Object.values(data)
-                .filter(member => {
-                  if (user.username === 'Super Admin') {
-                    return true; // Show all data for 'super Admin'
-                  } else if (user.username === 'মোঃ জয়নাল আবেদীন') {
-                    return member.enrollmentBy === 'Employee1';
-                  } else {
-                    return member.enrollmentBy === 'Employee2';
-                  }
-                })
+                .filter(loan => user.username === 'Super Admin' || loan.enrollmentBy === user.username)
                 .reduce((total, loan) => {
                   return total + (loan.loanAmount || 0); 
                 }, 0);
@@ -103,15 +79,7 @@ useEffect(() => {
 
               if (data) { 
                 const totalAmount = Object.values(data)
-                .filter(member => {
-                  if (user.username === 'Super Admin') {
-                    return true; // Show all data for 'super Admin'
-                  } else if (user.username === 'মোঃ জয়নাল আবেদীন') {
-                    return member.enrollmentBy === 'Employee1';
-                  } else {
-                    return member.enrollmentBy === 'Employee2';
-                  }
-                })
+                .filter(loan => user.username === 'Super Admin' || loan.enrollmentBy === user.username)
                 .reduce((total, loan) => {
                   return total + (loan.savingsAmount || 0); 
                 }, 0);
@@ -122,15 +90,7 @@ useEffect(() => {
 
               if (data) { 
                 const totalAmount = Object.values(data)
-                .filter(member => {
-                  if (user.username === 'Super Admin') {
-                    return true; // Show all data for 'super Admin'
-                  } else if (user.username === 'মোঃ জয়নাল আবেদীন') {
-                    return member.enrollmentBy === 'Employee1';
-                  } else {
-                    return member.enrollmentBy === 'Employee2';
-                  }
-                })
+                .filter(loan => user.username === 'Super Admin' || loan.enrollmentBy === user.username)
                 .reduce((total, loan) => {
                   return total + (loan.savingsWithdrawAmount || 0); 
                 }, 0);
@@ -140,15 +100,7 @@ useEffect(() => {
               }
               if (data) { 
                 const totalAmount = Object.values(data)
-                .filter(member => {
-                  if (user.username === 'Super Admin') {
-                    return true; // Show all data for 'super Admin'
-                  } else if (user.username === 'মোঃ জয়নাল আবেদীন') {
-                    return member.enrollmentBy === 'Employee1';
-                  } else {
-                    return member.enrollmentBy === 'Employee2';
-                  }
-                })
+                .filter(loan => user.username === 'Super Admin' || loan.enrollmentBy === user.username)
                 .reduce((total, loan) => {
                   return total + (loan.chargeAmount || 0); 
                 }, 0);

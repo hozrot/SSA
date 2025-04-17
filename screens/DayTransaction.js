@@ -49,13 +49,9 @@ export default function MyLoanCollection({ navigation }) {
         </style>
       </head>
       <body>
-      <h1>Today's Collection for </h1>
+      <h1>Today's Transaction Details of </h1>
         
-      <h2>  ${user.username === 'মোঃ জয়নাল আবেদীন'
-    ? 'Employee1'
-    : user.username === 'Super Admin'
-      ? 'Administrator'
-        : 'Employee2'}</h2>
+      <h2>  ${ user.username}</h2>
         <table>
           <thead>
             <tr>
@@ -114,7 +110,7 @@ const selectPrinter = async () => {
        dataLink,
        orderByChild('enrollmentBy'),
        equalTo(
-         user.username === 'মোঃ জয়নাল আবেদীন' ? 'Employee1' : 'Employee2'
+         user.username
        )
      );
    }

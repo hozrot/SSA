@@ -54,12 +54,12 @@ export default function Login({navigation}) {
     // Alert.alert("Success", `Login successful for ${loggedInUser.username}`);
     // Navigate to the Home screen and pass the username as a parameter
     navigation.navigate("Home", { username: loggedInUser.username });
-    Dialog.show({
-      type: ALERT_TYPE.SUCCESS,
-      title: "Success",
-      textBody: `Login successful for ${loggedInUser.username}`,
-      button: "Close",
-    });
+    // Dialog.show({
+    //   type: ALERT_TYPE.SUCCESS,
+    //   title: "Success",
+    //   textBody: `Login successful for ${loggedInUser.username}`,
+    //   button: "Close",
+    // });
   } else {
     Dialog.show({
       type: ALERT_TYPE.WARNING,
@@ -72,8 +72,7 @@ export default function Login({navigation}) {
     return (
 
       <ScrollView style={styles.containerView}>
-         <AlertNotificationRoot>
-                            </AlertNotificationRoot>
+        
 
         <View style={styles.HeaderView}>
           <Text
@@ -90,6 +89,9 @@ export default function Login({navigation}) {
           </Text>
           <Text style={styles.AllText}> সুন্দরগঞ্জ , গাইবান্ধা ।   </Text>
         </View>
+
+        <AlertNotificationRoot>
+        </AlertNotificationRoot>
         <View style={styles.FormView}>
           <Text
             style={{

@@ -19,12 +19,21 @@ export default function MySummary({navigation }) {
 
   useEffect(() => {
     const dataLink = ref(db, 'AllTransaction/');
-    const employeeLoansQuery = query(
-        dataLink,
-        orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
-                   equalTo(user.username === 'মোঃ জয়নাল আবেদীন' ? 'Employee1' : 'Employee2')
-      );
-     onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
+    let transactionQuery = dataLink;
+
+if (user.username === 'Super Admin') {
+  transactionQuery = query(
+    dataLink,
+    orderByChild('enrollmentBy') // No equalTo() to get all data
+  );
+} else {
+  transactionQuery = query(
+    dataLink,
+    orderByChild('enrollmentBy'),
+    equalTo(user.username )
+  );
+}
+     onValue(transactionQuery, (snapshot) => { // Use the filtered query
              const data = snapshot.val();
              if (data) { // Check if data exists
                const allLoan = Object.keys(data).map(key => ({

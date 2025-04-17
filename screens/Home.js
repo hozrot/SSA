@@ -28,10 +28,10 @@ export default function Home({ navigation, route }) {
       <Tab.Screen name="Dashboard" component={Dashboard} options={{
         headerShown: false
       }} />
-       {user && user.username !== 'Super Admin' && (
+      
       <Tab.Screen name="Registration" component={NewEntry} options={{
         headerShown: false
-      }} /> )}
+      }} /> 
       {/* <Tab.Screen name="Collection" component={Collection} options={{
         headerShown: false
       }} /> */}

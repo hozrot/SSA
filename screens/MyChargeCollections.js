@@ -20,12 +20,26 @@ export default function MyChargeCollections({ navigation }) {
 
   useEffect(() => {
     const dataLink = ref(db, 'AllTransaction/');
-    const employeeLoansQuery = query(
+    let transactionQuery = dataLink;
+
+    if (user.username === 'Super Admin') {
+      transactionQuery = query(
         dataLink,
-        orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
-          equalTo(user.username === 'মোঃ জয়নাল আবেদীন' ? 'Employee1' : 'Employee2')
+        orderByChild('enrollmentBy') // No equalTo() to get all data
       );
-      onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
+    } else {
+      transactionQuery = query(
+        dataLink,
+        orderByChild('enrollmentBy'),
+        equalTo(user.username )
+      );
+    }
+    // const employeeLoansQuery = query(
+    //     dataLink,
+    //     orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
+    //       equalTo(user.username === 'মোঃ জয়নাল আবেদীন' ? 'Employee1' : 'Employee2')
+    //   );
+      onValue(transactionQuery, (snapshot) => { // Use the filtered query
         const data = snapshot.val();
         if (data) { // Check if data exists
           const allCharge = Object.keys(data).map(key => ({
@@ -58,7 +72,7 @@ export default function MyChargeCollections({ navigation }) {
             const todayMoment = moment(formattedDate, 'MM/DD/YYYY'); // Corrected format string
           
             const totalChargeAmountToday = Object.values(data).reduce((total, charge) => {
-              const chargeDate = moment(charge.timestamp, 'DD/MM/YYYY'); // Corrected format string
+              const chargeDate = moment(charge.timestamp, 'MM/DD/YYYY'); // Corrected format string
              // console.log("database", loanDate);
           
               if (chargeDate.isSame(todayMoment, 'day') && charge.type === "Collection" ) { 

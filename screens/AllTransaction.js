@@ -67,7 +67,7 @@ export default function AllTransaction({ navigation }) {
   }, [selectedMemberId, memberList]);
 
   const addloancollection = () => {
-    if ( !selectedMemberId) {
+    if ( !selectedMemberId && loanAmount >0  || savingsAmount>0 || chargeAmount>0 || loanWithdrawAmount>0 || savingsWithdrawAmount>0) {
       Dialog.show({
         type: ALERT_TYPE.WARNING,
         title: "Error",

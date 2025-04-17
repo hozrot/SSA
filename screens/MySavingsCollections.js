@@ -21,12 +21,21 @@ export default function MySavingsCollection({ navigation }) {
 
   useEffect(() => {
     const dataLink = ref(db, 'AllTransaction/');
-    const employeeLoansQuery = query(
-        dataLink,
-       orderByChild('enrollmentBy'), // Assuming 'enrollmentBy' is the field in your data
-               equalTo(user.username === 'মোঃ জয়নাল আবেদীন' ? 'Employee1' : 'Employee2')
-      );
-      onValue(employeeLoansQuery, (snapshot) => { // Use the filtered query
+    let transactionQuery = dataLink;
+   
+   if (user.username === 'Super Admin') {
+     transactionQuery = query(
+       dataLink,
+       orderByChild('enrollmentBy') // No equalTo() to get all data
+     );
+   } else {
+     transactionQuery = query(
+       dataLink,
+       orderByChild('enrollmentBy'),
+       equalTo(user.username )
+     );
+   }
+      onValue(transactionQuery, (snapshot) => { // Use the filtered query
         const data = snapshot.val();
         if (data) { // Check if data exists
           const allSavings = Object.keys(data).map(key => ({
@@ -60,7 +69,7 @@ export default function MySavingsCollection({ navigation }) {
             const todayMoment = moment(formattedDate, 'MM/DD/YYYY'); // Corrected format string
           
             const totalLoanAmountToday = Object.values(data).reduce((total, loan) => {
-              const loanDate = moment(loan.timestamp, 'DD/MM/YYYY'); // Corrected format string
+              const loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); // Corrected format string
              // console.log("database", loanDate);
           
               if (loanDate.isSame(todayMoment, 'day') && loan.type === "Collection") { 

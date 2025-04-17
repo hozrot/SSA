@@ -13,14 +13,8 @@ export default function MyLoanCollection({ navigation }) {
   const {user} =useContext(UserContext);
   const [transactionList, setTransactionList] = useState([])
   const [totalTransactionToday, setTotalTransactionToday] = useState([])
-    const [totalTransaction, setTotalTransaction] = useState([])
-    const enrollmentBy ="মোঃ জয়নাল আবেদীন";
-   
-  //  const enrollmentBy ="মোঃ রাকিবুল ইসলাম";
-
-  if(user.username === "মোঃ জয়নাল আবেদীন"){
-    const enrollmentBy ="Employee1";
-  }
+  const [totalTransaction, setTotalTransaction] = useState([])
+  
 
   useEffect(() => {
     const dataLink = ref(db, 'AllTransaction/');
@@ -35,9 +29,7 @@ if (user.username === 'Super Admin') {
   transactionQuery = query(
     dataLink,
     orderByChild('enrollmentBy'),
-    equalTo(
-      user.username === 'মোঃ জয়নাল আবেদীন' ? 'Employee1' : 'Employee2'
-    )
+    equalTo(user.username )
   );
 }
       onValue(transactionQuery, (snapshot) => { // Use the filtered query
@@ -74,7 +66,7 @@ if (user.username === 'Super Admin') {
             const todayMoment = moment(formattedDate, 'MM/DD/YYYY'); // Corrected format string
           
             const totalLoanAmountToday = Object.values(data).reduce((total, loan) => {
-              const loanDate = moment(loan.timestamp, 'DD/MM/YYYY'); // Corrected format string
+              const loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); // Corrected format string
              console.log("database", loanDate);
           
               if (loanDate.isSame(todayMoment, 'day') &&  loan.type === 'Collection') { 

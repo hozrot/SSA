@@ -3,9 +3,11 @@ import Button from "../component/Button";
 import TextInput from "../component/TextInput";
 import React, { useState, useEffect,useContext, use } from "react";
 import { db } from "../config";
-import { ref, set, onValue } from "firebase/database";
+import { ref, set, get, query, orderByChild, equalTo,onValue } from 'firebase/database';
+//import { ref, set, onValue } from "firebase/database";
 import { Picker } from "@react-native-picker/picker";
 import { UserContext } from "../UserContext";
+import moment from 'moment';
 import {
   ALERT_TYPE,
   Dialog,
@@ -67,15 +69,17 @@ export default function AllTransaction({ navigation }) {
   }, [selectedMemberId, memberList]);
 
   const addloancollection = () => {
-    if ( !selectedMemberId && loanAmount >0  || savingsAmount>0 || chargeAmount>0 || loanWithdrawAmount>0 || savingsWithdrawAmount>0) {
+    if (!selectedMemberId || (loanAmount === 0 && savingsAmount === 0 && chargeAmount === 0 && loanWithdrawAmount === 0 && savingsWithdrawAmount === 0)) {
       Dialog.show({
         type: ALERT_TYPE.WARNING,
         title: "Error",
-        textBody: "All fields are required...........",
+        textBody: "Please select a member and enter a transaction amount.",
         button: "Close",
       });
-      return; // Exit the function if any field is empty
+      return; // Exit the function if member is not selected or no amount is entered
     }
+
+    
     set(ref(db, "AllTransaction/" + uniqueId), {
       memberno: selectedMemberId,
       enrollmentBy: user.username,
@@ -105,6 +109,7 @@ export default function AllTransaction({ navigation }) {
     });
   };
 
+  
   return (
     <ScrollView style={styles.containerView}>
          <AlertNotificationRoot>

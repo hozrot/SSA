@@ -36,7 +36,7 @@ export default function MemberList({ navigation }) {
       })).filter(member => {
         if (user.username === 'Super Admin') {
           return true; // Show all data for 'super Admin'
-        } else if (user.username === 'মোঃ জয়নাল আবেদীন') {
+        } else if (user.username === 'মোঃ জয়নাল আবেদীন') {
           return member.assingedEmployee === 'Employee1';
         } else {
           return member.assingedEmployee === 'Employee2';

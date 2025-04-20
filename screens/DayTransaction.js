@@ -57,27 +57,65 @@ export default function MyLoanCollection({ navigation }) {
             <tr>
               <th>Member No</th>
               <th>Date</th>
-              <th>Amount</th>
+              <th>Loan </th>
+              <th>Savings </th>
+              <th>Charge </th>
               <th>Type</th>
+             
              
             </tr>
           </thead>
           <tbody>
-            ${loneList.map(item => `
-              <tr>
-                <td>${item.memberno}</td>
-                <td>${item.timestamp}</td>
-                <td>${item.loanAmount+item.savingsAmount+item.chargeAmount+item.savingsWithdrawAmount+item.loanWithdrawAmount}</td>
-                <td>${item.type}</td>
-               
-              </tr>
-            `).join('')}
-          </tbody>
+    ${loneList
+      .map(item => {
+        let loanAmount;
+        let savingsAmount;
+        
+
+        if (item.type === 'Collection') {
+          loanAmount = item.loanAmount;
+          savingsAmount = item.savingsAmount;
+        } else if (item.type === 'Withdraw') {
+          loanAmount = item.loanWithdrawAmount;
+          savingsAmount = item.savingsWithdrawAmount;
+        } else {
+          amount = ''; // Or some default value
+        }
+
+        return `
+          <tr>
+            <td>${item.memberno}</td>
+            <td>${item.timestamp}</td>
+            <td>${loanAmount}</td>
+            <td>${savingsAmount}</td>
+            <td>${item.chargeAmount}</td>
+            <td>${item.type}</td>
+            
+          </tr>
+        `;
+      })
+      .join('')}
+  </tbody>
+         
         </table>
       </body>
     </html>
   `;
 
+
+//   <tbody>
+//   ${loneList.map(item => `
+//     <tr>
+//       <td>${item.memberno}</td>
+//       <td>${item.timestamp}</td>
+//       <td>${item.loanAmount}</td>
+//       <td>${item.savingsAmount}</td>
+//       <td>${item.chargeAmount}</td>
+//       <td>${item.type}</td>
+     
+//     </tr>
+//   `).join('')}
+// </tbody>
 const [selectedPrinter, setSelectedPrinter] = useState();
 
 const print = async () => {
@@ -124,7 +162,7 @@ const selectPrinter = async () => {
             ...data[key]
           })).filter(loan => { 
             const  loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); 
-            return loanDate.isSame(todayMoment,  'Day');  } ); // Filter for the specific employee
+            return loanDate.isSame(todayMoment,  'Day')  } ); // Filter for the specific employee
           setLoanList(allLoan);
           //console.log("today...........", loan.timestamp);
         } else {

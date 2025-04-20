@@ -154,7 +154,7 @@ export default function MemberTransaction({ navigation }) {
         }}
       >
         <BalanceCard
-          balanceTitle={"Withdrawn"}
+          balanceTitle={"Loan Taken"}
           iconName={"archive-plus"}
           iconColor={"white"}
           balance={totalLoanWithdraw+'৳'}

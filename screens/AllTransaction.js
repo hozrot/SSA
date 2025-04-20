@@ -52,7 +52,15 @@ export default function AllTransaction({ navigation }) {
       const allMembers = Object.keys(data).map((key) => ({
         id: key,
         ...data[key],
-      }));
+      })).filter(member => {
+        if (user.username === 'Super Admin') {
+          return true; // Show all data for 'super Admin'
+        } else if (user.username === 'মোঃ জয়নাল আবেদীন') {
+          return member.assingedEmployee === 'Employee1';
+        } else {
+          return member.assingedEmployee === 'Employee2';
+        }
+      });
       setMemberList(allMembers);
     });
   }, []);
@@ -162,8 +170,8 @@ export default function AllTransaction({ navigation }) {
         </Picker>
         {selectedMember && (
           <Text>
-            Member Name : {selectedMember.name} {"\n"}Company Name:{" "}
-            {selectedMember.company}
+            Member Name : {selectedMember.name} {"\n"}
+            Company Name: {selectedMember.company}
           </Text>
         )}
         {/* <Text

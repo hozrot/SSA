@@ -39,6 +39,12 @@ export default function AllTransaction({ navigation }) {
   const [selectedMember, setSelectedMember] = useState(null);
   const [searchText, setSearchText] = useState(''); 
 
+  const [totalLoanCollection, setTotalLoanCollection] = useState([]);
+    const [totalLoanWithdraw, setTotalLoanWithdraw] = useState([]);
+    const [totalSavingsCollection, setTotalSavingsCollection] = useState([]);
+    const [totalChargeCollection, setTotalChargeCollection] = useState([]);
+    const [totalSavingsWithdraw, setTotalSavingsWithdraw] = useState([]);
+
   const handleSearchTextChange = (text) => {
     setSearchText(text);
   };
@@ -74,7 +80,73 @@ export default function AllTransaction({ navigation }) {
     } else {
       setSelectedMember(null);
     }
+    const dataLink = ref(db, "AllTransaction/");
+    const employeeLoansQuery = query(
+      dataLink,
+      orderByChild("memberno"), // Assuming 'enrollmentBy' is the field in your data
+      equalTo(selectedMemberId) 
+// Filter for the specific employee
+    );
+   // console.log("Selected Member ID:", selectedMemberId);
+    onValue(employeeLoansQuery, (snapshot) => {
+      // Use the filtered query
+      const data = snapshot.val();
+     
+      if (data) {
+        const totalAmount = Object.values(data)
+          .filter(
+            (loan) => loan.type === "Withdraw"
+          )
+          .reduce((total, loan) => {
+            return total + (loan.loanWithdrawAmount || 0);
+          }, 0);
+        setTotalLoanWithdraw(totalAmount);
+      } else {
+        setTotalLoanWithdraw(0);
+      }
+      if (data) {
+        const totalAmount = Object.values(data)
+          .filter(
+            (loan) => loan.type === "Collection" 
+          )
+          .reduce((total, loan) => {
+            return total + (loan.loanAmount || 0) ;
+          }, 0);
+        setTotalLoanCollection(totalAmount);
+      } else {
+        setTotalLoanCollection(0);
+      }
+      if (data) {
+        const totalAmount = Object.values(data)
+          .filter(
+            (savings) =>
+              savings.type === "Collection" 
+          )
+          .reduce((total, savings) => {
+            return total + (savings.savingsAmount || 0);
+          }, 0);
+        setTotalSavingsCollection(totalAmount);
+      } else {
+        setTotalSavingsCollection(0);
+      }
+      if (data) {
+        const totalAmount = Object.values(data)
+          .filter(
+            (savings) =>
+              savings.type === "Withdraw" 
+          )
+          .reduce((total, savings) => {
+            return total + (savings.savingsWithdrawAmount || 0);
+          }, 0);
+        setTotalSavingsWithdraw(totalAmount);
+      } else {
+        setTotalSavingsWithdraw(0);
+      }
+      
+    });
   }, [selectedMemberId, memberList]);
+
+  
 
   const addloancollection = () => {
     if (!selectedMemberId || (loanAmount === 0 && savingsAmount === 0 && chargeAmount === 0 && loanWithdrawAmount === 0 && savingsWithdrawAmount === 0)) {
@@ -171,7 +243,10 @@ export default function AllTransaction({ navigation }) {
         {selectedMember && (
           <Text>
             Member Name : {selectedMember.name} {"\n"}
-            Company Name: {selectedMember.company}
+            Company Name: {selectedMember.company} {"\n"}
+            Loan Amount : {totalLoanCollection}{"\n"}
+            Savings Amount : {totalSavingsCollection}{"\n"}
+           
           </Text>
         )}
         {/* <Text

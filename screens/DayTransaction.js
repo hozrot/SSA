@@ -53,18 +53,18 @@ export default function MyLoanCollection({ navigation }) {
         </style>
       </head>
       <body>
-      <h1>Today's Collection Details of </h1>
+      <h1> Collection Details of </h1>
         
       <h2>  ${ user.username}</h2>
         <table>
           <thead>
             <tr>
              
-              <th>Date Time</th>
-               <th>Member No</th>
-              <th>Loan </th>
-              <th>Savings </th>
-              <th>Charge </th>
+              <th style="text-align: center;">${currentDate} Collection Time</th>
+               <th style="text-align: center;">Member No</th>
+              <th style="text-align: center;">Loan </th>
+              <th style="text-align: center;">Savings </th>
+              <th style="text-align: center;">Charge </th>
               
              
              
@@ -90,11 +90,11 @@ export default function MyLoanCollection({ navigation }) {
         return `
           <tr>
             
-            <td>${item.timestamp}</td>
-            <td>${item.memberno}</td>
-            <td>${loanAmount}</td>
-            <td>${savingsAmount}</td>
-            <td>${item.chargeAmount}</td>
+          <td style="text-align: center;">${moment(item.timestamp, 'MM/DD/YYYY hh:mm A').format(' hh:mm A')}</td>
+            <td style="text-align: center;">${item.memberno}</td>
+            <td style="text-align: center;">${loanAmount}</td>
+            <td style="text-align: center;">${savingsAmount}</td>
+            <td style="text-align: center;">${item.chargeAmount}</td>
            
             
           </tr>
@@ -104,8 +104,9 @@ export default function MyLoanCollection({ navigation }) {
   </tbody>
    <tfoot>
       <tr>
-        <th colSpan="2">Total</th>
-        <th>
+      <th> </th>
+       <th style="text-align: center;">Total</th>
+        <th style="text-align: center;">
           ${CollectionList.reduce((total, item) => {
             if (item.type === 'Collection') {
               return total + (item.loanAmount || 0);
@@ -115,7 +116,7 @@ export default function MyLoanCollection({ navigation }) {
             return total;
           }, 0)}
         </th>
-        <th>
+        <th style="text-align: center;">
           ${CollectionList.reduce((total, item) => {
             if (item.type === 'Collection') {
               return total + (item.savingsAmount || 0);
@@ -125,10 +126,20 @@ export default function MyLoanCollection({ navigation }) {
             return total;
           }, 0)}
         </th>
-        <th>
+        <th style="text-align: center;">
           ${CollectionList.reduce((total, item) => total + (item.chargeAmount || 0), 0)}
         </th>
         
+      </tr>
+       <tr>
+         <th> </th>
+       <th style="text-align: center;">Grand Total </th>
+        <th style="text-align: center;" colspan="3">
+          ${CollectionList.reduce((total, loan) => {
+            return total + (loan.loanAmount || 0)  + (loan.chargeAmount || 0) + (loan.savingsAmount || 0);
+          }, 0)}
+        </th>
+       
       </tr>
     </tfoot>
          
@@ -157,18 +168,18 @@ export default function MyLoanCollection({ navigation }) {
         </style>
       </head>
       <body>
-      <h1>Today's Collection Details of </h1>
+      <h1> Withdraw Details of </h1>
         
       <h2>  ${ user.username}</h2>
         <table>
           <thead>
             <tr>
              
-              <th>Date Time</th>
-               <th>Member No</th>
-              <th>Loan </th>
-              <th>Savings </th>
-              <th>Charge </th>
+              <th style="text-align: center;"> ${currentDate} Withdraw Time  </th>
+               <th style="text-align: center;">Member No</th>
+              <th style="text-align: center;">Loan </th>
+              <th style="text-align: center;">Savings </th>
+              
               
              
              
@@ -194,11 +205,12 @@ export default function MyLoanCollection({ navigation }) {
         return `
           <tr>
             
-            <td>${item.timestamp}</td>
-            <td>${item.memberno}</td>
-            <td>${loanAmount}</td>
-            <td>${savingsAmount}</td>
-            <td>${item.chargeAmount}</td>
+          
+            <td style="text-align: center;"> ${moment(item.timestamp, 'MM/DD/YYYY hh:mm A').format('hh:mm A')}</td>
+            <td style="text-align: center;">${item.memberno}</td>
+            <td style="text-align: center;">${loanAmount}</td>
+            <td style="text-align: center;">${savingsAmount}</td>
+           
            
             
           </tr>
@@ -208,8 +220,9 @@ export default function MyLoanCollection({ navigation }) {
   </tbody>
    <tfoot>
       <tr>
-        <th colSpan="2">Total</th>
-        <th>
+         <th> </th>
+       <th style="text-align: center;">Total</th>
+        <th style="text-align: center;">
           ${withdrawList.reduce((total, item) => {
             if (item.type === 'Collection') {
               return total + (item.loanAmount || 0);
@@ -219,7 +232,7 @@ export default function MyLoanCollection({ navigation }) {
             return total;
           }, 0)}
         </th>
-        <th>
+        <th style="text-align: center;">
           ${withdrawList.reduce((total, item) => {
             if (item.type === 'Collection') {
               return total + (item.savingsAmount || 0);
@@ -229,10 +242,16 @@ export default function MyLoanCollection({ navigation }) {
             return total;
           }, 0)}
         </th>
-        <th>
-          ${withdrawList.reduce((total, item) => total + (item.chargeAmount || 0), 0)}
+      </tr>
+      <tr>
+         <th> </th>
+       <th style="text-align: center;">Grand Total </th>
+        <th style="text-align: center;" colspan="2">
+          ${withdrawList.reduce((total, loan) => {
+            return total + (loan.loanWithdrawAmount + loan.savingsWithdrawAmount || 0);
+          }, 0)}
         </th>
-        
+       
       </tr>
     </tfoot>
          
@@ -321,7 +340,14 @@ const selectPrinter = async () => {
             ...data[key]
           })).filter(loan => { 
             const  loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); 
-            return loanDate.isSame(todayMoment,  'Day') && loan.type=="Collection"  } ); // Filter for the specific employee
+            return loanDate.isSame(todayMoment,  'Day') && loan.type=="Collection"  } )
+            .sort((a, b) => {
+              // Assuming your 'timestamp' field also contains the time
+              // If it doesn't, you'll need a separate time field for accurate sorting
+              const timeA = moment(a.timestamp, 'MM/DD/YYYY HH:mm A'); // Adjust format if needed
+              const timeB = moment(b.timestamp, 'MM/DD/YYYY HH:mm A'); // Adjust format if needed
+              return timeA.valueOf() - timeB.valueOf(); // Sort in ascending order of time
+            });  // Filter for the specific employee
           setCollectionList(allLoan);
           //console.log("today...........", loan.timestamp);
         } else {
@@ -334,7 +360,14 @@ const selectPrinter = async () => {
             ...data[key]
           })).filter(loan => { 
             const  loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); 
-            return loanDate.isSame(todayMoment,  'Day') && loan.type == "Withdraw"  } ); // Filter for the specific employee
+            return loanDate.isSame(todayMoment,  'Day') && loan.type == "Withdraw"  } )
+            .sort((a, b) => {
+              // Assuming your 'timestamp' field also contains the time
+              // If it doesn't, you'll need a separate time field for accurate sorting
+              const timeA = moment(a.timestamp, 'MM/DD/YYYY HH:mm A'); // Adjust format if needed
+              const timeB = moment(b.timestamp, 'MM/DD/YYYY HH:mm A'); // Adjust format if needed
+              return timeA.valueOf() - timeB.valueOf(); // Sort in ascending order of time
+            }); 
           setWithdrawList(allLoan);
           //console.log("today...........", loan.timestamp);
         } else {

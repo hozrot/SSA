@@ -149,6 +149,15 @@ export default function AllTransaction({ navigation }) {
   
 
   const addloancollection = () => {
+    if (!selectedMemberId ) {
+      Dialog.show({
+        type: ALERT_TYPE.WARNING,
+        title: "Error",
+        textBody: "Please select a member",
+        button: "Close",
+      });
+      return; // Exit the function if member is not selected or no amount is entered
+    }
     if (!selectedMemberId || (loanAmount === 0 && savingsAmount === 0 && chargeAmount === 0 && loanWithdrawAmount === 0 && savingsWithdrawAmount === 0)) {
       Dialog.show({
         type: ALERT_TYPE.WARNING,
@@ -158,18 +167,36 @@ export default function AllTransaction({ navigation }) {
       });
       return; // Exit the function if member is not selected or no amount is entered
     }
-
-    
+    if ( loanAmount > (totalLoanWithdraw - totalLoanCollection))
+      {
+      Dialog.show({
+        type: ALERT_TYPE.WARNING,
+        title: "Error",
+        textBody: "No Dew Loan to collect",
+        button: "Close",
+      });
+      return; // Exit the function if member is not selected or no amount is entered
+    }
+    if ( savingsWithdrawAmount > (totalSavingsCollection - totalSavingsWithdraw))
+      {
+      Dialog.show({
+        type: ALERT_TYPE.WARNING,
+        title: "Error",
+        textBody: "Not enough savings to withdraw",
+        button: "Close",
+      });
+      return; // Exit the function if member is not selected or no amount is entered
+    }
     set(ref(db, "AllTransaction/" + uniqueId), {
       memberno: selectedMemberId,
       enrollmentBy: user.username,
       scid: uniqueId,
       timestamp: formattedDateTime,
-      loanAmount: loanAmount,
-      savingsAmount: savingsAmount,
-      chargeAmount: chargeAmount,
-      loanWithdrawAmount: loanWithdrawAmount,
-      savingsWithdrawAmount: savingsWithdrawAmount,
+      loanAmount: loanAmount || 0,
+      savingsAmount: savingsAmount|| 0,
+      chargeAmount: chargeAmount || 0,
+      loanWithdrawAmount: loanWithdrawAmount || 0,
+      savingsWithdrawAmount: savingsWithdrawAmount || 0,
       type: type,
     });
     setSelectedMemberId("");
@@ -244,8 +271,8 @@ export default function AllTransaction({ navigation }) {
           <Text>
             Member Name : {selectedMember.name} {"\n"}
             Company Name: {selectedMember.company} {"\n"}
-            Loan Amount : {totalLoanCollection}{"\n"}
-            Savings Amount : {totalSavingsCollection}{"\n"}
+            Loan Need to Pay  : {totalLoanWithdraw - totalLoanCollection} Taka {"\n"} 
+            Savings Amount : {totalSavingsCollection - totalSavingsWithdraw} Taka {"\n"}
            
           </Text>
         )}

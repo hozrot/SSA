@@ -156,15 +156,15 @@ export default function AllTransaction({ navigation }) {
       });
       return; // Exit the function if member is not selected or no amount is entered
     }
-    if (loanTrackingNumber <= 0) {
-      Dialog.show({
-        type: ALERT_TYPE.WARNING,
-        title: "Error",
-        textBody: "Please give loan tracking number",
-        button: "Close",
-      });
-      return; // Exit the function if member is not selected or no amount is entered
-    }
+    // if (loanTrackingNumber <= 0) {
+    //   Dialog.show({
+    //     type: ALERT_TYPE.WARNING,
+    //     title: "Error",
+    //     textBody: "Please give loan tracking number",
+    //     button: "Close",
+    //   });
+    //   return; // Exit the function if member is not selected or no amount is entered
+    // }
     if (
       !selectedMemberId ||
       (loanAmount === 0 &&

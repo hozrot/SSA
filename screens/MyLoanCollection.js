@@ -67,7 +67,7 @@ if (user.username === 'Super Admin') {
           
             const totalLoanAmountToday = Object.values(data).reduce((total, loan) => {
               const loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); // Corrected format string
-             console.log("database", loanDate);
+            // console.log("database", loanDate);
           
               if (loanDate.isSame(todayMoment, 'day') &&  loan.type === 'Collection') { 
                 return total + (loan.loanAmount || 0);

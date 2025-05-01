@@ -30,7 +30,11 @@ export default function MyLoanCollection({ navigation }) {
     const year = today.getFullYear();
     const formattedDate = `${month}/${day}/${year}`;  
     const todayMoment = moment(formattedDate, 'MM/DD/YYYY'); 
+    const previousLoanDate = moment(todayMoment).subtract(2, 'day');
     const currentDate = moment().format('DD MMMM YYYY');
+    const previousDayMoment = moment(formattedDate, 'MM/DD/YYYY').subtract(1, 'day');
+    const previousDate = moment(formattedDate, 'MM/DD/YYYY').subtract(1, 'day').format('DD MMMM YYYY');
+    const daybeforepreviosDate = moment().subtract(2, 'day').format('DD MMMM YYYY');
 
     const printCollectionList = `
     <!DOCTYPE html>
@@ -90,7 +94,7 @@ export default function MyLoanCollection({ navigation }) {
         return `
           <tr>
             
-          <td style="text-align: center;">${moment(item.timestamp, 'MM/DD/YYYY hh:mm A').format(' hh:mm A')}</td>
+          <td style="text-align: center;">${moment(item.timestamp, 'MM/DD/YYYY hh:mm A')}</td>
             <td style="text-align: center;">${item.memberno}</td>
             <td style="text-align: center;">${loanAmount}</td>
             <td style="text-align: center;">${savingsAmount}</td>
@@ -206,7 +210,7 @@ export default function MyLoanCollection({ navigation }) {
           <tr>
             
           
-            <td style="text-align: center;"> ${moment(item.timestamp, 'MM/DD/YYYY hh:mm A').format('hh:mm A')}</td>
+            <td style="text-align: center;"> ${moment(item.timestamp, 'MM/DD/YYYY hh:mm A')}</td>
             <td style="text-align: center;">${item.memberno}</td>
             <td style="text-align: center;">${loanAmount}</td>
             <td style="text-align: center;">${savingsAmount}</td>
@@ -338,17 +342,46 @@ const selectPrinter = async () => {
           const allLoan = Object.keys(data).map(key => ({
             id: key,
             ...data[key]
-          })).filter(loan => { 
+          }))
+          // .filter(loan => {
+          //   const loanDate = moment(loan.timestamp, 'MM/DD/YYYY');
+          //   const filterDateString = '4/30/2025';
+          //   const filterMoment = moment.utc(filterDateString, 'MM/DD/YYYY').startOf('day');
+          //   const filterDateOnly = filterMoment.format('M/DD/YYYY');
+          //   const yesterdayMoment = moment(formattedDate, 'MM/DD/YYYY').subtract(1, 'day');
+          //   console.log("yesterday", filterDateOnly);
+            
+          //   return loanDate.isSame(filterDateOnly, 'Day') && loan.type === "Collection";
+            
+            
+          // })
+          
+          .filter(loan => { 
             const  loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); 
+            
+            //console.log("loanDate", loanDate);
+            const previousLoanDate = moment.utc(loanDate).subtract(1, 'day');
+           // console.log("previousLoanDate", previousLoanDate);
             return loanDate.isSame(todayMoment,  'Day') && loan.type=="Collection"  } )
             .sort((a, b) => {
-              // Assuming your 'timestamp' field also contains the time
-              // If it doesn't, you'll need a separate time field for accurate sorting
-              const timeA = moment(a.timestamp, 'MM/DD/YYYY HH:mm A'); // Adjust format if needed
-              const timeB = moment(b.timestamp, 'MM/DD/YYYY HH:mm A'); // Adjust format if needed
-              return timeA.valueOf() - timeB.valueOf(); // Sort in ascending order of time
-            });  // Filter for the specific employee
+              // Sort by memberno (assuming 'memberno' is a property in your loan object)
+              if (a.memberno < b.memberno) {
+                return -1; // a comes before b
+              }
+              if (a.memberno > b.memberno) {
+                return 1;  // a comes after b
+              }
+              return 0;    // a and b are equal in terms of memberno
+            });
+            // .sort((a, b) => {
+            //   // Assuming your 'timestamp' field also contains the time
+            //   // If it doesn't, you'll need a separate time field for accurate sorting
+            //   const timeA = moment(a.timestamp, 'MM/DD/YYYY HH:mm A'); // Adjust format if needed
+            //   const timeB = moment(b.timestamp, 'MM/DD/YYYY HH:mm A'); // Adjust format if needed
+            //   return timeA.valueOf() - timeB.valueOf(); // Sort in ascending order of time
+            // });  // Filter for the specific employee
           setCollectionList(allLoan);
+          
           //console.log("today...........", loan.timestamp);
         } else {
           setCollectionList([]); // Set to empty array if no loans found for the employee
@@ -362,12 +395,22 @@ const selectPrinter = async () => {
             const  loanDate = moment(loan.timestamp, 'MM/DD/YYYY'); 
             return loanDate.isSame(todayMoment,  'Day') && loan.type == "Withdraw"  } )
             .sort((a, b) => {
-              // Assuming your 'timestamp' field also contains the time
-              // If it doesn't, you'll need a separate time field for accurate sorting
-              const timeA = moment(a.timestamp, 'MM/DD/YYYY HH:mm A'); // Adjust format if needed
-              const timeB = moment(b.timestamp, 'MM/DD/YYYY HH:mm A'); // Adjust format if needed
-              return timeA.valueOf() - timeB.valueOf(); // Sort in ascending order of time
-            }); 
+              // Sort by memberno (assuming 'memberno' is a property in your loan object)
+              if (a.memberno < b.memberno) {
+                return -1; // a comes before b
+              }
+              if (a.memberno > b.memberno) {
+                return 1;  // a comes after b
+              }
+              return 0;    // a and b are equal in terms of memberno
+            });
+            // .sort((a, b) => {
+            //   // Assuming your 'timestamp' field also contains the time
+            //   // If it doesn't, you'll need a separate time field for accurate sorting
+            //   const timeA = moment(a.timestamp, 'MM/DD/YYYY HH:mm A'); // Adjust format if needed
+            //   const timeB = moment(b.timestamp, 'MM/DD/YYYY HH:mm A'); // Adjust format if needed
+            //   return timeA.valueOf() - timeB.valueOf(); // Sort in ascending order of time
+            // }); 
           setWithdrawList(allLoan);
           //console.log("today...........", loan.timestamp);
         } else {

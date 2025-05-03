@@ -114,7 +114,7 @@ export default function MyChargeCollections({ navigation }) {
               />
       </View>
       {
-        chargeList.map((item, index) => {
+        chargeList.slice(-10).map((item, index) => {
           return (
             <ListOne
               key={index}

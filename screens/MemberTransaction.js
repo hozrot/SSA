@@ -240,11 +240,26 @@ export default function MemberTransaction({ navigation }) {
             key={index}
             name={item.memberno}
             date={item.timestamp}
+            transactionId={item.scid}
             amount={item.type === 'Collection' ? item.loanAmount+item.chargeAmount+item.savingsAmount : item.savingsWithdrawAmount+item.loanWithdrawAmount}
             iconName={item.type === 'Collection' ? 'account-arrow-left' : 'account-arrow-right'}
               iconColor={item.type === 'Collection' ? '#8300FD' : "red"}
             type={item.type}
             category={item.category}
+            onPress={() =>
+              navigation.navigate("TransactionDetails", {
+                memberId: item.memberno,
+                name: item.name,
+                enrollmentBy: enrollmentBy,
+                loanAmount: item.loanAmount,
+                savingsAmount: item.savingsAmount,
+                chargeAmount: item.chargeAmount,
+                savingsWithdrawAmount: item.savingsWithdrawAmount,
+                loanWithdrawAmount: item.loanWithdrawAmount,
+                type: item.type,
+                loanTrackingNumber: item.loanTrackingNumber,
+              })
+            }
           />
         );
       })}

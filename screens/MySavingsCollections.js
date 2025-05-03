@@ -111,7 +111,7 @@ export default function MySavingsCollection({ navigation }) {
               />
       </View>
       {
-        savingsList.map((item, index) => {
+        savingsList.slice(-10).map((item, index) => {
           return (
             <ListOne
               key={index}

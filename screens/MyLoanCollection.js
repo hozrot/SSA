@@ -95,7 +95,6 @@ if (user.username === 'Super Admin') {
         <BalanceCard
                 balanceTitle={"Total Collected Loan"}
                 iconName={"arrow-down-bold-hexagon-outline"}
-      
                 iconColor={"white"}
                 balance={totalTransaction+' ৳' }
               />
@@ -108,7 +107,7 @@ if (user.username === 'Super Admin') {
               />
       </View>
       {
-        transactionList.map((item, index) => {
+        transactionList.slice(-10).map((item, index) => {
           return (
             <ListOne
               key={index}

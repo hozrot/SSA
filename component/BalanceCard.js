@@ -20,8 +20,8 @@ export default function BalanceCard({
           alignItems: "center",
         }}
       >
-        {" "}
-        <Text style={{ color: "white",textAlign:'center' }}> {balanceTitle} </Text>{" "}
+       
+        <Text style={{ color: "white",textAlign:'center' }}> {balanceTitle} </Text>
       </View>
 
       <MaterialCommunityIcons
@@ -29,7 +29,7 @@ export default function BalanceCard({
         size={iconSize}
         color={iconColor}
       />
-      <Text style={{ color: "white", fontWeight: "bold" }}> {balance} </Text>
+      <Text style={{ color: "white", fontWeight: "bold" }}> {balance} ৳ </Text>
     </TouchableOpacity>
   );
 }

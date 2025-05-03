@@ -108,8 +108,9 @@ export default function MyLoanCollection({ navigation }) {
   </tbody>
    <tfoot>
       <tr>
-      <th> </th>
-       <th style="text-align: center;">Total</th>
+       <th style="text-align: center;" >  ${currentDate} </th>
+       <th style="text-align: center ;">Total</th>
+       
         <th style="text-align: center;">
           ${CollectionList.reduce((total, item) => {
             if (item.type === 'Collection') {
@@ -136,8 +137,8 @@ export default function MyLoanCollection({ navigation }) {
         
       </tr>
        <tr>
-         <th> </th>
-       <th style="text-align: center;">Grand Total </th>
+        
+       <th style="text-align: center;" colspan="2">Grand Total </th>
         <th style="text-align: center;" colspan="3">
           ${CollectionList.reduce((total, loan) => {
             return total + (loan.loanAmount || 0)  + (loan.chargeAmount || 0) + (loan.savingsAmount || 0);
@@ -146,8 +147,8 @@ export default function MyLoanCollection({ navigation }) {
        
       </tr>
     </tfoot>
-         
         </table>
+      
       </body>
     </html>
   `;
@@ -460,14 +461,14 @@ const selectPrinter = async () => {
                 iconName={"calendar-check"}
                 iconColor={"white"}
                 onPress={()=>navigation.navigate("DayTransaction")}
-                balance={totalCollectionToday +' ৳'}
+                balance={totalCollectionToday }
               />
                <BalanceCard
                 balanceTitle={"Today's Withdraw"}
                 iconName={"calendar-check"}
                 iconColor={"white"}
                 onPress={()=>navigation.navigate("DayTransaction")}
-                balance={totalWithdrawToday +' ৳'}
+                balance={totalWithdrawToday}
               />
               
       </View>
@@ -476,7 +477,7 @@ const selectPrinter = async () => {
      <View > <Button label=" Withdraw " onPress={printWithdraw} /> </View>
      </View>
       {
-        loneList.map((item, index) => {
+        loneList.slice(-10).map((item, index) => {
           return (
             <ListOne
               key={index}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-export default function ListOne({ name, type, onPress, date, iconName, iconSize, amount,amount2,amount3,category,backgroundColor='#7FC56C',
+export default function ListOne({ name, type, onPress, date,transactionId, iconName, iconSize, amount,amount2,amount3,category,backgroundColor='#7FC56C',
     iconColor = 'green' }) {
     return (
         <TouchableOpacity style={[styles.List, { backgroundColor: backgroundColor }]} onPress={onPress}>
@@ -9,7 +9,7 @@ export default function ListOne({ name, type, onPress, date, iconName, iconSize,
                 {/* <MaterialCommunityIcons name={'arrow-split-vertical'} size={36} color={"red"} /> */}
                 <MaterialCommunityIcons name={iconName} size={48} color={iconColor} />
                 {/* <Text style={{fontWeight:'bold',fontSize:10}}>Given {type}</Text> */}
-                <Text style={{ fontWeight: 'bold', fontSize: 10 }}> {type}</Text>
+                <Text style={{ fontWeight: 'bold', fontSize: 10 }}> {type} </Text>
             </View>
             <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: .85 }} >
 
@@ -17,6 +17,7 @@ export default function ListOne({ name, type, onPress, date, iconName, iconSize,
                     <Text style={{ fontWeight: 'bold', fontSize: 16 }}> Member Id: {name}</Text>
                     <View style={{}}>
                         <Text style={{ fontSize: 12 }}>{date}</Text>
+                        <Text style={{ fontSize: 12 }}> Transaction Id : {transactionId}</Text>
                     </View>
 
                     <Text style={{ fontWeight: 'bold', fontSize: 16 }}> {category}</Text>

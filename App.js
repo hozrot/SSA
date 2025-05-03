@@ -33,6 +33,7 @@ import DayTransaction from './screens/DayTransaction';
 import MemberTransaction from './screens/MemberTransaction';
 import AllTransaction from './screens/AllTransaction';
 import { UserProvider } from './UserContext';
+import TransactionDetails from './screens/TransactionDetails';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -67,6 +68,7 @@ export default function App() {
         <Stack.Screen name="DayTransaction" component={DayTransaction} />
         <Stack.Screen name="AllTransaction" component={AllTransaction} />
         <Stack.Screen name="MemberTransaction" component={MemberTransaction} />
+        <Stack.Screen name="TransactionDetails" component={TransactionDetails} />
         
         <Stack.Screen name="Summary" component={Summary} />
       </Stack.Navigator>

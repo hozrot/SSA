@@ -149,19 +149,19 @@ useEffect(() => {
           balanceTitle={"Loan Withdrawn"}
           iconName={"arrow-down-bold-hexagon-outline"}
           iconColor={"white"}
-          balance={totalLoanWithdraw + '৳'}
+          balance={totalLoanWithdraw}
         />
         <BalanceCard
           balanceTitle={" Collection Loan "}
           iconName={"arrow-up-bold-hexagon-outline"}
           iconColor={"white"}
-          balance={totalLoanCollection + '৳'}
+          balance={totalLoanCollection}
         />
         <BalanceCard
           balanceTitle={" Collection Charge"}
           iconName={"hexagon-slice-6"}
           iconColor={"white"}
-          balance={totalChargeAmount + '৳'}
+          balance={totalChargeAmount}
         />
       </View>
 
@@ -176,19 +176,19 @@ useEffect(() => {
           balanceTitle={"Savings"}
           iconName={"arrow-down-bold-hexagon-outline"}
           iconColor={"white"}
-          balance={totalSaveAmount + '৳'}
+          balance={totalSaveAmount}
         />
         <BalanceCard
           balanceTitle={" Savings Withdrawn"}
           iconName={"arrow-up-bold-hexagon-outline"}
           iconColor={"white"}
-          balance={totalsavingsWithdraw + '৳'}
+          balance={totalsavingsWithdraw }
         />
         <BalanceCard
           balanceTitle={" Balance"}
           iconName={"hexagon-slice-6"}
           iconColor={"white"}
-          balance={totalSaveAmount - totalsavingsWithdraw + '৳'}
+          balance={totalSaveAmount - totalsavingsWithdraw }
         />
       </View>
 

@@ -27,7 +27,7 @@ export default function TransactionDetails() {
   const [uloanAmount, setLoanAmount] = useState(0);
   const [uloanWithdrawAmount, setLoanWithdrawAmount] = useState(0);
   const [uloanTrackingNumber, setLoanTrackingNumber] = useState(0);
-  const [suavingsAmount, setSavingsAmount] = useState(0);
+  const [usavingsAmount, setSavingsAmount] = useState(0);
   const [usavingsWithdrawAmount, setSavingsWithdrawAmount] = useState(0);
   const [utype, setType] = useState("");
   const [category, setCategory] = useState("");
@@ -216,13 +216,13 @@ export default function TransactionDetails() {
             <TextInput
               inputHieght={54}
               inputAlign={"center"}
-              placeholder="Enter here...."
+              placeholder={loanAmount.toString()}
               autoCapitalize="none"
               keyboardType="number-pad"
               keyboardAppearance="dark"
               returnKeyType="next"
               returnKeyLabel="next"
-              value={loanAmount.toString()}
+              value={uloanAmount}
               onChangeText={(text) => {
                 const numericValue = parseFloat(text);
                 if (isNaN(numericValue)) {
@@ -248,13 +248,13 @@ export default function TransactionDetails() {
             <TextInput
               inputHieght={54}
               inputAlign={"center"}
-              placeholder="Enter here...."
+              placeholder={savingsAmount.toString()}
               autoCapitalize="none"
               keyboardType="number-pad"
               keyboardAppearance="dark"
               returnKeyType="next"
               returnKeyLabel="next"
-              value={savingsAmount.toString()}
+              value={usavingsAmount}
               onChangeText={(text) => {
                 const numericValue = parseFloat(text);
                 if (isNaN(numericValue)) {
@@ -280,13 +280,13 @@ export default function TransactionDetails() {
             <TextInput
               inputHieght={54}
               inputAlign={"center"}
-              placeholder="Enter here...."
+              placeholder={chargeAmount.toString()}
               autoCapitalize="none"
               keyboardType="number-pad"
               keyboardAppearance="dark"
               returnKeyType="next"
               returnKeyLabel="next"
-              value={chargeAmount.toString()}
+              value={uchargeAmount}
               onChangeText={(text) => {
                 const numericValue = parseFloat(text);
                 if (isNaN(numericValue)) {
@@ -317,13 +317,13 @@ export default function TransactionDetails() {
             <TextInput
               inputHieght={54}
               inputAlign={"center"}
-              placeholder="Enter here...."
+              placeholder={loanWithdrawAmount.toString()}
               autoCapitalize="none"
               keyboardType="number-pad"
               keyboardAppearance="dark"
               returnKeyType="next"
               returnKeyLabel="next"
-              value={loanWithdrawAmount.toString()}
+              value={uloanWithdrawAmount}
               onChangeText={(text) => {
                 const numericValue = parseFloat(text);
                 if (isNaN(numericValue)) {
@@ -349,13 +349,13 @@ export default function TransactionDetails() {
             <TextInput
               inputHieght={54}
               inputAlign={"center"}
-              placeholder="Enter here...."
+              placeholder={loanTrackingNumber.toString()}
               autoCapitalize="none"
               keyboardType="number-pad"
               keyboardAppearance="dark"
               returnKeyType="next"
               returnKeyLabel="next"
-              value={loanTrackingNumber.toString()}
+              value={uloanTrackingNumber}
               onChangeText={(text) => {
                 const numericValue = parseFloat(text);
                 if (isNaN(numericValue)) {
@@ -381,13 +381,13 @@ export default function TransactionDetails() {
             <TextInput
               inputHieght={54}
               inputAlign={"center"}
-              placeholder="Enter here...."
+              placeholder={savingsWithdrawAmount.toString()}
               autoCapitalize="none"
               keyboardType="number-pad"
               keyboardAppearance="dark"
               returnKeyType="next"
               returnKeyLabel="next"
-              value={savingsWithdrawAmount.toString()}
+              value={usavingsWithdrawAmount}
               onChangeText={(text) => {
                 const numericValue = parseFloat(text);
                 if (isNaN(numericValue)) {

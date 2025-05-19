@@ -157,21 +157,21 @@ export default function MemberTransaction({ navigation }) {
           balanceTitle={"Loan Taken"}
           iconName={"archive-plus"}
           iconColor={"white"}
-          balance={totalLoanWithdraw+'৳'}
+          balance={totalLoanWithdraw+''}
         />
         <BalanceCard
           balanceTitle={"Return"}
           iconName={"archive-minus"}
           iconColor={"white"}
           //onPress={()=>navigation.navigate("DayTransaction")}
-          balance={totalLoanCollection+'৳'}
+          balance={totalLoanCollection+''}
         />
         <BalanceCard
           balanceTitle={"Due"}
           iconName={"archive-clock"}
           iconColor={"white"}
           //onPress={()=>navigation.navigate("DayTransaction")}
-          balance={totalLoanWithdraw-totalLoanCollection+'৳'}
+          balance={totalLoanWithdraw-totalLoanCollection+''}
         />
       </View>
       <View
@@ -204,14 +204,14 @@ export default function MemberTransaction({ navigation }) {
           iconName={"arrow-up-bold-hexagon-outline"}
           iconColor={"white"}
           //onPress={()=>navigation.navigate("DayTransaction")}
-          balance={totalSavingsWithdraw+'৳'}
+          balance={totalSavingsWithdraw+''}
         />
          <BalanceCard
           balanceTitle={" Balance"}
           iconName={"hexagon-slice-6"}
           iconColor={"white"}
           //onPress={()=>navigation.navigate("DayTransaction")}
-          balance={totalSavingsCollection-totalSavingsWithdraw+'৳'}
+          balance={totalSavingsCollection-totalSavingsWithdraw+''}
         />
       </View>
       <View
@@ -225,7 +225,7 @@ export default function MemberTransaction({ navigation }) {
           balanceTitle={"Total Charges Given"}
           iconName={"hexagon-multiple"}
           iconColor={"yellow"}
-          balance={totalChargeCollection+'৳'}
+          balance={totalChargeCollection}
         />
         {/* <BalanceCard
           balanceTitle={"Total Balance"}

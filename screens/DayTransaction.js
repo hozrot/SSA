@@ -487,7 +487,8 @@ const selectPrinter = async () => {
               iconName={item.type === 'Collection' ? 'account-arrow-left' : 'account-arrow-right'}
               iconColor={item.type === 'Collection' ? '#8300FD' : "red"}
               type={item.type}  
-              backgroundColor={"yellow"}          />
+              backgroundColor={"yellow"} 
+              transactionId={item.scid}         />
 
           )
         })

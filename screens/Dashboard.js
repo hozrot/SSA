@@ -27,90 +27,65 @@ export default function Dashboard({ navigation }) {
     setUser(null);
   }
 
-useEffect(() => {
+  useEffect(() => {
     const dataLink = ref(db, 'AllTransaction/');
     let employeeTransactionQuery = dataLink;
-   
-   if (user.username === 'Super Admin') {
-    employeeTransactionQuery = query(
-       dataLink,
-       orderByChild('enrollmentBy') // No equalTo() to get all data
-     );
-   } else {
-    employeeTransactionQuery = query(
-       dataLink,
-       orderByChild('enrollmentBy'),
-       equalTo(user.username)
-       
-     );
-   }
-     onValue(employeeTransactionQuery, (snapshot) => { // Use the filtered query
-             const data = snapshot.val();
-             if (data) { // Check if data exists
-               const allLoan = Object.keys(data).map(key => ({
-                 id: key,
-                 ...data[key]
-               }))
-               setLoanList(allLoan);
-             } else {
-               setLoanList([]); // Set to empty array if no loans found for the employee
-             }
-             if (data) { 
-                 const totalAmount = Object.values(data)
-                 .filter(loan => user.username === 'Super Admin' || loan.enrollmentBy === user.username)
-                 .reduce((total, loan) => {
-                   return total + (loan.loanWithdrawAmount || 0); 
-                 }, 0);
-                 setTotalLoanWithdraw(totalAmount); 
-               } else {
-                setTotalLoanWithdraw(0); 
-               }
-
-               if (data) { 
-                const totalAmount = Object.values(data)
-                .filter(loan => user.username === 'Super Admin' || loan.enrollmentBy === user.username)
-                .reduce((total, loan) => {
-                  return total + (loan.loanAmount || 0); 
-                }, 0);
-                setTotalLoanCollection(totalAmount); 
-              } else {
-                setTotalLoanCollection(0); 
-              }
-
-              if (data) { 
-                const totalAmount = Object.values(data)
-                .filter(loan => user.username === 'Super Admin' || loan.enrollmentBy === user.username)
-                .reduce((total, loan) => {
-                  return total + (loan.savingsAmount || 0); 
-                }, 0);
-                setTotalSaveAmount(totalAmount); 
-              } else {
-                setTotalSaveAmount(0); 
-              }
-
-              if (data) { 
-                const totalAmount = Object.values(data)
-                .filter(loan => user.username === 'Super Admin' || loan.enrollmentBy === user.username)
-                .reduce((total, loan) => {
-                  return total + (loan.savingsWithdrawAmount || 0); 
-                }, 0);
-                setTotalSavingsWithdraw(totalAmount); 
-              } else {
-                setTotalSavingsWithdraw(0); 
-              }
-              if (data) { 
-                const totalAmount = Object.values(data)
-                .filter(loan => user.username === 'Super Admin' || loan.enrollmentBy === user.username)
-                .reduce((total, loan) => {
-                  return total + (loan.chargeAmount || 0); 
-                }, 0);
-                setTotalChargeAmount(totalAmount); 
-              } else {
-                setTotalChargeAmount(0); 
-              }
-      });
   
-    }, []);
+    if (user.username === 'Super Admin') {
+      employeeTransactionQuery = query(
+        dataLink,
+        orderByChild('enrollmentBy')
+      );
+    } else {
+      employeeTransactionQuery = query(
+        dataLink,
+        orderByChild('enrollmentBy'),
+        equalTo(user.username)
+      );
+    }
+  
+    const unsubscribe = onValue(employeeTransactionQuery, (snapshot) => {
+      const data = snapshot.val();
+      let allLoan = [];
+      let totalLoanWithdraw = 0;
+      let totalLoanCollection = 0;
+      let totalSaveAmount = 0;
+      let totalSavingsWithdraw = 0;
+      let totalChargeAmount = 0;
+  
+      if (data) {
+        // Process data once
+        allLoan = Object.keys(data).map(key => ({
+          id: key,
+          ...data[key]
+        }));
+  
+        // Filter once if needed, then reduce for all sums
+        const filteredLoans = Object.values(data).filter(
+          (loan) => user.username === 'Super Admin' || loan.enrollmentBy === user.username
+        );
+  
+        filteredLoans.forEach((loan) => {
+          totalLoanWithdraw += loan.loanWithdrawAmount || 0;
+          totalLoanCollection += loan.loanAmount || 0;
+          totalSaveAmount += loan.savingsAmount || 0;
+          totalSavingsWithdraw += loan.savingsWithdrawAmount || 0;
+          totalChargeAmount += loan.chargeAmount || 0;
+        });
+      }
+  
+      // Update all states together
+      setLoanList(allLoan);
+      setTotalLoanWithdraw(totalLoanWithdraw);
+      setTotalLoanCollection(totalLoanCollection);
+      setTotalSaveAmount(totalSaveAmount);
+      setTotalSavingsWithdraw(totalSavingsWithdraw);
+      setTotalChargeAmount(totalChargeAmount);
+    });
+  
+    // Cleanup function for onValue listener
+    return () => unsubscribe();
+  }, [user.username]); // Add user.username to dependencies if it can change
   
   return (
     <View style={{ flex: 1, justifyContent: 'space-evenly', alignItems: "center", backgroundColor: 'green', paddingTop: 20 }}>
